@@ -294,16 +294,17 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 </div>
 
 <div class="nav">
-  <div class="nav-tab active" onclick="switchTab('colombia')">🇨🇴 Colombia</div>
-  <div class="nav-tab" onclick="switchTab('grupos')">Grupos</div>
-  <div class="nav-tab" onclick="switchTab('horarios')">Horarios</div>
-  <div class="nav-tab" onclick="switchTab('canales')">Canales</div>
+  <div class="nav-tab active" onclick="switchTab('grupos')">📊 Grupos</div>
+  <div class="nav-tab" onclick="switchTab('colombia')">🇨🇴 Colombia</div>
+  <div class="nav-tab" onclick="switchTab('horarios')">🗓️ Horarios</div>
+  <div class="nav-tab" onclick="switchTab('canales')">📺 Canales</div>
+  <div class="nav-tab" onclick="switchTab('probabilidades')">🎯 Probabilidades</div>
 </div>
 
 <div class="wrap">
 
 <!-- COLOMBIA -->
-<div class="panel active" id="panel-colombia">
+<div class="panel" id="panel-colombia">
   <!-- RESULTADOS EN VIVO -->
   <div id="liveResultsSection" style="display:none;margin-bottom:20px">
     <div class="sh">
@@ -313,16 +314,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
     <div id="liveMatchesContainer" class="ml"></div>
   </div>
-  <div class="sh"><span class="sh-title">Probabilidades</span><span class="sh-sub">Opta · 10,000 sims · jun 2026</span></div>
-  <div class="prob-cards" id="pCards"></div>
-  <div class="tog-row">
-    <button class="tog ab" onclick="setMode('both')">Ambos</button>
-    <button class="tog" onclick="setMode('base')">Base</button>
-    <button class="tog" onclick="setMode('alt')">Sin Ronaldo</button>
-  </div>
-  <div class="leg" id="probLeg"></div>
-  <div id="probBars"></div>
-  <div class="sh" style="margin-top:20px"><span class="sh-title">Partidos Colombia</span><span class="sh-sub">Hora Colombia · Grupo K</span></div>
+  <div class="sh"><span class="sh-title">Partidos Colombia</span><span class="sh-sub">Hora Colombia · Grupo K</span></div>
   <div class="ml">
     <div class="mc col"><div class="mc-b"><div class="mc-t"><div class="mc-f">🇨🇴</div><div class="mc-n co">Colombia</div></div><div class="mc-c"><div class="mc-sc">vs</div><div class="mc-st">PROX</div></div><div class="mc-t r"><div class="mc-f">🇺🇿</div><div class="mc-n">Uzbekistán</div></div></div><div class="mc-foot"><span>Mié 17 jun · <b style="color:var(--gold)">9:00 PM COL</b> · Azteca, CDMX</span><span id="cd_uzb" style="font-family:'Oswald',sans-serif;font-size:11px;color:#f5c518;letter-spacing:1px;font-weight:600"></span><div style="display:flex;gap:3px"><span class="ch-tag ch-c">Caracol</span><span class="ch-tag ch-r">RCN</span><span class="ch-tag ch-d">DSports</span><span class="ch-tag ch-di">Disney+</span></div></div></div>
     <div class="mc col"><div class="mc-b"><div class="mc-t"><div class="mc-f">🇨🇴</div><div class="mc-n co">Colombia</div></div><div class="mc-c"><div class="mc-sc">vs</div><div class="mc-st">PROX</div></div><div class="mc-t r"><div class="mc-f">🇨🇩</div><div class="mc-n">DR Congo</div></div></div><div class="mc-foot"><span>Mar 23 jun · <b style="color:var(--gold)">9:00 PM COL</b> · Akron, Guadalajara</span><span id="cd_congo" style="font-family:'Oswald',sans-serif;font-size:11px;color:#f5c518;letter-spacing:1px;font-weight:600"></span><div style="display:flex;gap:3px"><span class="ch-tag ch-c">Caracol</span><span class="ch-tag ch-r">RCN</span><span class="ch-tag ch-d">DSports</span></div></div></div>
@@ -331,7 +323,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 </div>
 
 <!-- GRUPOS -->
-<div class="panel" id="panel-grupos">
+<div class="panel active" id="panel-grupos">
   <div id="apiStatusBar2" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:7px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text2)">
     <div id="apiStatusDot2" style="width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;animation:blink 1.4s ease infinite"></div>
     <span id="apiStatusText2">Cargando tabla de posiciones...</span>
@@ -358,6 +350,29 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 <div class="panel" id="panel-canales">
   <div class="sh"><span class="sh-title">Canales y partidos</span><span class="sh-sub">Qué canal pasa cada partido</span></div>
   <div class="cg-grid" id="canalesGrid"></div>
+</div>
+
+
+<!-- PROBABILIDADES -->
+<div class="panel" id="panel-probabilidades">
+  <div class="sh" style="margin-top:4px">
+    <span class="sh-title">Probabilidades</span>
+    <span class="sh-sub">Opta · 10,000 simulaciones · jun 2026</span>
+  </div>
+  <div class="prob-cards" id="pCards"></div>
+  <div class="tog-row">
+    <button class="tog ab" onclick="setMode('both')">Ambos</button>
+    <button class="tog" onclick="setMode('base')">Base</button>
+    <button class="tog" onclick="setMode('alt')">Sin Ronaldo</button>
+  </div>
+  <div class="leg" id="probLeg"></div>
+  <div id="probBars"></div>
+  <div class="sh" style="margin-top:24px"><span class="sh-title">¿Qué significa?</span></div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px 18px;font-size:13px;color:var(--text2);line-height:1.7">
+    <p>Estas probabilidades están calculadas por <b style="color:var(--text)">Opta</b> con 10,000 simulaciones del torneo basadas en el rendimiento histórico de cada selección, el fixture del Grupo K y los datos de xG (expected goals).</p>
+    <p style="margin-top:8px">El escenario <b style="color:var(--gold)">"Sin Ronaldo titular"</b> refleja el impacto estadístico de que Portugal juegue sin Cristiano Ronaldo como titular, basado en los datos de Portugal sin él en amistosos recientes.</p>
+    <p style="margin-top:8px">Fuente: <b style="color:var(--text)">theanalyst.com</b> · Opta Supercomputer · Actualizado junio 2026</p>
+  </div>
 </div>
 
 </div>
@@ -444,18 +459,18 @@ const allMatches=[
   ]},
   {d:'Vie 12 jun',ms:[
     {t:'2:00PM',h:'Canadá',hf:'🇨🇦',a:'Bosnia',af:'🇧🇦',g:'B',v:'Toronto',ch:['DSports'],col:false},
-    {t:'8:00PM',h:'EE. UU.',hf:'🇺🇸',a:'Paraguay',af:'🇵🇾',g:'D',v:'Los Ángeles',ch:['DSports','ESPN'],col:false},
+    {t:'8:00PM',h:'EE. UU.',hf:'🇺🇸',a:'Paraguay',af:'🇵🇾',g:'D',v:'Los Ángeles',ch:['DSports','WC26'],col:false},
   ]},
   {d:'Sáb 13 jun',ms:[
     {t:'12:00PM',h:'Qatar',hf:'🇶🇦',a:'Suiza',af:'🇨🇭',g:'B',v:'San Francisco',ch:['DSports'],col:false},
-    {t:'5:00PM',h:'Brasil',hf:'🇧🇷',a:'Marruecos',af:'🇲🇦',g:'C',v:'MetLife, Nueva York',ch:['Caracol','DSports','ESPN'],col:false},
+    {t:'5:00PM',h:'Brasil',hf:'🇧🇷',a:'Marruecos',af:'🇲🇦',g:'C',v:'MetLife, Nueva York',ch:['Caracol','DSports','WC26'],col:false},
     {t:'8:00PM',h:'Haití',hf:'🇭🇹',a:'Escocia',af:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',g:'C',v:'Boston',ch:['DSports'],col:false},
   ]},
   {d:'Dom 14 jun',ms:[
     {t:'12:00PM',h:'Alemania',hf:'🇩🇪',a:'Curazao',af:'🇨🇼',g:'E',v:'Atlanta',ch:['DSports','Win'],col:false},
     {t:'3:00PM',h:'Países Bajos',hf:'🇳🇱',a:'Japón',af:'🇯🇵',g:'F',v:'Dallas',ch:['DSports'],col:false},
     {t:'6:00PM',h:'Portugal',hf:'🇵🇹',a:'DR Congo',af:'🇨🇩',g:'K',v:'Houston',ch:['DSports','Win'],col:false},
-    {t:'9:00PM',h:'Argentina',hf:'🇦🇷',a:'Argelia',af:'🇩🇿',g:'J',v:'Atlanta',ch:['DSports','ESPN'],col:false},
+    {t:'9:00PM',h:'Argentina',hf:'🇦🇷',a:'Argelia',af:'🇩🇿',g:'J',v:'Atlanta',ch:['DSports','WC26'],col:false},
   ]},
   {d:'Lun 15 jun',ms:[
     {t:'11:00AM',h:'España',hf:'🇪🇸',a:'Cabo Verde',af:'🇨🇻',g:'H',v:'Atlanta',ch:['Caracol','DSports'],col:false},
@@ -466,7 +481,7 @@ const allMatches=[
   {d:'Mar 16 jun',ms:[
     {t:'2:00PM',h:'Francia',hf:'🇫🇷',a:'Senegal',af:'🇸🇳',g:'I',v:'Nueva York',ch:['Caracol','DSports'],col:false},
     {t:'5:00PM',h:'Inglaterra',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',a:'Ghana',af:'🇬🇭',g:'L',v:'Filadelfia',ch:['DSports'],col:false},
-    {t:'8:00PM',h:'Argentina',hf:'🇦🇷',a:'Argelia',af:'🇩🇿',g:'J',v:'Dallas',ch:['DSports','ESPN'],col:false},
+    {t:'8:00PM',h:'Argentina',hf:'🇦🇷',a:'Argelia',af:'🇩🇿',g:'J',v:'Dallas',ch:['DSports','WC26'],col:false},
   ]},
   {d:'Mié 17 jun 🇨🇴',ms:[
     {t:'12:00PM',h:'Portugal',hf:'🇵🇹',a:'Uzbekistán',af:'🇺🇿',g:'K',v:'Houston',ch:['DSports','Win'],col:false},
@@ -484,7 +499,7 @@ const allMatches=[
     {t:'9:00PM',h:'Colombia',hf:'🇨🇴',a:'DR Congo',af:'🇨🇩',g:'K',v:'Akron, Guadalajara',ch:['Caracol','RCN','DSports'],col:true},
   ]},
   {d:'Sáb 27 jun 🇨🇴 🔥',ms:[
-    {t:'3:00PM',h:'Argentina',hf:'🇦🇷',a:'Austria',af:'🇦🇹',g:'J',v:'Dallas',ch:['DSports','ESPN'],col:false},
+    {t:'3:00PM',h:'Argentina',hf:'🇦🇷',a:'Austria',af:'🇦🇹',g:'J',v:'Dallas',ch:['DSports','WC26'],col:false},
     {t:'3:00PM',h:'Inglaterra',hf:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',a:'Ghana',af:'🇬🇭',g:'L',v:'Filadelfia',ch:['DSports'],col:false},
     {t:'6:30PM',h:'Colombia',hf:'🇨🇴',a:'Portugal',af:'🇵🇹',g:'K',v:'Hard Rock, Miami',ch:['Caracol','RCN','DSports'],col:true},
     {t:'6:30PM',h:'DR Congo',hf:'🇨🇩',a:'Uzbekistán',af:'🇺🇿',g:'K',v:'Atlanta',ch:['DSports','Win'],col:false},
@@ -506,7 +521,7 @@ const allMatches=[
   ]},
 ];
 
-const chMap={'Caracol':'ch-c','RCN':'ch-r','Win':'ch-w','DSports':'ch-d','Disney+':'ch-di','ESPN':'ch-es','Paramount+':'ch-pa'};
+const chMap={'Caracol':'ch-c','RCN':'ch-r','Win':'ch-w','DSports':'ch-d','Disney+':'ch-di','WC26':'ch-es','Paramount+':'ch-pa'};
 let schMode='col';
 function rnSch(m){
   schMode=m;
@@ -530,7 +545,7 @@ const canalData=[
    games:[{t:'Dom 14 jun · 6:00PM',teams:'Portugal vs DR Congo'},{t:'Dom 14 jun · 12:00PM',teams:'Alemania vs Curazao'},{t:'Lun 15 jun · 8:00PM',teams:'Uruguay vs Arabia Saudita'},{t:'Jue 18 jun · 11:00AM',teams:'Alemania vs Costa Marfil'},{t:'Jue 18 jun · 5:00PM',teams:'España vs Arabia Saudita'},{t:'Sáb 27 jun · 6:30PM',teams:'DR Congo vs Uzbekistán'}]},
   {n:'DSports',b:'DS',bg:'#00a0e9',tc:'#fff',tp:'TV Paga · DirecTV',pts:'104 partidos — cobertura total',
    games:[{t:'Todos los días',teams:'104 partidos completos del torneo'},{t:'Mié 17 jun · 9:00PM',teams:'Colombia vs Uzbekistán',col:true},{t:'Mar 23 jun · 9:00PM',teams:'Colombia vs DR Congo',col:true},{t:'Sáb 27 jun · 6:30PM',teams:'Colombia vs Portugal',col:true},{t:'19 jul · 2:00PM',teams:'Final del Mundial'}]},
-  {n:'Disney+ / ESPN',b:'D+',bg:'#1a3e8c',tc:'#fff',tp:'Streaming · Plan Premium',pts:'30 partidos · incluye semis y final',
+  {n:'Disney+ / WC26',b:'D+',bg:'#1a3e8c',tc:'#fff',tp:'Streaming · Plan Premium',pts:'30 partidos · incluye semis y final',
    games:[{t:'Mié 17 jun · 9:00PM',teams:'Colombia vs Uzbekistán',col:true},{t:'Vie 12 jun · 8:00PM',teams:'EE.UU. vs Paraguay'},{t:'Dom 14 jun · 9:00PM',teams:'Argentina vs Argelia'},{t:'14-15 jul',teams:'Las dos semifinales'},{t:'19 jul · 2:00PM',teams:'Final del Mundial'}]},
   {n:'Paramount+',b:'P+',bg:'#0064ff',tc:'#fff',tp:'Streaming · Pago',pts:'104 partidos vía alianza DSports',
    games:[{t:'Todos los partidos',teams:'Vía alianza con DSports'},{t:'Mié 17 jun · 9:00PM',teams:'Colombia vs Uzbekistán',col:true},{t:'Mar 23 jun · 9:00PM',teams:'Colombia vs DR Congo',col:true},{t:'Sáb 27 jun · 6:30PM',teams:'Colombia vs Portugal',col:true}]},
@@ -541,8 +556,8 @@ document.getElementById('canalesGrid').innerHTML=canalData.map(c=>{
 }).join('');
 
 function switchTab(t){
-  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['colombia','grupos','horarios','canales'][i]===t));
-  ['colombia','grupos','horarios','canales'].forEach(id=>document.getElementById('panel-'+id).classList.toggle('active',id===t));
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['grupos','colombia','horarios','canales','probabilidades'][i]===t));
+  ['grupos','colombia','horarios','canales','probabilidades'].forEach(id=>document.getElementById('panel-'+id).classList.toggle('active',id===t));
 }
 
 function updateClock(){
@@ -622,8 +637,13 @@ const COL_MATCHES = {
   por:   new Date('2026-06-27T23:30:00Z'), // 27 jun 6:30PM COL
 };
 
-function fmtColCD(diff) {
-  if(diff <= 0) return '🟢 EN JUEGO';
+// Duración estimada del partido: 120 minutos (con descuento)
+const MATCH_DURATION = 120 * 60 * 1000;
+
+function fmtColCD(matchTime, diff) {
+  const elapsed = Date.now() - matchTime;
+  if(diff <= 0 && elapsed < MATCH_DURATION) return '🟢 EN JUEGO';
+  if(diff <= 0 && elapsed >= MATCH_DURATION) return '✅ TERMINADO';
   const pad = n => String(n).padStart(2,'0');
   const d = Math.floor(diff / 864e5);
   const h = Math.floor((diff % 864e5) / 36e5);
@@ -638,9 +658,9 @@ function updateColCD() {
   const elUzb   = document.getElementById('cd_uzb');
   const elCongo = document.getElementById('cd_congo');
   const elPor   = document.getElementById('cd_por');
-  if(elUzb)   elUzb.textContent   = fmtColCD(COL_MATCHES.uzb - now);
-  if(elCongo) elCongo.textContent = fmtColCD(COL_MATCHES.congo - now);
-  if(elPor)   elPor.textContent   = fmtColCD(COL_MATCHES.por - now);
+  if(elUzb)   elUzb.textContent   = fmtColCD(COL_MATCHES.uzb.getTime(),   COL_MATCHES.uzb - now);
+  if(elCongo) elCongo.textContent = fmtColCD(COL_MATCHES.congo.getTime(), COL_MATCHES.congo - now);
+  if(elPor)   elPor.textContent   = fmtColCD(COL_MATCHES.por.getTime(),   COL_MATCHES.por - now);
 }
 setInterval(updateColCD, 1000);
 updateColCD();
@@ -694,20 +714,20 @@ const WC_LEAGUE   = '4429';
 
 const chMap2 = {
   'Caracol':'ch-c','RCN':'ch-r','Win':'ch-w',
-  'DSports':'ch-d','Disney+':'ch-di','ESPN':'ch-es'
+  'DSports':'ch-d','Disney+':'ch-di','WC26':'ch-es'
 };
 
 // IDs de partidos de Colombia (se buscan dinámicamente)
 let colMatchIds = [];
 
-const ESPN_BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world';
+const WC26_BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world';
 const COL_NAME  = 'Colombia';
 
-function espnFetch(path) {
-  const url = ESPN_BASE + path;
-  console.log('[ROBERT NEWS] ESPN fetch:', url);
+function wc26Fetch(path) {
+  const url = WC26_BASE + path;
+  console.log('[ROBERT NEWS] WC26 fetch:', url);
   return fetch(url, {
-    headers: { 'Accept': 'application/json' }
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
   }).then(r => {
     if(!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
@@ -841,10 +861,33 @@ function updateStandingsFromAPI(standingsGroups) {
 
 let lastFetch = 0;
 
-function updateStandingsFromESPN(standings) {
+// Mapa nombres WC26 → nombres en nuestros grupos
+const WC26_NAME_MAP = {
+  'Mexico':'México','South Africa':'Sudáfrica','South Korea':'Corea Sur',
+  'Czechia':'Rep. Checa','Czech Republic':'Rep. Checa',
+  'Switzerland':'Suiza','Bosnia-Herzegovina':'Bosnia','Bosnia and Herzegovina':'Bosnia',
+  'Canada':'Canadá','Brazil':'Brasil','Morocco':'Marruecos','Haiti':'Haití',
+  'Scotland':'Escocia','United States':'EE. UU.','USA':'EE. UU.',
+  'Turkey':'Turquía','Germany':'Alemania',"Ivory Coast":'Costa Marfil',
+  'Netherlands':'Países Bajos','Japan':'Japón','Tunisia':'Túnez','Sweden':'Suecia',
+  'Belgium':'Bélgica','Egypt':'Egipto','Iran':'Irán','New Zealand':'N. Zelanda',
+  'Cameroon':'Camerún','Spain':'España','Cape Verde':'Cabo Verde',
+  'Saudi Arabia':'Arabia S.','France':'Francia','Norway':'Noruega',
+  'Algeria':'Argelia','Austria':'Austria','Jordan':'Jordania',
+  'Colombia':'Colombia','Uzbekistan':'Uzbekistán','DR Congo':'DR Congo',
+  'England':'Inglaterra','Croatia':'Croacia','Ghana':'Ghana','Panama':'Panamá',
+  'Serbia':'Serbia','Kuwait':'Kuwait','Argentina':'Argentina',
+  'Portugal':'Portugal','Uruguay':'Uruguay','Senegal':'Senegal',
+  'Iraq':'Iraq','Paraguay':'Paraguay','Australia':'Australia',
+  'Ecuador':'Ecuador','Qatar':'Qatar',
+};
+function espnName(n){ return WC26_NAME_MAP[n] || n; }
+
+
+function updateStandingsFromWC26(standings) {
   try {
     const entries = standings.entries || [];
-    console.log('[ROBERT NEWS] ESPN standings entries:', entries.length);
+    console.log('[ROBERT NEWS] WC26 standings entries:', entries.length);
     // Por ahora loggear para ver estructura
     if(entries.length > 0) console.log('[ROBERT NEWS] Sample entry:', JSON.stringify(entries[0]).substring(0,300));
   } catch(e) {
@@ -865,53 +908,81 @@ async function loadLiveMatches() {
   try {
     setApiStatus(null, 'Actualizando resultados...');
 
-    // ESPN API — scoreboard + standings
-    const [scoreData, standData] = await Promise.all([
-      espnFetch('/scoreboard'),
-      espnFetch('/standings').catch(() => null),
+    // worldcup26.ir — traer grupos y partidos en paralelo
+    const [groupsData, gamesData] = await Promise.all([
+      wc26Fetch('/get/groups'),
+      wc26Fetch('/get/games'),
     ]);
-    const events = scoreData.events || [];
-    console.log('[ROBERT NEWS] ESPN scoreboard events:', events.length);
 
-    // Si hay standings, actualizar tabla directamente
-    if(standData?.standings?.entries) {
-      updateStandingsFromESPN(standData.standings);
-    }
+    console.log('[ROBERT NEWS] Groups:', groupsData);
+    console.log('[ROBERT NEWS] Games:', gamesData?.length || gamesData);
 
-    function normalizeESPN(e) {
+    // Actualizar tabla de grupos directamente con datos de /get/groups
+    if(groupsData) updateGroupsFromWC26(groupsData);
+
+    // Procesar partidos para marcadores en vivo
+    const games = Array.isArray(gamesData) ? gamesData : (gamesData?.games || gamesData?.data || []);
+    const events = games;
+    console.log('[ROBERT NEWS] Total games:', events.length);
+
+    function normalizeWC26(e) {
       const comp = e.competitions?.[0] || {};
       const competitors = comp.competitors || [];
       const home = competitors.find(c => c.homeAway === 'home') || competitors[0] || {};
       const away = competitors.find(c => c.homeAway === 'away') || competitors[1] || {};
-      const statusType = comp.status?.type?.name || '';
-      const status = statusType === 'STATUS_FINAL' ? 'FINISHED'
-                   : statusType === 'STATUS_IN_PROGRESS' || statusType === 'STATUS_HALFTIME' ? 'IN_PLAY'
+      const statusName = comp.status?.type?.name || '';
+      const statusState = comp.status?.type?.state || '';
+
+      // Valores exactos que devuelve WC26
+      const status = (statusName === 'STATUS_FINAL' || statusName === 'STATUS_FULL_TIME'
+                      || statusState === 'post')
+                     ? 'FINISHED'
+                   : (statusName === 'STATUS_IN_PROGRESS' || statusName === 'STATUS_HALFTIME'
+                      || statusName === 'STATUS_FIRST_HALF' || statusName === 'STATUS_SECOND_HALF'
+                      || statusName === 'STATUS_HALF_TIME' || statusState === 'in')
+                     ? 'IN_PLAY'
                    : 'SCHEDULED';
-      const hg = home.score !== undefined && home.score !== '' ? parseInt(home.score) : null;
-      const ag = away.score !== undefined && away.score !== '' ? parseInt(away.score) : null;
-      // Grupo desde el nombre del evento o notas
-      const note = comp.notes?.[0]?.headline || '';
-      const groupMatch = note.match(/Group ([A-L])/i);
+
+      const hg = home.score !== undefined && home.score !== '' && home.score !== null
+                 ? parseInt(home.score) : null;
+      const ag = away.score !== undefined && away.score !== '' && away.score !== null
+                 ? parseInt(away.score) : null;
+
+      // Grupo desde altGameNote o notes
+      const altNote = comp.altGameNote || comp.notes?.[0]?.headline || e.name || '';
+      const groupMatch = altNote.match(/Group ([A-L])/i);
+
+      console.log('[ROBERT NEWS] Event:', home.team?.displayName, hg, '-', ag, away.team?.displayName, '|', statusName, '| group:', groupMatch?.[1]);
+
+      const hName = home.team?.displayName || home.team?.name || '';
+      const aName = away.team?.displayName || away.team?.name || '';
+      console.log('[ROBERT NEWS] Event:', hName, hg, '-', ag, aName, '|', statusName, '| group:', groupMatch?.[1]);
       return {
         id: e.id,
         utcDate: comp.date || e.date,
         status,
         group: groupMatch ? groupMatch[1] : '',
-        homeTeam: { name: home.team?.displayName || home.team?.name || '' },
-        awayTeam: { name: away.team?.displayName || away.team?.name || '' },
+        homeTeam: { name: hName },
+        awayTeam: { name: aName },
         score: { fullTime: { home: hg, away: ag } },
         clock: comp.status?.displayClock || '',
-        statusDisplay: comp.status?.type?.shortDetail || statusType,
+        statusDisplay: comp.status?.type?.shortDetail || '',
       };
     }
 
-    const matches = events.map(normalizeESPN);
+    const matches = events.map(normalizeWC26);
     console.log('[ROBERT NEWS] Normalized:', matches.map(m => m.homeTeam.name + ' vs ' + m.awayTeam.name + ' ' + m.status));
 
     const liveMatches  = matches.filter(m => m.status === 'IN_PLAY');
+    const finishedMatches = matches.filter(m => m.status === 'FINISHED');
     const now          = new Date();
     const todayMatches = matches.filter(m => Math.abs(now - new Date(m.utcDate)) < 86400000);
-    const displayMatches = liveMatches.length > 0 ? liveMatches : todayMatches.slice(0, 8);
+    // Mostrar: en vivo primero, luego terminados de hoy, luego próximos de hoy
+    const displayMatches = [...liveMatches, 
+      ...finishedMatches.filter(m => Math.abs(now - new Date(m.utcDate)) < 86400000),
+      ...todayMatches.filter(m => m.status === 'SCHEDULED')
+    ].slice(0, 8);
+    console.log('[ROBERT NEWS] Live:', liveMatches.length, 'Finished:', finishedMatches.length, 'Today:', todayMatches.length);
 
     if(displayMatches.length > 0) {
       const container = document.getElementById('liveMatchesContainer');
@@ -923,12 +994,28 @@ async function loadLiveMatches() {
       if(section) section.style.display = 'none';
     }
 
-    // Actualizar tabla de grupos con resultados de hoy
-    if(matches.length > 0) updateScheduleWithResults(matches);
+    // Actualizar marcadores con partidos de hoy
+    const matches = events.map(normalizeWC26);
+    const liveMatches = matches.filter(m => m.status === 'IN_PLAY');
+    const finishedMatches = matches.filter(m => m.status === 'FINISHED');
+    const now = new Date();
+    const todayMatches = matches.filter(m => Math.abs(now - new Date(m.utcDate)) < 86400000);
+    const displayMatches = [...liveMatches, ...finishedMatches.slice(0,4), ...todayMatches.filter(m=>m.status==='SCHEDULED').slice(0,4)].slice(0,8);
+
+    console.log('[ROBERT NEWS] Live:', liveMatches.length, 'Finished:', finishedMatches.length);
+
+    if(displayMatches.length > 0) {
+      const container = document.getElementById('liveMatchesContainer');
+      const section   = document.getElementById('liveResultsSection');
+      if(container) container.innerHTML = displayMatches.map(m => renderLiveMatch(m)).join('');
+      if(section) section.style.display = 'block';
+    }
+
+    updateScheduleWithResults(matches, events);
 
     // Intentar traer standings directamente
     try {
-      const grpData = await espnFetch('/groups');
+      const grpData = await wc26Fetch('/get/groups').catch(()=>({}));
       console.log('[ROBERT NEWS] groups data:', JSON.stringify(grpData).substring(0,400));
     } catch(e) { console.log('groups endpoint not available'); }
 
@@ -936,7 +1023,7 @@ async function loadLiveMatches() {
       hour: '2-digit', minute: '2-digit', timeZone: 'America/Bogota'
     });
     const totalEvents = matches.length;
-    setApiStatus(true, '✅ ESPN · ' + totalEvents + ' partidos · Actualizado ' + now2 + ' COL');
+    setApiStatus(true, '✅ WC26 · ' + totalEvents + ' partidos · Actualizado ' + now2 + ' COL');
     const lu = document.getElementById('liveLastUpdate');
     if(lu) lu.textContent = 'Actualizado ' + now2 + ' COL';
 
@@ -967,14 +1054,18 @@ function buildStandingsFromMatches(matches) {
     const aGoals = m.score.fullTime.away;
     if(hGoals === null || aGoals === null) return;
 
-    const hName = m.homeTeam.name;
-    const aName = m.awayTeam.name;
+    const hName = espnName(m.homeTeam.name);
+    const aName = espnName(m.awayTeam.name);
     const hTeam = standings[groupLetter].find(t =>
-      t.n === hName || t.n.includes(hName) || hName.includes(t.n)
+      t.n === hName || t.n === m.homeTeam.name ||
+      t.n.includes(hName) || hName.includes(t.n)
     );
     const aTeam = standings[groupLetter].find(t =>
-      t.n === aName || t.n.includes(aName) || aName.includes(t.n)
+      t.n === aName || t.n === m.awayTeam.name ||
+      t.n.includes(aName) || aName.includes(t.n)
     );
+    if(!hTeam) console.warn('[ROBERT NEWS] Team not found in group:', m.homeTeam.name, '->', hName, 'in group', groupLetter);
+    if(!aTeam) console.warn('[ROBERT NEWS] Team not found in group:', m.awayTeam.name, '->', aName, 'in group', groupLetter);
 
     if(hTeam) {
       hTeam.pj++; hTeam.gf += hGoals; hTeam.gc += aGoals;
@@ -998,9 +1089,115 @@ function buildStandingsFromMatches(matches) {
   document.getElementById('groupsGrid').innerHTML = renderGroupTable(groupsData);
 }
 
-function updateScheduleWithResults(matches) {
-  // Actualizar tabla de posiciones
-  buildStandingsFromMatches(matches);
+
+function buildStandingsFromWC26Records(espnEvents) {
+  const standings = {};
+  groups.forEach(g => {
+    standings[g.l] = g.t.map(t => ({...t, pj:0, g:0, e:0, p:0, gf:0, gc:0, pts:0}));
+  });
+
+  espnEvents.forEach(e => {
+    const comp = e.competitions?.[0] || {};
+    const altNote = comp.altGameNote || '';
+    const gm = altNote.match(/Group ([A-L])/i);
+    if(!gm) return;
+    const gl = gm[1];
+    if(!standings[gl]) return;
+
+    (comp.competitors || []).forEach(c => {
+      const name = c.team?.displayName || '';
+      const mn = espnName(name);
+      const team = standings[gl].find(t =>
+        t.n === mn || t.n === name || mn.includes(t.n) || t.n.includes(mn)
+      );
+      if(!team){ console.warn('[TABLE] Not found:', name, '->', mn, 'G'+gl); return; }
+
+      // Record acumulado: "W-D-L"
+      const recObj = (c.records || []).find(r => r.name === 'All Splits' || r.type === 'total');
+      const rec = recObj?.summary || '';
+      if(!rec) return;
+      const parts = rec.split('-').map(Number);
+      if(parts.length < 3 || isNaN(parts[0])) return;
+      const [w, d, l] = parts;
+      team.pj  = w + d + l;
+      team.g   = w;
+      team.e   = d;
+      team.p   = l;
+      team.pts = w*3 + d;
+      console.log('[TABLE]', mn, 'G'+gl+':', team.pj+'PJ', w+'W', d+'D', l+'L', team.pts+'pts');
+    });
+  });
+
+  const gd = Object.entries(standings).map(([l, t]) => ({
+    l, t, status: t.some(x => x.pj > 0) ? 'En curso' : 'Próximo'
+  }));
+  document.getElementById('groupsGrid').innerHTML = renderGroupTable(gd);
+}
+
+
+function updateGroupsFromWC26(data) {
+  // worldcup26.ir /get/groups devuelve los grupos con standings
+  // Intentar varios formatos posibles
+  const groupsArr = Array.isArray(data) ? data : (data.groups || data.data || []);
+  console.log('[ROBERT NEWS] WC26 groups array:', groupsArr.length, 'groups');
+  if(!groupsArr.length) return;
+
+  const groupsData = groupsArr.map(g => {
+    const letter = (g.name || g.group || '').replace('Group ','').replace('Grupo ','').trim();
+    const teams  = (g.teams || g.standings || g.table || []).map(t => {
+      const name = t.team || t.name || t.team_name || '';
+      return {
+        n: name, f: flagFor(name),
+        pj: parseInt(t.played || t.mp || t.pj || 0),
+        g:  parseInt(t.won    || t.w  || t.g  || 0),
+        e:  parseInt(t.drawn  || t.d  || t.e  || 0),
+        p:  parseInt(t.lost   || t.l  || t.p  || 0),
+        gf: parseInt(t.goals_for     || t.gf || t.scored || 0),
+        gc: parseInt(t.goals_against || t.gc || t.conceded || 0),
+        pts:parseInt(t.points || t.pts || 0),
+        col: name === 'Colombia',
+      };
+    });
+    return { l: letter, t: teams, status: teams.some(x=>x.pj>0)?'En curso':'Próximo' };
+  }).filter(g => g.l && g.t.length);
+
+  if(groupsData.length > 0) {
+    document.getElementById('groupsGrid').innerHTML = renderGroupTable(groupsData);
+    console.log('[ROBERT NEWS] Groups table updated!', groupsData.length, 'groups');
+  }
+}
+
+function flagFor(name) {
+  const flags = {
+    'Colombia':'🇨🇴','Portugal':'🇵🇹','Mexico':'🇲🇽','México':'🇲🇽',
+    'South Africa':'🇿🇦','Sudáfrica':'🇿🇦','South Korea':'🇰🇷',
+    'Czechia':'🇨🇿','Rep. Checa':'🇨🇿','Brazil':'🇧🇷','Brasil':'🇧🇷',
+    'Argentina':'🇦🇷','Spain':'🇪🇸','España':'🇪🇸','France':'🇫🇷',
+    'Francia':'🇫🇷','Germany':'🇩🇪','Alemania':'🇩🇪','England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'Netherlands':'🇳🇱','Belgium':'🇧🇪','Japan':'🇯🇵','Uruguay':'🇺🇾',
+    'Morocco':'🇲🇦','Marruecos':'🇲🇦','Croatia':'🇭🇷','Senegal':'🇸🇳',
+    'USA':'🇺🇸','United States':'🇺🇸','Canada':'🇨🇦','Canadá':'🇨🇦',
+    'Switzerland':'🇨🇭','Suiza':'🇨🇭','Ecuador':'🇪🇨','Peru':'🇵🇪',
+    'Uzbekistan':'🇺🇿','Uzbekistán':'🇺🇿','DR Congo':'🇨🇩',
+    'Norway':'🇳🇴','Noruega':'🇳🇴','Algeria':'🇩🇿','Argelia':'🇩🇿',
+    'Austria':'🇦🇹','Saudi Arabia':'🇸🇦','Tunisia':'🇹🇳','Sweden':'🇸🇪',
+    'Egypt':'🇪🇬','Iran':'🇮🇷','Ghana':'🇬🇭','Panama':'🇵🇦','Panamá':'🇵🇦',
+    'Serbia':'🇷🇸','New Zealand':'🇳🇿','Cameroon':'🇨🇲','Iraq':'🇮🇶',
+    'Jordan':'🇯🇴','Cape Verde':'🇨🇻','Cabo Verde':'🇨🇻','Haiti':'🇭🇹',
+    'Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Bolivia':'🇧🇴','Venezuela':'🇻🇪','Bosnia':'🇧🇦',
+    'Hungary':'🇭🇺','Indonesia':'🇮🇩','Qatar':'🇶🇦','Turkey':'🇹🇷',
+    "Ivory Coast":'🇨🇮','Korea Republic':'🇰🇷','Korea DPR':'🇰🇵',
+  };
+  return flags[name] || '⚽';
+}
+
+function updateScheduleWithResults(matches, rawWC26Events) {
+  // Usar records de WC26 si están disponibles
+  if(rawWC26Events && rawWC26Events.length > 0) {
+    buildStandingsFromWC26Records(rawWC26Events);
+  } else {
+    buildStandingsFromMatches(matches);
+  }
 
   // Actualizar countdowns de partidos de Colombia con datos reales
   matches.forEach(m => {
@@ -1036,7 +1233,7 @@ function updateScheduleWithResults(matches) {
 
 // Cargar inmediatamente y luego cada 60 segundos
 loadLiveMatches();
-setInterval(loadLiveMatches, 90000);
+setInterval(loadLiveMatches, 60000);
 
 </script>
 
