@@ -294,16 +294,17 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 </div>
 
 <div class="nav">
-  <div class="nav-tab active" onclick="switchTab('colombia')">🇨🇴 Colombia</div>
-  <div class="nav-tab" onclick="switchTab('grupos')">Grupos</div>
-  <div class="nav-tab" onclick="switchTab('horarios')">Horarios</div>
-  <div class="nav-tab" onclick="switchTab('canales')">Canales</div>
+  <div class="nav-tab active" onclick="switchTab('grupos')">📊 Grupos</div>
+  <div class="nav-tab" onclick="switchTab('colombia')">🇨🇴 Colombia</div>
+  <div class="nav-tab" onclick="switchTab('horarios')">🗓️ Horarios</div>
+  <div class="nav-tab" onclick="switchTab('canales')">📺 Canales</div>
+  <div class="nav-tab" onclick="switchTab('probabilidades')">🎯 Probabilidades</div>
 </div>
 
 <div class="wrap">
 
 <!-- COLOMBIA -->
-<div class="panel active" id="panel-colombia">
+<div class="panel" id="panel-colombia">
   <!-- RESULTADOS EN VIVO -->
   <div id="liveResultsSection" style="display:none;margin-bottom:20px">
     <div class="sh">
@@ -313,16 +314,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     </div>
     <div id="liveMatchesContainer" class="ml"></div>
   </div>
-  <div class="sh"><span class="sh-title">Probabilidades</span><span class="sh-sub">Opta · 10,000 sims · jun 2026</span></div>
-  <div class="prob-cards" id="pCards"></div>
-  <div class="tog-row">
-    <button class="tog ab" onclick="setMode('both')">Ambos</button>
-    <button class="tog" onclick="setMode('base')">Base</button>
-    <button class="tog" onclick="setMode('alt')">Sin Ronaldo</button>
-  </div>
-  <div class="leg" id="probLeg"></div>
-  <div id="probBars"></div>
-  <div class="sh" style="margin-top:20px"><span class="sh-title">Partidos Colombia</span><span class="sh-sub">Hora Colombia · Grupo K</span></div>
+  <div class="sh"><span class="sh-title">Partidos Colombia</span><span class="sh-sub">Hora Colombia · Grupo K</span></div>
   <div class="ml">
     <div class="mc col"><div class="mc-b"><div class="mc-t"><div class="mc-f">🇨🇴</div><div class="mc-n co">Colombia</div></div><div class="mc-c"><div class="mc-sc">vs</div><div class="mc-st">PROX</div></div><div class="mc-t r"><div class="mc-f">🇺🇿</div><div class="mc-n">Uzbekistán</div></div></div><div class="mc-foot"><span>Mié 17 jun · <b style="color:var(--gold)">9:00 PM COL</b> · Azteca, CDMX</span><span id="cd_uzb" style="font-family:'Oswald',sans-serif;font-size:11px;color:#f5c518;letter-spacing:1px;font-weight:600"></span><div style="display:flex;gap:3px"><span class="ch-tag ch-c">Caracol</span><span class="ch-tag ch-r">RCN</span><span class="ch-tag ch-d">DSports</span><span class="ch-tag ch-di">Disney+</span></div></div></div>
     <div class="mc col"><div class="mc-b"><div class="mc-t"><div class="mc-f">🇨🇴</div><div class="mc-n co">Colombia</div></div><div class="mc-c"><div class="mc-sc">vs</div><div class="mc-st">PROX</div></div><div class="mc-t r"><div class="mc-f">🇨🇩</div><div class="mc-n">DR Congo</div></div></div><div class="mc-foot"><span>Mar 23 jun · <b style="color:var(--gold)">9:00 PM COL</b> · Akron, Guadalajara</span><span id="cd_congo" style="font-family:'Oswald',sans-serif;font-size:11px;color:#f5c518;letter-spacing:1px;font-weight:600"></span><div style="display:flex;gap:3px"><span class="ch-tag ch-c">Caracol</span><span class="ch-tag ch-r">RCN</span><span class="ch-tag ch-d">DSports</span></div></div></div>
@@ -331,7 +323,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 </div>
 
 <!-- GRUPOS -->
-<div class="panel" id="panel-grupos">
+<div class="panel active" id="panel-grupos">
   <div id="apiStatusBar2" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:7px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text2)">
     <div id="apiStatusDot2" style="width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;animation:blink 1.4s ease infinite"></div>
     <span id="apiStatusText2">Cargando tabla de posiciones...</span>
@@ -358,6 +350,29 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 <div class="panel" id="panel-canales">
   <div class="sh"><span class="sh-title">Canales y partidos</span><span class="sh-sub">Qué canal pasa cada partido</span></div>
   <div class="cg-grid" id="canalesGrid"></div>
+</div>
+
+
+<!-- PROBABILIDADES -->
+<div class="panel" id="panel-probabilidades">
+  <div class="sh" style="margin-top:4px">
+    <span class="sh-title">Probabilidades</span>
+    <span class="sh-sub">Opta · 10,000 simulaciones · jun 2026</span>
+  </div>
+  <div class="prob-cards" id="pCards"></div>
+  <div class="tog-row">
+    <button class="tog ab" onclick="setMode('both')">Ambos</button>
+    <button class="tog" onclick="setMode('base')">Base</button>
+    <button class="tog" onclick="setMode('alt')">Sin Ronaldo</button>
+  </div>
+  <div class="leg" id="probLeg"></div>
+  <div id="probBars"></div>
+  <div class="sh" style="margin-top:24px"><span class="sh-title">¿Qué significa?</span></div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px 18px;font-size:13px;color:var(--text2);line-height:1.7">
+    <p>Estas probabilidades están calculadas por <b style="color:var(--text)">Opta</b> con 10,000 simulaciones del torneo basadas en el rendimiento histórico de cada selección, el fixture del Grupo K y los datos de xG (expected goals).</p>
+    <p style="margin-top:8px">El escenario <b style="color:var(--gold)">"Sin Ronaldo titular"</b> refleja el impacto estadístico de que Portugal juegue sin Cristiano Ronaldo como titular, basado en los datos de Portugal sin él en amistosos recientes.</p>
+    <p style="margin-top:8px">Fuente: <b style="color:var(--text)">theanalyst.com</b> · Opta Supercomputer · Actualizado junio 2026</p>
+  </div>
 </div>
 
 </div>
@@ -541,8 +556,8 @@ document.getElementById('canalesGrid').innerHTML=canalData.map(c=>{
 }).join('');
 
 function switchTab(t){
-  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['colombia','grupos','horarios','canales'][i]===t));
-  ['colombia','grupos','horarios','canales'].forEach(id=>document.getElementById('panel-'+id).classList.toggle('active',id===t));
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['grupos','colombia','horarios','canales','probabilidades'][i]===t));
+  ['grupos','colombia','horarios','canales','probabilidades'].forEach(id=>document.getElementById('panel-'+id).classList.toggle('active',id===t));
 }
 
 function updateClock(){
@@ -622,8 +637,13 @@ const COL_MATCHES = {
   por:   new Date('2026-06-27T23:30:00Z'), // 27 jun 6:30PM COL
 };
 
-function fmtColCD(diff) {
-  if(diff <= 0) return '🟢 EN JUEGO';
+// Duración estimada del partido: 120 minutos (con descuento)
+const MATCH_DURATION = 120 * 60 * 1000;
+
+function fmtColCD(matchTime, diff) {
+  const elapsed = Date.now() - matchTime;
+  if(diff <= 0 && elapsed < MATCH_DURATION) return '🟢 EN JUEGO';
+  if(diff <= 0 && elapsed >= MATCH_DURATION) return '✅ TERMINADO';
   const pad = n => String(n).padStart(2,'0');
   const d = Math.floor(diff / 864e5);
   const h = Math.floor((diff % 864e5) / 36e5);
@@ -638,9 +658,9 @@ function updateColCD() {
   const elUzb   = document.getElementById('cd_uzb');
   const elCongo = document.getElementById('cd_congo');
   const elPor   = document.getElementById('cd_por');
-  if(elUzb)   elUzb.textContent   = fmtColCD(COL_MATCHES.uzb - now);
-  if(elCongo) elCongo.textContent = fmtColCD(COL_MATCHES.congo - now);
-  if(elPor)   elPor.textContent   = fmtColCD(COL_MATCHES.por - now);
+  if(elUzb)   elUzb.textContent   = fmtColCD(COL_MATCHES.uzb.getTime(),   COL_MATCHES.uzb - now);
+  if(elCongo) elCongo.textContent = fmtColCD(COL_MATCHES.congo.getTime(), COL_MATCHES.congo - now);
+  if(elPor)   elPor.textContent   = fmtColCD(COL_MATCHES.por.getTime(),   COL_MATCHES.por - now);
 }
 setInterval(updateColCD, 1000);
 updateColCD();
@@ -899,10 +919,12 @@ async function loadLiveMatches() {
       const statusState = comp.status?.type?.state || '';
 
       // Valores exactos que devuelve ESPN
-      const status = (statusName === 'STATUS_FINAL' || statusName === 'STATUS_FULL_TIME')
+      const status = (statusName === 'STATUS_FINAL' || statusName === 'STATUS_FULL_TIME'
+                      || statusState === 'post')
                      ? 'FINISHED'
                    : (statusName === 'STATUS_IN_PROGRESS' || statusName === 'STATUS_HALFTIME'
-                      || statusState === 'in')
+                      || statusName === 'STATUS_FIRST_HALF' || statusName === 'STATUS_SECOND_HALF'
+                      || statusName === 'STATUS_HALF_TIME' || statusState === 'in')
                      ? 'IN_PLAY'
                    : 'SCHEDULED';
 
@@ -934,9 +956,15 @@ async function loadLiveMatches() {
     console.log('[ROBERT NEWS] Normalized:', matches.map(m => m.homeTeam.name + ' vs ' + m.awayTeam.name + ' ' + m.status));
 
     const liveMatches  = matches.filter(m => m.status === 'IN_PLAY');
+    const finishedMatches = matches.filter(m => m.status === 'FINISHED');
     const now          = new Date();
     const todayMatches = matches.filter(m => Math.abs(now - new Date(m.utcDate)) < 86400000);
-    const displayMatches = liveMatches.length > 0 ? liveMatches : todayMatches.slice(0, 8);
+    // Mostrar: en vivo primero, luego terminados de hoy, luego próximos de hoy
+    const displayMatches = [...liveMatches, 
+      ...finishedMatches.filter(m => Math.abs(now - new Date(m.utcDate)) < 86400000),
+      ...todayMatches.filter(m => m.status === 'SCHEDULED')
+    ].slice(0, 8);
+    console.log('[ROBERT NEWS] Live:', liveMatches.length, 'Finished:', finishedMatches.length, 'Today:', todayMatches.length);
 
     if(displayMatches.length > 0) {
       const container = document.getElementById('liveMatchesContainer');
@@ -948,8 +976,21 @@ async function loadLiveMatches() {
       if(section) section.style.display = 'none';
     }
 
-    // Actualizar tabla de grupos con resultados de hoy
-    if(matches.length > 0) updateScheduleWithResults(matches);
+    // Actualizar tabla de grupos con TODOS los resultados (hoy + anteriores)
+    // Traer también días anteriores para la tabla completa
+    const pastDates = ['20260611','20260612','20260613','20260614','20260615','20260616','20260617'];
+    const pastResults = await Promise.all(
+      pastDates.map(d => espnFetch('/scoreboard?dates='+d).catch(()=>({events:[]})))
+    );
+    const pastEvents = [];
+    const seenPast = new Set();
+    pastResults.forEach(r => (r.events||[]).forEach(e => {
+      if(!seenPast.has(e.id)){ seenPast.add(e.id); pastEvents.push(e); }
+    }));
+    const pastMatches = pastEvents.map(normalizeESPN);
+    const allMatchesForTable = [...pastMatches, ...matches];
+    console.log('[ROBERT NEWS] Past matches for table:', pastMatches.length);
+    if(allMatchesForTable.length > 0) updateScheduleWithResults(allMatchesForTable);
 
     // Intentar traer standings directamente
     try {
@@ -1061,7 +1102,7 @@ function updateScheduleWithResults(matches) {
 
 // Cargar inmediatamente y luego cada 60 segundos
 loadLiveMatches();
-setInterval(loadLiveMatches, 90000);
+setInterval(loadLiveMatches, 60000);
 
 </script>
 
