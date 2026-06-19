@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -970,8 +971,8 @@ async function loadLiveMatches() {
       };
     }
 
-    const matches = events.map(normalizeWC26);
-    console.log('[ROBERT NEWS] Normalized:', matches.map(m => m.homeTeam.name + ' vs ' + m.awayTeam.name + ' ' + m.status));
+    const matchesNorm = events.map(normalizeWC26);
+    console.log('[ROBERT NEWS] Normalized:', matchesNorm.map(m => m.homeTeam.name + ' vs ' + m.awayTeam.name + ' ' + m.status));
 
     const liveMatches  = matches.filter(m => m.status === 'IN_PLAY');
     const finishedMatches = matches.filter(m => m.status === 'FINISHED');
