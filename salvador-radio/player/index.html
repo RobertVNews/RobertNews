@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b12">
+<meta name="description" content="SALVADOR ENTREGAS — la radio del colegio, en vivo">
+<title>SALVADOR ENTREGAS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* ====================================================================
+     CONFIGURACION — pega aqui los datos de tu estacion Zeno.fm
+     1) STREAM_URL: en Zeno Tools -> tu estacion -> "Stream URL" (mp3).
+     2) NOWPLAYING_URL: opcional. Endpoint de metadata de Zeno para "ahora suena".
+        Dejalo vacio ("") si no lo tienes; la web funciona igual.
+     3) REQUEST_WHATSAPP: numero (con codigo pais, sin +) para peticiones por WhatsApp.
+        Ej: "573001234567". Vacio ("") oculta el boton.
+     ==================================================================== */
+
+  :root{
+    --ink:#0b0b12; --panel:#15151f; --card:#1c1c28; --line:#2c2c3a;
+    --brand:#e5172b; --gold:#e3c766; --text:#ececf2; --muted:#9a9aae;
+    color-scheme: dark;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+  body{
+    font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1100px 560px at 50% -12%, rgba(229,23,43,.20), transparent 55%),
+      radial-gradient(760px 420px at 100% 108%, rgba(227,199,102,.08), transparent 45%),
+      var(--ink);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{
+    min-height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding-block: calc(env(safe-area-inset-top,0px) + 28px) calc(env(safe-area-inset-bottom,0px) + 28px);
+    padding-inline:16px;
+    gap:22px;
+  }
+  .card{
+    width:100%; max-width:420px;
+    background:linear-gradient(180deg, var(--card), var(--panel));
+    border:1px solid var(--line); border-radius:22px;
+    padding:26px 22px 24px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45);
+    text-align:center;
+  }
+  .crest{
+    width:96px; height:96px; margin:0 auto 14px; display:block;
+    border-radius:50%; object-fit:cover;
+    border:2px solid var(--gold);
+    background:var(--panel);
+  }
+  .live{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--line); background:rgba(0,0,0,.25);
+    padding:.36rem .7rem; border-radius:999px; margin-bottom:14px;
+  }
+  .live .dot{ width:9px; height:9px; border-radius:50%; background:var(--muted); }
+  .live.on{ color:#ff5a6a; border-color:rgba(229,23,43,.45); }
+  .live.on .dot{ background:var(--brand); animation:pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.35; transform:scale(.7); } }
+
+  h1{
+    font-family:"Anton", Impact, "Arial Narrow Bold", sans-serif;
+    font-weight:400; letter-spacing:.02em; line-height:.98;
+    font-size:2.05rem; margin:2px 0 4px; text-wrap:balance;
+  }
+  .tagline{ color:var(--muted); font-size:.92rem; margin:0 0 20px; }
+
+  .now{
+    background:rgba(0,0,0,.28); border:1px solid var(--line); border-radius:14px;
+    padding:12px 14px; margin:0 0 20px; min-height:58px;
+    display:flex; flex-direction:column; justify-content:center; gap:2px;
+  }
+  .now .k{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); }
+  .now .v{ font-size:1rem; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .play{
+    width:84px; height:84px; border-radius:50%; margin:0 auto 6px;
+    display:flex; align-items:center; justify-content:center;
+    border:none; cursor:pointer;
+    background:var(--brand); color:#fff;
+    box-shadow:0 10px 30px rgba(229,23,43,.45);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .play:hover{ transform:scale(1.05); }
+  .play:active{ transform:scale(.96); }
+  .play:focus-visible{ outline:3px solid var(--gold); outline-offset:3px; }
+  .play svg{ width:38px; height:38px; display:block; }
+  .play .pause{ display:none; }
+  .play.playing .play-i{ display:none; }
+  .play.playing .pause{ display:block; }
+  .hint{ color:var(--muted); font-size:.82rem; margin:8px 0 18px; min-height:1.1em; }
+
+  .vol{ display:flex; align-items:center; gap:10px; margin:0 6px 6px; }
+  .vol svg{ width:20px; height:20px; color:var(--muted); flex:none; }
+  input[type=range]{ width:100%; accent-color:var(--brand); }
+
+  .req{
+    display:inline-flex; align-items:center; gap:8px;
+    margin-top:16px; padding:.6rem 1.05rem; border-radius:999px;
+    border:1px solid var(--line); background:transparent; color:var(--text);
+    font-size:.9rem; font-weight:600; text-decoration:none; cursor:pointer;
+  }
+  .req:hover{ border-color:var(--gold); color:var(--gold); }
+
+  .foot{ color:var(--muted); font-size:.76rem; text-align:center; }
+  audio{ display:none; }
+  @media (prefers-reduced-motion: reduce){ .live.on .dot{ animation:none; } .play{ transition:none; } }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <img class="crest" src="../emisora/assets/escudo-colegio-sm.jpg" alt="Escudo del colegio"
+           onerror="this.style.display='none'">
+      <div class="live" id="liveBadge"><span class="dot"></span><span id="liveText">Conectando…</span></div>
+      <h1>SALVADOR ENTREGAS</h1>
+      <p class="tagline">La voz del colegio · Barranquilla</p>
+
+      <div class="now">
+        <span class="k">Ahora suena</span>
+        <span class="v" id="nowPlaying">—</span>
+      </div>
+
+      <button class="play" id="playBtn" aria-label="Reproducir">
+        <svg class="play-i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <p class="hint" id="hint">Toca para escuchar en vivo</p>
+
+      <div class="vol">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z"/></svg>
+        <input type="range" id="vol" min="0" max="1" step="0.01" value="0.9" aria-label="Volumen">
+      </div>
+
+      <a class="req" id="reqBtn" hidden>💬 Pedir una canción</a>
+    </section>
+    <p class="foot">Emisora escolar · en vivo por internet</p>
+  </main>
+
+  <audio id="audio" preload="none" playsinline></audio>
+
+<script>
+  // ===== CONFIGURACION (edita estos tres valores) =====
+  var STREAM_URL     = "PEGA_AQUI_TU_STREAM_URL_DE_ZENO"; // ej: https://stream.zeno.fm/xxxxxxxx
+  var NOWPLAYING_URL = ""; // opcional (endpoint de metadata); vacio = usa tagline fija
+  var REQUEST_WHATSAPP = ""; // ej: "573001234567"; vacio = oculta el boton
+  // =====================================================
+
+  var audio = document.getElementById("audio");
+  var playBtn = document.getElementById("playBtn");
+  var hint = document.getElementById("hint");
+  var badge = document.getElementById("liveBadge");
+  var liveText = document.getElementById("liveText");
+  var np = document.getElementById("nowPlaying");
+  var vol = document.getElementById("vol");
+  var configured = STREAM_URL && STREAM_URL.indexOf("PEGA_AQUI") === -1;
+
+  function setLive(on){
+    badge.classList.toggle("on", !!on);
+    liveText.textContent = on ? "En vivo" : "Fuera del aire";
+  }
+
+  // Volumen
+  audio.volume = parseFloat(vol.value);
+  vol.addEventListener("input", function(){ audio.volume = parseFloat(vol.value); });
+
+  // Play / pause
+  playBtn.addEventListener("click", function(){
+    if(!configured){
+      hint.textContent = "Falta pegar la URL del stream de Zeno en el codigo.";
+      return;
+    }
+    if(audio.paused){
+      // recargar el stream en vivo (evita quedarse en un punto viejo)
+      audio.src = STREAM_URL + (STREAM_URL.indexOf("?")>-1 ? "&" : "?") + "_=" + Date.now();
+      var p = audio.play();
+      if(p && p.catch) p.catch(function(){ hint.textContent = "No se pudo reproducir. Reintenta."; });
+    } else {
+      audio.pause();
+    }
+  });
+
+  audio.addEventListener("playing", function(){
+    playBtn.classList.add("playing");
+    playBtn.setAttribute("aria-label","Pausar");
+    hint.textContent = "Sonando…";
+    setLive(true);
+  });
+  audio.addEventListener("pause", function(){
+    playBtn.classList.remove("playing");
+    playBtn.setAttribute("aria-label","Reproducir");
+    hint.textContent = "En pausa";
+  });
+  audio.addEventListener("waiting", function(){ hint.textContent = "Cargando…"; });
+  audio.addEventListener("error", function(){
+    playBtn.classList.remove("playing");
+    hint.textContent = "Sin senal ahora mismo.";
+    setLive(false);
+  });
+
+  // "Ahora suena" — si hay endpoint de metadata JSON con {title} o {streamTitle}
+  function pollNowPlaying(){
+    if(!NOWPLAYING_URL){ np.textContent = "SALVADOR ENTREGAS en vivo"; return; }
+    fetch(NOWPLAYING_URL, { cache:"no-store" })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        var t = (d && (d.title || d.streamTitle || d.now_playing || (d.currentTrack && d.currentTrack.title))) || "";
+        np.textContent = t || "SALVADOR ENTREGAS en vivo";
+      })
+      .catch(function(){ /* deja el ultimo valor */ });
+  }
+  pollNowPlaying();
+  if(NOWPLAYING_URL) setInterval(pollNowPlaying, 15000);
+
+  // Estado inicial del "en vivo": desconocido hasta que se reproduzca
+  setLive(false);
+  if(!configured){ hint.textContent = "Pendiente: pega la URL del stream de Zeno."; }
+
+  // Boton de peticiones por WhatsApp
+  if(REQUEST_WHATSAPP){
+    var rb = document.getElementById("reqBtn");
+    rb.hidden = false;
+    rb.href = "https://wa.me/" + REQUEST_WHATSAPP + "?text=" +
+      encodeURIComponent("Hola SALVADOR ENTREGAS, me gustaria pedir una cancion: ");
+    rb.target = "_blank"; rb.rel = "noopener";
+  }
+</script>
+</body>
+</html>
