@@ -11,9 +11,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap">
 <style>
   /* ====================================================================
-     CONFIGURACION — pega aqui los datos de tu estacion Zeno.fm
-     1) STREAM_URL: en Zeno Tools -> tu estacion -> "Stream URL" (mp3).
-     2) NOWPLAYING_URL: opcional. Endpoint de metadata de Zeno para "ahora suena".
+     CONFIGURACION — pega aqui los datos de tu estacion de radio (Caster.fm, Primcast, etc.)
+     1) STREAM_URL: en el panel del servicio -> tu estacion -> "Stream URL" (mp3).
+     2) NOWPLAYING_URL: opcional. Endpoint de metadata del servicio para "ahora suena".
         Dejalo vacio ("") si no lo tienes; la web funciona igual.
      3) REQUEST_WHATSAPP: numero (con codigo pais, sin +) para peticiones por WhatsApp.
         Ej: "573001234567". Vacio ("") oculta el boton.
@@ -151,7 +151,7 @@
 
 <script>
   // ===== CONFIGURACION (edita estos tres valores) =====
-  var STREAM_URL     = "PEGA_AQUI_TU_STREAM_URL_DE_ZENO"; // ej: https://stream.zeno.fm/xxxxxxxx
+  var STREAM_URL     = "PEGA_AQUI_TU_STREAM_URL";  // URL MP3 del servicio (Caster.fm, Primcast, etc.)
   var NOWPLAYING_URL = ""; // opcional (endpoint de metadata); vacio = usa tagline fija
   var REQUEST_WHATSAPP = ""; // ej: "573001234567"; vacio = oculta el boton
   // =====================================================
@@ -177,7 +177,7 @@
   // Play / pause
   playBtn.addEventListener("click", function(){
     if(!configured){
-      hint.textContent = "Falta pegar la URL del stream de Zeno en el codigo.";
+      hint.textContent = "Falta pegar la URL del stream en el codigo.";
       return;
     }
     if(audio.paused){
@@ -224,7 +224,7 @@
 
   // Estado inicial del "en vivo": desconocido hasta que se reproduzca
   setLive(false);
-  if(!configured){ hint.textContent = "Pendiente: pega la URL del stream de Zeno."; }
+  if(!configured){ hint.textContent = "Pendiente: pega la URL del stream."; }
 
   // Boton de peticiones por WhatsApp
   if(REQUEST_WHATSAPP){
