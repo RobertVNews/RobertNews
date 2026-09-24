@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07070a">
+<meta name="description" content="SALVADOR ENTREGAS — radio del colegio en vivo">
+<title>SALVADOR ENTREGAS · En vivo</title>
+<!-- CSS propio (sin Tailwind CDN: más rápido y no falla si CDN bloquea) -->
+<style>
+  :root{ --ink:#07070a; --panel:#101014; --card:#16161c; --line:#2a2a33; --brand:#e5172b; --gold:#e3c766; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color:#e5e5e5; background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(229,23,43,.18), transparent 55%),
+      radial-gradient(800px 400px at 100% 100%, rgba(227,199,102,.08), transparent 40%),
+      var(--ink);
+    min-height:100vh; -webkit-tap-highlight-color:transparent;
+  }
+  .font-display{ font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; letter-spacing:.04em; }
+  .font-mono{ font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+  .max-w-3xl{ max-width:48rem; margin-left:auto; margin-right:auto; }
+  .px-4{ padding-left:1rem; padding-right:1rem; }
+  .py-3{ padding-top:.75rem; padding-bottom:.75rem; }
+  .py-6{ padding-top:1.5rem; padding-bottom:1.5rem; }
+  .mt-2{ margin-top:.5rem; } .mt-4{ margin-top:1rem; } .mt-5{ margin-top:1.25rem; } .mt-6{ margin-top:1.5rem; } .mt-8{ margin-top:2rem; }
+  .mb-2{ margin-bottom:.5rem; } .mb-3{ margin-bottom:.75rem; } .mb-4{ margin-bottom:1rem; } .mb-5{ margin-bottom:1.25rem; }
+  .text-center{ text-align:center; }
+  .truncate{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .flex{ display:flex; } .items-center{ align-items:center; } .justify-between{ justify-content:space-between; }
+  .gap-2{ gap:.5rem; } .gap-3{ gap:.75rem; } .min-w-0{ min-width:0; } .shrink-0{ flex-shrink:0; }
+  .hidden{ display:none !important; }
+  header{ border-bottom:1px solid rgba(42,42,51,.8); background:rgba(0,0,0,.3); position:sticky; top:0; z-index:30; backdrop-filter:blur(8px); }
+  .rounded-full{ border-radius:999px; }
+  .rounded-2xl{ border-radius:1rem; } .rounded-3xl{ border-radius:1.5rem; }
+  .border{ border:1px solid var(--line); }
+  .bg-panel{ background:var(--panel); } .bg-card{ background:rgba(22,22,28,.92); }
+  .text-white{ color:#fff; } .text-brand{ color:var(--brand); }
+  .text-neutral-400{ color:#a3a3a3; } .text-neutral-500{ color:#737373; } .text-neutral-600{ color:#525252; } .text-neutral-700{ color:#404040; }
+  .pulse-live{animation:pulseLive 1.6s ease-in-out infinite;}
+  @keyframes pulseLive{
+    0%,100%{box-shadow:0 0 0 0 rgba(229,23,43,.55)}
+    50%{box-shadow:0 0 0 12px rgba(229,23,43,0)}
+  }
+  .cover-glow{box-shadow:0 20px 60px rgba(0,0,0,.55), 0 0 40px rgba(229,23,43,.15);}
+  .eq{ display:flex; align-items:flex-end; height:1.25rem; }
+  .eq span{display:inline-block;width:3px;margin:0 1px;background:#e5172b;border-radius:2px;animation:eq 1s ease-in-out infinite;}
+  .eq span:nth-child(1){height:8px} .eq span:nth-child(2){height:14px;animation-delay:.15s}
+  .eq span:nth-child(3){height:10px;animation-delay:.3s} .eq span:nth-child(4){height:16px;animation-delay:.1s}
+  .eq span:nth-child(5){height:9px;animation-delay:.25s}
+  @keyframes eq{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
+  .eq.off span{animation:none;opacity:.35;transform:scaleY(.4)}
+  audio{width:100%; accent-color:#e5172b;}
+  .wave-banner{ display:flex; align-items:flex-end; justify-content:center; gap:4px; height:36px; margin:0 auto 8px; }
+  .wave-banner i{ display:block; width:5px; border-radius:999px; background:linear-gradient(180deg,#e5172b,#e3c766); animation:waveBar 1s ease-in-out infinite; opacity:.85; }
+  .wave-banner i:nth-child(1){ height:12px } .wave-banner i:nth-child(2){ height:22px; animation-delay:.1s }
+  .wave-banner i:nth-child(3){ height:32px; animation-delay:.2s } .wave-banner i:nth-child(4){ height:18px; animation-delay:.3s }
+  .wave-banner i:nth-child(5){ height:28px; animation-delay:.15s } .wave-banner i:nth-child(6){ height:14px; animation-delay:.25s }
+  .wave-banner i:nth-child(7){ height:24px; animation-delay:.05s }
+  .wave-banner.off i{ animation:none; opacity:.25; height:8px !important; }
+  @keyframes waveBar{ 0%,100%{ transform:scaleY(.45) } 50%{ transform:scaleY(1) } }
+  #mainPlayer.live-hidden-controls{ position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+  #mainListenStatus.public-quiet{ opacity:0; height:0; overflow:hidden; margin:0; }
+  .school-crest{
+    display:inline-block; border-radius:50%; object-fit:cover; object-position:center;
+    background:#101014; border:2px solid rgba(227,199,102,.45);
+    box-shadow:0 0 0 3px rgba(229,23,43,.18), 0 6px 20px rgba(0,0,0,.45);
+    flex-shrink:0;
+  }
+  .school-crest-sm{ width:44px; height:44px; }
+  .school-crest-xl{ width:120px; height:120px; }
+  .player-card{ border:1px solid var(--line); border-radius:1.5rem; background:rgba(22,22,28,.92); padding:1.5rem; text-align:center; }
+  .badge{ display:flex; align-items:center; gap:.5rem; padding:.35rem .75rem; border-radius:999px; border:1px solid var(--line); background:var(--panel); }
+  .dot{ width:10px; height:10px; border-radius:50%; background:#525252; }
+  .cover-box{ position:relative; margin:0 auto 1.25rem; width:10rem; height:10rem; }
+  @media (min-width:640px){ .cover-box{ width:12rem; height:12rem; } .player-card{ padding:2rem; } }
+  .cover-box .ph{ position:absolute; inset:0; border-radius:1rem; border:1px dashed var(--line); display:flex; align-items:center; justify-content:center; color:#404040; font-size:2.25rem; }
+  .cover-box img{ position:relative; width:100%; height:100%; border-radius:1rem; object-fit:cover; }
+  .title{ font-size:1.875rem; color:#fff; line-height:1.15; margin:0; }
+  @media (min-width:640px){ .title{ font-size:2.25rem; } }
+  .level-meter{ height:14px; border-radius:8px; background:#0A0A0C; border:1px solid #2a2a33; overflow:hidden; margin-top:.75rem; }
+  #mainLevelFill{ height:100%; width:0%; background:linear-gradient(90deg,#22c55e 0%,#eab308 55%,#e5172b 100%); transition:width 40ms linear; border-radius:7px; }
+  details{ border:1px solid var(--line); border-radius:1rem; background:rgba(16,16,20,.6); padding:1rem; margin-top:1rem; }
+  summary{ cursor:pointer; font-weight:600; color:#d4d4d4; }
+  input{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:.75rem; padding:.65rem .75rem; color:#fff; font-size:.875rem; margin-top:.5rem; }
+  button.primary{ width:100%; margin-top:.75rem; background:var(--brand); color:#fff; border:0; border-radius:.75rem; padding:.85rem 1rem; font-weight:600; font-size:.875rem; cursor:pointer; }
+  footer{ border-top:1px solid var(--line); margin-top:2rem; padding:1.5rem 0; font-size:.75rem; color:#737373; }
+  .grid-2{ display:grid; gap:.75rem; }
+  @media (min-width:640px){ .grid-2{ grid-template-columns:1fr 1fr; } }
+  #bootStatus{ text-align:center; font-size:.7rem; color:#525252; margin-top:.5rem; font-family:ui-monospace,monospace; }
+</style>
+<link rel="icon" href="assets/escudo-colegio-sm.jpg" type="image/jpeg">
+<link rel="preload" href="assets/escudo-colegio-sm.jpg" as="image">
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header>
+    <div class="max-w-3xl px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <img class="school-crest school-crest-sm school-logo" src="assets/escudo-colegio-sm.jpg" alt="Escudo" width="44" height="44" decoding="async">
+        <div class="min-w-0">
+          <h1 id="stationName" class="font-display text-white" style="font-size:1.5rem;margin:0;line-height:1">SALVADOR ENTREGAS</h1>
+          <p id="stationTagline" class="font-mono text-neutral-500 truncate" style="font-size:11px;margin:.15rem 0 0">La voz del colegio</p>
+        </div>
+      </div>
+      <div class="badge shrink-0" id="onairBadge">
+        <span id="onairDot" class="dot"></span>
+        <span id="onairText" class="font-mono" style="font-size:10px;letter-spacing:.12em;color:#737373">OFF AIR</span>
+      </div>
+    </div>
+    <div id="publicTicker" class="hidden text-center font-mono" style="font-size:12px;color:var(--gold);background:rgba(227,199,102,.1);border-top:1px solid rgba(227,199,102,.2);padding:.5rem 1rem"></div>
+  </header>
+
+  <main class="max-w-3xl px-4 py-6">
+    <section>
+      <div id="liveHero" class="hidden" aria-hidden="true">
+        <div class="wave-banner" id="liveWaveTop"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p id="liveShowInfo" class="hidden">SALVADOR ENTREGAS</p>
+      </div>
+
+      <div id="playerBlock" class="player-card">
+        <img class="school-crest school-crest-xl school-logo" src="assets/escudo-colegio-sm.jpg" alt="Escudo" width="120" height="120" decoding="async" style="margin:0 auto 1rem;display:block">
+        <div class="wave-banner off" id="publicWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+        <div class="cover-box">
+          <img id="npCover" alt="" class="cover-glow hidden" style="background:var(--panel)">
+          <div id="npCoverPlaceholder" class="ph font-display">SE</div>
+        </div>
+
+        <div class="flex items-center justify-between gap-2" style="justify-content:center;margin-bottom:.5rem">
+          <div id="eq" class="eq off"><span></span><span></span><span></span><span></span><span></span></div>
+          <span id="playerModeLabel" class="font-mono text-neutral-500" style="font-size:10px;letter-spacing:.14em;text-transform:uppercase">En espera</span>
+        </div>
+
+        <h2 id="npTitle" class="font-display title">En espera</h2>
+        <p id="npArtist" class="text-neutral-400" style="margin:.35rem 0 0">SALVADOR ENTREGAS</p>
+        <p id="npShow" class="font-mono text-neutral-600" style="font-size:12px;margin-top:.5rem"></p>
+
+        <div id="mainPlayerWrap" style="margin-top:1.25rem;text-align:left;position:relative">
+          <!-- autoplay al abrir; sin overlay "toca para oír" -->
+          <audio id="micPlayer" playsinline webkit-playsinline preload="none" style="display:none" aria-hidden="true"></audio>
+          <audio id="mainPlayer" autoplay playsinline webkit-playsinline preload="auto"
+            style="width:100%;min-height:36px" controls></audio>
+          <div class="level-meter"><div id="mainLevelFill"></div></div>
+          <p id="mainLevelVal" class="font-mono text-neutral-500 text-center" style="font-size:10px;margin:.35rem 0 0">0%</p>
+          <p id="mainListenStatus" class="font-mono text-neutral-500 text-center public-quiet" style="font-size:11px;margin-top:.5rem"></p>
+          <!-- sin banner «Escuchar»: autoplay + reintentos silenciosos -->
+          <button id="mainPlayBtn" type="button" class="hidden" aria-hidden="true" tabindex="-1" style="display:none!important"></button>
+          <p id="bootStatus">Listo</p>
+          <button id="forceListenBtn" type="button" style="display:none;margin:.75rem auto 0;padding:.85rem 1.5rem;border:0;border-radius:999px;background:#e11d48;color:#fff;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 28px rgba(0,0,0,.45)">▶ Toca para oír la radio</button>
+        </div>
+
+        <div id="cityPlayerWrap" class="hidden"><audio id="cityPlayer" playsinline></audio><p id="cityListenStatus" class="hidden"></p><button id="cityPlayBtn" type="button" class="hidden"></button></div>
+        <div id="livePlayerWrap" class="hidden"><audio id="livePlayer" playsinline></audio><p id="liveListenStatus" class="hidden"></p><button id="liveReconnectBtn" type="button" class="hidden"></button></div>
+        <div id="mp3PlayerWrap" class="hidden"><audio id="mp3Player" playsinline></audio></div>
+        <div id="youtubePlayerWrap" class="hidden" style="margin-top:1.25rem;border:1px solid rgba(255,0,51,.45);border-radius:.75rem;overflow:hidden;text-align:left;background:rgba(0,0,0,.55)">
+          <p class="font-mono" style="font-size:11px;color:#ff3355;padding:.75rem .75rem .25rem">YOUTUBE · al aire</p>
+          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#000;min-height:200px">
+            <div id="ytPlayerHost" style="width:100%;height:100%;min-height:200px"></div>
+            <button id="ytListenBtn" type="button" class="hidden" style="position:absolute;inset:0;z-index:5;margin:auto;width:min(90%,280px);height:56px;border:0;border-radius:999px;background:#ff0033;color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.5)">▶ Toca para oír</button>
+          </div>
+          <p id="ytHint" class="font-mono text-neutral-500" style="font-size:11px;padding:.5rem .75rem .75rem;margin:0">Si no suena, pulsa el botón rojo (el navegador bloquea el autoplay).</p>
+        </div>
+        <div id="spotifyEmbedWrap" class="hidden" style="margin-top:1.25rem;border:1px solid rgba(29,185,84,.5);border-radius:.75rem;overflow:hidden;text-align:left;background:rgba(0,0,0,.4)">
+          <p class="font-mono" style="font-size:11px;color:#1DB954;padding:.75rem .75rem .25rem">SPOTIFY · al aire</p>
+          <iframe id="spotifyEmbed" style="width:100%;height:152px;border:0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Tema al aire"></iframe>
+        </div>
+        <p id="idleHint" class="text-neutral-500" style="margin:1.25rem auto 0;max-width:28rem;font-size:.875rem;line-height:1.5">
+          Cuando la emisora esté al aire, sonará aquí automáticamente.
+        </p>
+      </div>
+    </section>
+
+    <details>
+      <summary class="font-display">Pide una canción</summary>
+      <p class="text-neutral-500" style="font-size:.875rem;margin:.5rem 0 .75rem">Escribe el nombre. El control decide si la pone.</p>
+      <form id="requestForm" class="grid-2">
+        <input required id="reqName" type="text" placeholder="Tu nombre">
+        <input required id="reqSong" type="text" placeholder="Canción">
+        <input id="reqArtist" type="text" placeholder="Artista (opcional)">
+        <input id="reqNote" type="text" placeholder="Dedicatoria (opcional)">
+        <button type="submit" class="primary" style="grid-column:1/-1">Enviar pedido</button>
+      </form>
+      <p id="reqStatus" class="font-mono hidden" style="font-size:12px;margin-top:.75rem"></p>
+    </details>
+
+    <details>
+      <summary class="font-display">Programación</summary>
+      <div id="scheduleList" style="margin-top:.75rem;font-size:.875rem">
+        <p class="text-neutral-600" style="font-size:12px">Sin programación publicada.</p>
+      </div>
+    </details>
+  </main>
+
+  <footer>
+    <div class="max-w-3xl px-4 flex items-center justify-between gap-3" style="flex-wrap:wrap">
+      <div class="flex items-center gap-3">
+        <img class="school-crest school-crest-sm school-logo" src="assets/escudo-colegio-sm.jpg" alt="" width="44" height="44" loading="lazy" decoding="async">
+        <div>
+          <p id="footerSchool" class="font-display text-white" style="font-size:1.1rem;margin:0">SALVADOR ENTREGAS</p>
+          <p id="footerAddress" style="margin:0">Barranquilla</p>
+        </div>
+      </div>
+      <div class="font-mono">
+        <span id="footerContact"></span><br>
+        <span id="footerSocial"></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts livianos: sin Firebase/HLS/Tailwind (cargan más y a veces bloquean el colegio) -->
+  <script src="config.js?v=se99"></script>
+  <script src="sync.js?v=se99"></script>
+  <script src="mp3-library.js?v=se99"></script>
+  <script src="http-live.js?v=se99"></script>
+  <script src="live-stream.js?v=se99" defer></script>
+  <script>
+  (function(){
+    "use strict";
+    var cfg = window.APP_CONFIG || {};
+    var LS_STATE = "ser_station_state_v1";
+    var LS_REQ = "ser_requests_v1";
+    var LS_SCH = "ser_schedule_v1";
+    var LS_MP3 = "ser_mp3_audio_v1";
+    var LS_COVER = "ser_mp3_cover_v1";
+
+    document.getElementById("stationName").textContent = cfg.STATION_NAME || "SALVADOR ENTREGAS";
+    // Tagline simple (sin segundo "en vivo" — el badge ON AIR ya lo indica)
+    document.getElementById("stationTagline").textContent = cfg.STATION_TAGLINE
+      ? String(cfg.STATION_TAGLINE).replace(/\s*[·•]\s*en vivo/i, "").trim() || "La voz del colegio"
+      : "La voz del colegio";
+    document.getElementById("footerSchool").textContent = cfg.SCHOOL_NAME || "SALVADOR ENTREGAS";
+    document.getElementById("footerAddress").textContent = cfg.SCHOOL_ADDRESS || "";
+    document.getElementById("footerContact").textContent = cfg.SCHOOL_CONTACT || "";
+    document.getElementById("footerSocial").textContent = cfg.SCHOOL_SOCIAL || "";
+    // Escudo liviano (sm) para que la página cargue en redes lentas
+    (function applySchoolLogo(){
+      var src = cfg.SCHOOL_LOGO_SM || cfg.SCHOOL_LOGO || "assets/escudo-colegio-sm.jpg";
+      document.querySelectorAll("img.school-logo").forEach(function(img){
+        img.src = src;
+        img.alt = (cfg.SCHOOL_NAME || "Colegio") + " — escudo";
+      });
+    })();
+
+    var lastTrackId = "";
+    var lastMp3 = "";
+    var lastLivePeer = "";
+    var lastCityUrl = "";
+    var lastCityRelay = "";
+    var liveListener = null;
+    var cityRelayListener = null;
+    var cityHls = null;
+    // Autoplay: intentamos al abrir; sin overlay "toca para oír"
+    var audioUnlocked = true;
+    try{ sessionStorage.setItem("se_audio_ok", "1"); }catch(e){}
+    var unlockInProgress = false;
+    var liveRetryTimer = null;
+    var liveRetryCount = 0;
+    var autoPlayWatch = null;
+    var lastWantedUrl = "";
+
+    // ---- Autoplay (oyente NO usa mic; solo oye) ----
+    function mainEl(){ return document.getElementById("mainPlayer"); }
+
+    /** Limpia srcObject (PeerJS) y deja el <audio> listo para MP3 HTTP */
+    function clearPeerFromMain(el){
+      el = el || mainEl();
+      if(!el) return;
+      try{
+        if(el.srcObject){
+          try{
+            var tracks = el.srcObject.getTracks ? el.srcObject.getTracks() : [];
+            tracks.forEach(function(t){ try{ t.stop(); }catch(e){} });
+          }catch(e2){}
+          el.srcObject = null;
+        }
+      }catch(e3){}
+    }
+
+    function hardUnmute(el){
+      el = el || mainEl();
+      if(!el) return;
+      try{
+        el.muted = false;
+        el.defaultMuted = false;
+        el.volume = 1;
+        el.removeAttribute("muted");
+      }catch(e){}
+    }
+
+    function setBoot(msg){
+      var b = document.getElementById("bootStatus");
+      if(b) b.textContent = msg || "";
+    }
+
+    /**
+     * Reproducir al abrir: 1) con sonido  2) muted→play→unmute
+     * (política de navegadores; reintento silencioso en bucle)
+     */
+    function forcePlay(el){
+      el = el || mainEl();
+      if(!el) return Promise.resolve(false);
+      try{
+        el.setAttribute("playsinline", "");
+        el.setAttribute("webkit-playsinline", "");
+        try{ el.removeAttribute("crossorigin"); el.crossOrigin = null; }catch(e){}
+        el.autoplay = true;
+        el.playsInline = true;
+      }catch(e){}
+
+      function ok(){
+        hardUnmute(el);
+        markUnlocked();
+        startMainMeter(el);
+        watchRealAudio(el);
+        setMainStatus("");
+        setBoot("▶ Al aire");
+        hideListenBanner();
+        return true;
+      }
+
+      // Preferir muted→play→unmute (más fiable en móvil; sin banner)
+      try{
+        el.muted = true;
+        el.defaultMuted = true;
+        el.volume = 1;
+      }catch(e){}
+      return el.play().then(function(){
+        hardUnmute(el);
+        return el.play().then(function(){ return ok(); }).catch(function(){
+          hardUnmute(el);
+          startMainMeter(el);
+          watchRealAudio(el);
+          setBoot("▶ Al aire");
+          hideListenBanner();
+          return true;
+        });
+      }).catch(function(){
+        // Segundo intento: con sonido directo
+        hardUnmute(el);
+        return el.play().then(function(){ return ok(); }).catch(function(){
+          setBoot("Sintonizando…");
+          hideListenBanner();
+          // reintento silencioso más tarde (autoPlayWatch)
+          return false;
+        });
+      });
+    }
+
+    function hideListenBanner(){
+      var btn = document.getElementById("mainPlayBtn");
+      if(btn){
+        btn.classList.add("hidden");
+        btn.style.display = "none";
+        btn.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    /** Si el audio se traba: reintenta en silencio (NUNCA banner «Escuchar») */
+    var audioWatchTimer = null;
+    var recoverCount = 0;
+    function watchRealAudio(el){
+      el = el || mainEl();
+      if(!el) return;
+      if(audioWatchTimer) clearInterval(audioWatchTimer);
+      var lastT = -1;
+      var stuck = 0;
+      recoverCount = 0;
+      hideListenBanner();
+      audioWatchTimer = setInterval(function(){
+        try{
+          hideListenBanner();
+          if(el.ended){
+            // 24h avanza por evento ended; no pedir click
+            setBoot("Siguiente tema…");
+            return;
+          }
+          if(el.paused){
+            hardUnmute(el);
+            el.play().catch(function(){});
+            setBoot("Sintonizando…");
+            return;
+          }
+          var t = el.currentTime || 0;
+          if(Math.abs(t - lastT) < 0.04 && !el.srcObject && el.readyState >= 2){
+            stuck++;
+          } else {
+            stuck = 0;
+            hardUnmute(el);
+            if(t > 0.3) setBoot("▶ Al aire");
+          }
+          // Atasco ~2s: reintentar play / re-seek sin banner
+          if(stuck >= 3 && el.src && !el.srcObject){
+            stuck = 0;
+            recoverCount++;
+            hardUnmute(el);
+            try{
+              var a24 = lastAuto24State && lastAuto24State.auto24;
+              if(a24 && a24.enabled && a24.trackStartedAt){
+                syncBroadcastPosition(el, a24.trackStartedAt);
+              }
+            }catch(e2){}
+            el.play().catch(function(){});
+            // Tras varios atascos: recargar la misma URL y re-sintonizar
+            if(recoverCount >= 4 && lastWantedUrl){
+              recoverCount = 0;
+              var seekAt = 0;
+              try{
+                var a = lastAuto24State && lastAuto24State.auto24;
+                if(a && a.enabled && a.trackStartedAt) seekAt = a.trackStartedAt;
+              }catch(e3){}
+              setBoot("Reconectando audio…");
+              playUrlOnMain(lastWantedUrl, false, seekAt ? { seekAt: seekAt } : {});
+            }
+          }
+          lastT = t;
+        }catch(e){}
+      }, 800);
+    }
+
+    function setMainStatus(msg){
+      var s = document.getElementById("mainListenStatus");
+      if(!s) return;
+      // En público no mostramos jerga técnica del panel
+      var quiet = !msg || /sintoniz|relay|mic|peer|websocket|timeout|conect/i.test(String(msg));
+      if(quiet){
+        s.textContent = "";
+        s.classList.add("public-quiet");
+      } else {
+        s.textContent = msg;
+        s.classList.remove("public-quiet");
+      }
+    }
+
+    function setPublicLiveDecor(on){
+      var w = document.getElementById("publicWave");
+      var w2 = document.getElementById("liveWaveTop");
+      var hero = document.getElementById("liveHero");
+      if(w){
+        if(on) w.classList.remove("off");
+        else w.classList.add("off");
+      }
+      if(w2){
+        if(on) w2.classList.remove("off");
+        else w2.classList.add("off");
+      }
+      if(hero){
+        if(on) hero.classList.remove("hidden");
+        else hero.classList.add("hidden");
+      }
+    }
+
+    var mainMeterStop = null;
+    /**
+     * Fill solo si el audio AVANZA de verdad (currentTime sube).
+     * Antes se animaba con !paused y parecía “al aire” sin sonido.
+     */
+    function startMainMeter(el){
+      if(mainMeterStop){
+        try{ mainMeterStop(); }catch(e){}
+      }
+      if(!el) return;
+      var raf = 0;
+      var lastCt = -1;
+      var alive = 0;
+      function setFill(pct){
+        pct = Math.max(0, Math.min(100, Math.round(pct)));
+        var fill = document.getElementById("mainLevelFill");
+        var val = document.getElementById("mainLevelVal");
+        if(fill) fill.style.width = pct + "%";
+        if(val) val.textContent = pct + "%";
+      }
+      function tick(){
+        var eq = document.getElementById("eq");
+        var hasStream = !!(el.srcObject);
+        var playing = !el.paused && !el.ended && (el.readyState >= 2 || hasStream);
+        var ct = 0;
+        try{ ct = el.currentTime || 0; }catch(e){}
+        if(playing && ct > lastCt + 0.01){
+          alive = Math.min(8, alive + 1);
+          lastCt = ct;
+        } else if(playing && hasStream){
+          // WebRTC a veces no reporta currentTime estable: pulse suave
+          alive = Math.min(8, alive + 1);
+        } else if(!playing){
+          alive = 0;
+          lastCt = ct;
+        } else {
+          // “playing” pero tiempo congelado → no es audio real
+          alive = Math.max(0, alive - 1);
+        }
+        if(alive >= 2){
+          var t = performance.now() / 1000;
+          var a = 0.42 + 0.38 * Math.abs(Math.sin(t * 5.2 + ct * 0.7));
+          var b = 0.18 * Math.abs(Math.sin(t * 11.3 + ct * 1.4));
+          var c = 0.12 * Math.abs(Math.sin(t * 2.1));
+          setFill(Math.min(0.98, a + b + c) * 100);
+          if(eq) eq.classList.remove("off");
+          setPublicLiveDecor(true);
+        } else {
+          setFill(0);
+          if(eq) eq.classList.add("off");
+        }
+        raf = requestAnimationFrame(tick);
+      }
+      tick();
+      mainMeterStop = function(){
+        cancelAnimationFrame(raf);
+        mainMeterStop = null;
+        setFill(0);
+      };
+    }
+
+    function markUnlocked(){
+      audioUnlocked = true;
+      try{ sessionStorage.setItem("se_audio_ok", "1"); }catch(e){}
+      hideTap();
+      var btn = document.getElementById("mainPlayBtn");
+      if(btn) btn.classList.add("hidden");
+    }
+
+    // Nunca mostrar banner «Escuchar» — solo reintentos silenciosos
+    function showTapOnce(force){
+      hideListenBanner();
+      setBoot("Sintonizando…");
+      var el = mainEl();
+      if(el){
+        hardUnmute(el);
+        el.play().catch(function(){});
+      }
+      if(force && lastWantedUrl){
+        var seekAt = 0;
+        try{
+          var a = lastAuto24State && lastAuto24State.auto24;
+          if(a && a.enabled && a.trackStartedAt) seekAt = a.trackStartedAt;
+        }catch(e){}
+        setTimeout(function(){
+          playUrlOnMain(lastWantedUrl, false, seekAt ? { seekAt: seekAt } : {});
+        }, 400);
+      }
+    }
+    function hideTap(){
+      hideListenBanner();
+    }
+
+    /** Solo reintenta play si la emisora está ON AIR (no al entrar en silencio) */
+    function stationIsOnAir(){
+      try{
+        var st = lastAuto24State || {};
+        if(st.onAir) return true;
+        if(st.auto24 && st.auto24.enabled) return true;
+        if(st.live && st.live.active) return true;
+        if(st.nowPlaying && (st.nowPlaying.mp3Url || st.nowPlaying.peerId || st.nowPlaying.youtube)) return true;
+      }catch(e){}
+      return false;
+    }
+
+    /** Reintento automático de play (cada 2s si está pausado y hay emisión) */
+    function startAutoPlayWatch(){
+      if(autoPlayWatch) return;
+      autoPlayWatch = setInterval(function(){
+        try{
+          if(typeof isYoutubePlayingNow === "function" && isYoutubePlayingNow()) return;
+          if(!stationIsOnAir()) return;
+          var el = mainEl();
+          if(!el) return;
+          if(el.paused && (el.src || lastWantedUrl) && !el.srcObject){
+            hardUnmute(el);
+            el.play().then(function(){
+              hardUnmute(el);
+              startMainMeter(el);
+              try{
+                var a = lastAuto24State && lastAuto24State.auto24;
+                if(a && a.enabled && a.trackStartedAt){
+                  syncBroadcastPosition(el, a.trackStartedAt);
+                }
+              }catch(e2){}
+              setBoot("▶ Al aire");
+            }).catch(function(){});
+          } else if(!el.paused && el.muted){
+            hardUnmute(el);
+          }
+        }catch(e){}
+      }, 2000);
+    }
+
+    /**
+     * @param {string} url
+     * @param {boolean} loop
+     * @param {{ seekAt?: number }} opts seekAt = epoch ms cuando el panel empezó ESTA canción
+     *   (radio 24h: el oyente se une a mitad de tema, no desde 0)
+     */
+    function playUrlOnMain(url, loop, opts){
+      opts = opts || {};
+      var el = mainEl();
+      if(!el || !url) return Promise.resolve(false);
+      lastWantedUrl = url;
+      var seekAt = opts.seekAt || 0;
+      clearPeerFromMain(el);
+      try{
+        var same = el.src && (
+          el.src === url ||
+          el.src.indexOf(encodeURI(url)) >= 0 ||
+          (function(){ try{ return decodeURIComponent(el.src).indexOf(url) >= 0; }catch(e){ return false; } })()
+        );
+        // Misma canción ya sonando: solo alinear posición (no reiniciar)
+        if(same && !el.paused && (el.currentTime || 0) > 0.15){
+          hardUnmute(el);
+          if(seekAt) syncBroadcastPosition(el, seekAt);
+          return forcePlay(el);
+        }
+      }catch(e){}
+      try{
+        el.removeAttribute("crossorigin");
+        el.crossOrigin = null;
+        hardUnmute(el);
+      }catch(e){}
+      try{
+        el.classList.remove("live-hidden-controls");
+        el.setAttribute("controls", "controls");
+        el.style.minHeight = "40px";
+      }catch(e){}
+      el.loop = !!loop;
+      el.preload = "auto";
+      el.src = url;
+      try{ el.load(); }catch(e){}
+      return new Promise(function(resolve){
+        var done = false;
+        function finish(ok){
+          if(done) return;
+          done = true;
+          resolve(!!ok);
+        }
+        function afterReady(){
+          forcePlay(el).then(function(ok){
+            if(ok && seekAt) syncBroadcastPosition(el, seekAt);
+            finish(ok);
+          });
+        }
+        el.addEventListener("canplay", afterReady, { once: true });
+        el.addEventListener("loadedmetadata", function(){
+          if(seekAt) syncBroadcastPosition(el, seekAt);
+        }, { once: true });
+        el.addEventListener("error", function(){
+          setBoot("Reintentando audio…");
+          showTapOnce(true);
+          finish(false);
+        }, { once: true });
+        setTimeout(function(){
+          if(!done) afterReady();
+        }, 900);
+      });
+    }
+
+    var lastSeekOkAt = 0;
+    /** Alinea el oyente a la posición de la transmisión (sin reiniciar de 0) */
+    function syncBroadcastPosition(el, trackStartedAt){
+      if(!el || !trackStartedAt) return;
+      var want = (Date.now() - Number(trackStartedAt)) / 1000;
+      if(!isFinite(want) || want < 0) want = 0;
+      function apply(){
+        try{
+          var d = el.duration;
+          var now = Date.now();
+          // No spamear seeks (provocan tacos y “se queda”)
+          if(now - lastSeekOkAt < 2000) return;
+          if(isFinite(d) && d > 1){
+            if(want >= d - 0.75){
+              // No avanzar aquí (provoca bucles y parpadeo). Solo acota al final.
+              return;
+            }
+            var cur = el.currentTime || 0;
+            // Solo corregir si el desfase es grande (evita seeks que reinician)
+            if(Math.abs(cur - want) > 6){
+              el.currentTime = Math.min(Math.max(0, want), d - 0.35);
+              lastSeekOkAt = now;
+            }
+          } else if(want > 1 && (el.currentTime || 0) < 0.5){
+            // Solo el primer enganche si aún no hay duration
+            try{ el.currentTime = want; lastSeekOkAt = now; }catch(e){}
+          }
+        }catch(e){}
+      }
+      if(el.readyState >= 1) apply();
+      else el.addEventListener("loadedmetadata", apply, { once: true });
+      setTimeout(apply, 600);
+    }
+
+    function unlockAllAudio(){
+      if(unlockInProgress) return;
+      unlockInProgress = true;
+      markUnlocked();
+      var el = mainEl();
+      if(el){ try{ el.muted = false; el.volume = 1; }catch(e){} el.play().catch(function(){}); }
+      // Desbloquear también el canal de voz (mic overlay)
+      try{
+        var micEl = document.getElementById("micPlayer");
+        if(micEl){
+          micEl.muted = false;
+          micEl.volume = 1;
+          micEl.play().catch(function(){});
+        }
+        if(window.__serWantMicOverlay) connectMicOverlay();
+      }catch(eM){}
+
+      // Primero sintonizar el estado del control (nube); no forzar prueba local
+      if(window.StationSync){
+        window.StationSync.pull().then(function(r){
+          if(r && r.state){
+            applyIncomingState(r.state);
+            return;
+          }
+          unlockFromLocalOnly();
+        }).catch(function(){ unlockFromLocalOnly(); });
+      } else {
+        unlockFromLocalOnly();
+      }
+      setTimeout(function(){ unlockInProgress = false; }, 800);
+    }
+
+    function unlockFromLocalOnly(){
+      var st = localGet(LS_STATE, {});
+      applyIncomingState(st);
+    }
+
+    /** Detiene el mainPlayer y limpia src (quita test-signal atascado) */
+    function hardStopMain(reason){
+      try{
+        var el = mainEl();
+        if(el){
+          el.pause();
+          el.removeAttribute("src");
+          el.loop = false;
+          el.load();
+        }
+      }catch(e){}
+      lastMp3 = "";
+      if(reason) setMainStatus(reason);
+    }
+
+    function isTestUrl(u){
+      if(!u) return false;
+      return /test-signal/i.test(String(u));
+    }
+
+    function showTapIfPaused(){
+      setTimeout(function(){
+        var el = mainEl();
+        if(!el) return;
+        hideListenBanner();
+        if(el.paused || el.muted){
+          hardUnmute(el);
+          forcePlay(el);
+        }
+      }, 500);
+      setTimeout(function(){
+        var el = mainEl();
+        if(el && el.paused && lastWantedUrl){
+          hardUnmute(el);
+          el.play().catch(function(){});
+        }
+        hideListenBanner();
+      }, 2000);
+    }
+
+    // Al cargar: sintonizar y autoplay (sin overlay)
+    try{
+      sessionStorage.removeItem("se_test_stopped");
+      var bootEl = mainEl();
+      if(bootEl && bootEl.src && isTestUrl(bootEl.src)){
+        bootEl.pause();
+        bootEl.removeAttribute("src");
+        bootEl.load();
+      }
+    }catch(e){}
+
+    var mainPlayBtn = document.getElementById("mainPlayBtn");
+    if(mainPlayBtn){
+      mainPlayBtn.addEventListener("click", function(e){
+        e.preventDefault();
+        unlockAllAudio();
+        if(lastWantedUrl) playUrlOnMain(lastWantedUrl, false);
+      });
+    }
+    // Cualquier gesto en la página reintenta audio (sin mensaje)
+    ["pointerdown","touchstart","keydown"].forEach(function(ev){
+      document.addEventListener(ev, function(){
+        var el = mainEl();
+        if(el && el.paused && (el.src || lastWantedUrl)){
+          hardUnmute(el);
+          el.play().catch(function(){});
+        } else if(el && el.muted){
+          hardUnmute(el);
+        }
+      }, { passive: true, once: false });
+    });
+    startAutoPlayWatch();
+    setBoot("Sintonizando…");
+
+    // Sin Firebase en oyentes (acelera carga; sintonía solo por /api/sync)
+    var db = null;
+
+    function localGet(key, fallback){
+      try{ var r = localStorage.getItem(key); return r ? JSON.parse(r) : fallback; }catch(e){ return fallback; }
+    }
+
+    function setOnAirVisual(on){
+      var dot = document.getElementById("onairDot");
+      var txt = document.getElementById("onairText");
+      var eq = document.getElementById("eq");
+      if(on){
+        if(dot){ dot.className = "dot pulse-live"; dot.style.background = "#e5172b"; }
+        if(txt){ txt.textContent = "AL AIRE"; txt.style.color = "#e5172b"; txt.style.fontWeight = "600"; }
+        if(eq) eq.classList.remove("off");
+      } else {
+        if(dot){ dot.className = "dot"; dot.style.background = "#525252"; }
+        if(txt){ txt.textContent = "OFF AIR"; txt.style.color = "#737373"; txt.style.fontWeight = "500"; }
+        if(eq) eq.classList.add("off");
+      }
+    }
+
+    function showCover(url){
+      var img = document.getElementById("npCover");
+      var ph = document.getElementById("npCoverPlaceholder");
+      if(url){
+        if(img.src !== url) img.src = url;
+        img.classList.remove("hidden");
+        ph.classList.add("hidden");
+      } else {
+        img.classList.add("hidden");
+        ph.classList.remove("hidden");
+      }
+    }
+
+    // Solo cambia título/artista si el texto es distinto (evita parpadeo)
+    var lastUiTitle = "";
+    var lastUiArtist = "";
+    function setTrackUi(title, artist){
+      title = title || "En espera";
+      artist = artist || (cfg.STATION_NAME || "SALVADOR ENTREGAS");
+      if(title !== lastUiTitle){
+        lastUiTitle = title;
+        var tEl = document.getElementById("npTitle");
+        if(tEl) tEl.textContent = title;
+      }
+      if(artist !== lastUiArtist){
+        lastUiArtist = artist;
+        var aEl = document.getElementById("npArtist");
+        if(aEl) aEl.textContent = artist;
+      }
+    }
+
+    function renderState(state){
+      state = state || {};
+      var json = JSON.stringify(state.nowPlaying||{}) + "|" + state.onAir + "|" + state.mode + "|" + (state.ticker||"");
+      // always update show fields even if same track
+
+      var ticker = document.getElementById("publicTicker");
+      if(state.ticker && state.showTicker !== false){
+        ticker.textContent = state.ticker;
+        ticker.classList.remove("hidden");
+      } else ticker.classList.add("hidden");
+
+      var liveHero = document.getElementById("liveHero");
+      var playerBlock = document.getElementById("playerBlock");
+      var mode = state.mode || "playlist";
+      // __serForceOnAir: no dejar "en espera" si hay 24h/mic/mp3
+      var np0 = state.nowPlaying || {};
+      var onAir = !!(state.onAir || (state.auto24 && state.auto24.enabled) || (state.live && (state.live.active || state.live.mic || state.live.httpLive)) || (np0.mp3Url && /^https?:\/\//i.test(String(np0.mp3Url))) || np0.peerId || np0.youtube || np0.videoId);
+      if(onAir && !state.onAir){ try{ state.onAir = true; }catch(eOA){} }
+      var np = state.nowPlaying || null;
+
+      liveHero.classList.add("hidden");
+      playerBlock.classList.remove("hidden");
+      setOnAirVisual(onAir);
+
+      var showLine = [];
+      if(state.showTitle) showLine.push(state.showTitle);
+      if(state.dj) showLine.push("con " + state.dj);
+      document.getElementById("npShow").textContent = showLine.join(" · ");
+
+      var idle = document.getElementById("idleHint");
+      var mp3Wrap = document.getElementById("mp3PlayerWrap");
+      var spWrap = document.getElementById("spotifyEmbedWrap");
+      var ytWrap = document.getElementById("youtubePlayerWrap");
+      var liveWrap = document.getElementById("livePlayerWrap");
+      var cityWrap = document.getElementById("cityPlayerWrap");
+      var label = document.getElementById("playerModeLabel");
+      var liveMeta = state.live || {};
+      var cityMeta = state.city || {};
+
+      // --- YOUTUBE (player oficial, sincronizado con el panel) ---
+      var ytVideoId = (np && (np.videoId || "")) || "";
+      if(!ytVideoId && np && np.youtubeUrl){
+        try{
+          var ym = String(np.youtubeUrl).match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);
+          if(ym) ytVideoId = ym[1];
+        }catch(eY){}
+      }
+      var isYoutubeMode = !!(
+        onAir && (
+          mode === "youtube" ||
+          (np && (np.source === "youtube" || np.youtube)) ||
+          (ytVideoId && (np && np.source === "youtube"))
+        ) && ytVideoId
+      );
+      if(isYoutubeMode){
+        idle.classList.add("hidden");
+        if(mp3Wrap) mp3Wrap.classList.add("hidden");
+        if(spWrap) spWrap.classList.add("hidden");
+        if(cityWrap) cityWrap.classList.add("hidden");
+        if(liveWrap) liveWrap.classList.add("hidden");
+        if(ytWrap) ytWrap.classList.remove("hidden");
+        label.textContent = "YOUTUBE";
+        setTrackUi((np && np.title) ? np.title : "YouTube", (np && np.artist) ? np.artist : "YouTube");
+        showCover((np && np.cover) || ("https://i.ytimg.com/vi/" + ytVideoId + "/hqdefault.jpg"));
+        setOnAirVisual(true);
+        setPublicLiveDecor(true);
+        setMainStatus("");
+        hideListenBanner();
+
+        // Limpieza UNA sola vez al entrar a YouTube o al cambiar de video
+        // (hacer mel.load()/disconnect cada poll traba el iframe)
+        var ytSwitch = (ytCurrentId !== ytVideoId) || !document.getElementById("ytEmbedFrame");
+        if(ytSwitch){
+          try{
+            var mel = mainEl();
+            if(mel){
+              try{ mel.pause(); }catch(eP){}
+              try{ mel.srcObject = null; }catch(eS){}
+              try{ if(mel.getAttribute("src")){ mel.removeAttribute("src"); mel.load(); } }catch(eL){}
+            }
+          }catch(eM){}
+          try{
+            if(window.__serHttpListener && window.__serHttpListener.active){
+              window.__serHttpListener.disconnect();
+            }
+          }catch(eH){}
+          httpLiveStarted = false;
+          lastWantedUrl = "";
+          lastMp3 = "";
+        }
+
+        // Mic solo si el panel lo activó de verdad
+        var ytMicOn = !!(liveMeta.mic || (np && np.micPeerId));
+        var ytPeer = (np && np.micPeerId) || "";
+        if(!ytMicOn || !ytPeer){
+          if(lastLivePeer){
+            try{ if(liveListener) liveListener.disconnect(); }catch(eD){}
+            lastLivePeer = "";
+          }
+        }
+        var startedAt = Number((np && np.trackStartedAt) || (np && np.at) || 0) || 0;
+        playYoutubeVideo(ytVideoId, startedAt);
+        if(ytMicOn && ytPeer){
+          connectLive(ytPeer, false);
+        }
+        return;
+      } else {
+        if(ytCurrentId || document.getElementById("ytEmbedFrame")){
+          stopYoutubePlayer();
+        }
+        if(ytWrap) ytWrap.classList.add("hidden");
+      }
+
+      // --- LIVE sin URL pública de MP3 (upload blob / solo mic) ---
+      // Prioridad: 1) MP3 https público (más abajo)  2) PeerJS  3) HTTP masivo (respaldo)
+      // Antes se forzaba solo HTTP y el oyente se quedaba en «Sintonizando» sin audio.
+      var peerId = (liveMeta && liveMeta.peerId) || (np && np.peerId) || "";
+      var isAuto24Mode = !!(state.auto24 && state.auto24.enabled) || (np && np.source === "auto24") || mode === "auto24";
+      if(mode === "youtube" || (np && (np.source === "youtube" || np.youtube))) isAuto24Mode = false;
+      var musicUrlEarly = (np && np.mp3Url && /^https?:\/\//i.test(String(np.mp3Url))) ? np.mp3Url : "";
+      var liveActive = !!(
+        liveMeta.active ||
+        mode === "live" || mode === "upload" ||
+        (np && (np.source === "live" || np.source === "upload"))
+      );
+      var hasHttpLiveFlag = !!(liveMeta.httpLive || liveMeta.mode === "http" || liveMeta.mode === "master" || liveMeta.capture === "master" || (np && np.httpLive) || (np && np.listenHttpOnly));
+      var isUploadMode = !!(mode === "upload" || (np && (np.source === "upload" || np.isUpload)));
+
+      // Master HTTP exclusivo desactivado: siempre música por MP3 + mic overlay si hay
+      // (evita silencio si LIVE HTTP falla)
+
+      // Música (MP3/24h) + mic remoto HTTP (celular/PC) a la vez
+      // También si solo hay flag mic + http sin exigir ambos campos
+      var micOverlay = !!(
+        (hasHttpLiveFlag || liveMeta.mode === "http") &&
+        (liveMeta.mic || liveMeta.micRemote || liveMeta.capture === "mic-join" ||
+          (np && (np.hasMic || np.micRemote || np.httpLive && liveMeta.mic)))
+      );
+      if(!micOverlay && onAir && musicUrlEarly && hasHttpLiveFlag && (liveMeta.active || liveMeta.mic)){
+        micOverlay = true;
+      }
+      if(onAir && musicUrlEarly && micOverlay){
+        window.__serMicMissPolls = 0;
+        try{ window.__serWantMicOverlay = true; }catch(e){}
+      } else {
+        // No cortar el mic al primer poll vacío (evita “se oyó un momento y se fue”)
+        window.__serMicMissPolls = (window.__serMicMissPolls || 0) + 1;
+        if(window.__serMicMissPolls >= 8){
+          try{ window.__serWantMicOverlay = false; }catch(e){}
+          try{
+            if(window.__serHttpMicListener){
+              window.__serHttpMicListener.disconnect();
+              window.__serHttpMicListener = null;
+            }
+          }catch(e2){}
+        }
+      }
+
+      // SOLO ruta live exclusiva cuando NO hay MP3 público (blob upload / solo mic)
+      if(onAir && !isAuto24Mode && !musicUrlEarly && liveActive && (peerId || hasHttpLiveFlag)){
+        idle.classList.add("hidden");
+        mp3Wrap.classList.add("hidden");
+        spWrap.classList.add("hidden");
+        if(cityWrap) cityWrap.classList.add("hidden");
+        liveWrap.classList.add("hidden");
+        label.textContent = isUploadMode ? "MP3 SUBIDO" : (hasHttpLiveFlag && !peerId ? "MIC · MASIVO" : "AL AIRE");
+        setTrackUi((np && np.title) ? np.title : "Al aire", (np && np.artist) ? np.artist : (cfg.STATION_NAME || "SALVADOR ENTREGAS"));
+        showCover((np && np.cover) || "");
+        setOnAirVisual(true);
+        setPublicLiveDecor(true);
+        setMainStatus("");
+        // HTTP mic masivo primero en solo-voz; Peer de respaldo
+        if(hasHttpLiveFlag){
+          setBoot("Sintonizando voz…");
+          connectHttpLive();
+          if(peerId) scheduleHttpLiveBackup(peerId); // no-op name; peer as backup below
+        } else if(peerId){
+          setBoot("Sintonizando…");
+          connectLive(peerId, false);
+        } else {
+          setBoot("Sintonizando voz…");
+          connectHttpLive();
+        }
+        return;
+      }
+
+      if(onAir && musicUrlEarly && !isAuto24Mode){
+        // MP3 público abajo; mic overlay si aplica
+      } else if(!(onAir && peerId && liveMeta.active && !isAuto24Mode && !musicUrlEarly)){
+        if(lastLivePeer){
+          lastLivePeer = "";
+          if(liveListener) liveListener.disconnect();
+        }
+        if(window.__serHttpListener){
+          try{ window.__serHttpListener.disconnect(); }catch(e){}
+        }
+        liveWrap.classList.add("hidden");
+        clearPeerFromMain(mainEl());
+        var lp = document.getElementById("livePlayer");
+        if(lp) lp.srcObject = null;
+      }
+
+      // ----- 2) CIUDAD solo con Icecast/HLS real (nunca wss forzado) -----
+      var cityUrl = (cityMeta.streamUrl) || (np && np.streamUrl) || "";
+      function isFakeHttpStream(u){
+        if(!u) return true;
+        if(/\/(radio|stream|status|health)\/?$/i.test(u)) return true;
+        if(/trycloudflare\.com/i.test(u)) return true;
+        return false;
+      }
+      var httpIsReal = cityUrl && !isFakeHttpStream(cityUrl);
+      var cityActive = onAir && cityMeta.active && httpIsReal && mode === "city";
+
+      if(cityActive){
+        idle.classList.add("hidden");
+        mp3Wrap.classList.add("hidden");
+        spWrap.classList.add("hidden");
+        liveWrap.classList.add("hidden");
+        if(cityWrap) cityWrap.classList.add("hidden");
+        label.textContent = "EMISIÓN CIUDAD";
+        setTrackUi((np && np.title) || "Emisión a la ciudad", (np && np.artist) || (cfg.STATION_NAME || "SALVADOR ENTREGAS"));
+        showCover((np && np.cover) || "");
+        setOnAirVisual(true);
+        if(cityUrl !== lastCityUrl){
+          lastCityUrl = cityUrl;
+          startCityHttp(cityUrl, "");
+        } else if(audioUnlocked) forcePlay(mainEl());
+        else { showTapOnce(); setMainStatus("Pulsa ▶ para oír"); }
+        return;
+      } else {
+        lastCityUrl = "";
+        lastCityRelay = "";
+        if(cityWrap) cityWrap.classList.add("hidden");
+        // Si el control dejó city/relay viejo activo, no intentar wss (evita "Conectando al relay")
+        if(onAir && cityMeta.active && !httpIsReal && !peerId){
+          // caer a Spotify/MP3 más abajo si hay nowPlaying
+        }
+      }
+
+      // ----- sin nowPlaying -----
+      if(!np || !np.title){
+        setOnAirVisual(onAir);
+        setTrackUi(onAir ? "Sintonizando…" : "En espera", cfg.STATION_NAME || "SALVADOR ENTREGAS");
+        showCover("");
+        mp3Wrap.classList.add("hidden");
+        spWrap.classList.add("hidden");
+        liveWrap.classList.add("hidden");
+        if(cityWrap) cityWrap.classList.add("hidden");
+        idle.classList.remove("hidden");
+        label.textContent = onAir ? "AL AIRE" : "En espera";
+        setMainStatus("");
+        // Sin tema al aire: no forzar reproducción residual
+        if(!onAir){
+          lastWantedUrl = "";
+          lastMp3 = "";
+          try{
+            var mel = mainEl();
+            if(mel && !mel.srcObject){
+              mel.pause();
+              mel.removeAttribute("src");
+              mel.load();
+            }
+          }catch(eOff){}
+          setBoot("En espera del control");
+        }
+        return;
+      }
+
+      idle.classList.add("hidden");
+      setTrackUi(np.title, np.artist || "—");
+      var cover = np.cover || "";
+      if(cover === "local" || !cover){
+        cover = localStorage.getItem(LS_COVER) || cover;
+        if(cover === "local") cover = localStorage.getItem(LS_COVER) || "";
+      }
+      showCover(cover && cover !== "local" ? cover : (localStorage.getItem(LS_COVER)||""));
+      if(liveWrap) liveWrap.classList.add("hidden");
+      if(cityWrap) cityWrap.classList.add("hidden");
+      if(mp3Wrap) mp3Wrap.classList.add("hidden");
+
+      // ----- 3) MP3 / RADIO 24h / live con URL / SEÑAL DE PRUEBA -----
+      var isAuto24 = !!(state.auto24 && state.auto24.enabled) && np.source !== "upload" && mode !== "upload";
+      if(np.source === "upload" || mode === "upload" || (np && np.isUpload)) isAuto24 = false;
+      if(np.source === "youtube" || mode === "youtube" || (np && np.youtube)) isAuto24 = false;
+      var hasHttpMp3 = !!(np.mp3Url && /^https?:\/\//i.test(String(np.mp3Url)));
+      if(np.source === "mp3" || np.source === "test" || np.source === "auto24" || np.source === "live" || np.source === "upload" || np.source === "youtube" || mode === "mp3" || mode === "auto24" || mode === "upload" || mode === "youtube" || isTestUrl(np.mp3Url) || isAuto24 || hasHttpMp3 || (np && np.httpLive) || (np && np.youtube)){
+        serSetLabel(np.source === "test" ? "PRUEBA" : (np.source === "youtube" || mode === "youtube" || np.youtube ? "YOUTUBE" : "AL AIRE"));
+        spWrap.classList.add("hidden");
+        if(ytWrap) ytWrap.classList.add("hidden");
+        var src = np.mp3Url || "";
+        if(!src && np.source === "test"){
+          src = (cfg.TEST_SIGNAL_URL) || (location.origin + "/test-signal.mp3");
+        }
+        // Reloj de la transmisión: 24h y también biblioteca/URL (entrar a mitad)
+        var trackStartedAt = Number(
+          (np && np.trackStartedAt) ||
+          (isAuto24 && state.auto24 && state.auto24.trackStartedAt) ||
+          (np && np.at) ||
+          0
+        );
+        if(src){
+          if(lastLivePeer || (liveListener && liveListener.disconnect)){
+            lastLivePeer = "";
+            try{ if(liveListener) liveListener.disconnect(); }catch(e){}
+          }
+          clearPeerFromMain(mainEl());
+          hideListenBanner();
+          // Misma canción: no recargar (evita tacos). Solo play + reloj.
+          var trackKey = src + "|" + (isAuto24 ? String(state.auto24 && state.auto24.index) : "x");
+          var sameTrack = (src === lastMp3) && (!isAuto24 || trackKey === lastAuto24PlayKey);
+          // Música SIEMPRE por MP3 (estable). Mic aparte solo si hay voz real.
+          lastMp3 = src;
+          lastAuto24PlayKey = trackKey;
+          serStablePlayMusic(src, trackStartedAt).then(function(ok){
+            hideListenBanner();
+            if(ok) serSetLabel(window.__serWantMicOverlay && serMicLiveOk ? "MÚSICA + VOZ" : "AL AIRE");
+          });
+          setMainStatus("");
+          setPublicLiveDecor(true);
+          setOnAirVisual(true);
+          if(isAuto24) wireAuto24Ended(state);
+          // Mic: solo si el flag pide overlay Y /api/live tiene chunks activos
+          if(window.__serWantMicOverlay){
+            serProbeMicLive().then(function(ok){
+              if(ok){
+                connectMicOverlay();
+                serSetLabel("MÚSICA + VOZ");
+              } else {
+                serSetLabel("AL AIRE");
+              }
+            });
+          } else {
+            serSetLabel(isAuto24 ? "AL AIRE" : "AL AIRE");
+          }
+        } else {
+          // Upload/live sin URL pública: no quedarse en «Esperando» — ir a Peer/HTTP
+          setMainStatus("");
+          hideListenBanner();
+          var p2 = (state.live && state.live.peerId) || np.peerId || "";
+          var h2 = !!(state.live && state.live.httpLive) || !!np.httpLive;
+          if(h2){
+            setBoot("Sintonizando voz…");
+            connectHttpLive();
+          } else if(p2){
+            setBoot("Sintonizando…");
+            connectLive(p2, false);
+            if(h2) scheduleHttpLiveBackup(p2);
+          } else if(h2){
+            setBoot("Sintonizando…");
+            connectHttpLive();
+          } else {
+            setBoot("Esperando audio del control…");
+          }
+        }
+        return;
+      }
+
+      // ----- 4) SPOTIFY: preview + embed -----
+      if(np.trackId || np.source === "spotify"){
+        label.textContent = "SPOTIFY · AL AIRE";
+        var tid = np.trackId || (np.uri && String(np.uri).split(":").pop()) || "";
+        var preview = np.previewUrl || np.preview_url || "";
+        spWrap.classList.remove("hidden");
+        if(tid && tid !== lastTrackId){
+          lastTrackId = tid;
+          var emb = document.getElementById("spotifyEmbed");
+          if(emb){
+            emb.src = "https://open.spotify.com/embed/track/" + tid + "?utm_source=generator&theme=0&autoplay=1";
+          }
+        }
+        if(preview){
+          setMainStatus("");
+          if(preview !== lastMp3){
+            lastMp3 = preview;
+            playUrlOnMain(preview, true);
+          } else forcePlay(mainEl());
+        } else {
+          setMainStatus("");
+          setBoot("Spotify · usa el reproductor de abajo");
+        }
+        hideListenBanner();
+        showTapIfPaused();
+        return;
+      }
+
+      spWrap.classList.add("hidden");
+      label.textContent = onAir ? "Al aire" : "En espera";
+      setMainStatus(onAir ? "Fuente desconocida — espera al control" : "Sin emisión");
+    }
+
+    // ---------- YouTube fluido: montar 1 vez, no tocar en cada poll ----------
+    var ytCurrentId = "";
+    var ytWantedStart = 0;
+    var ytHasSound = false;
+    var ytMountedAt = 0;
+    var ytUnmuteReloadDone = false;
+    var ytModeActive = false;
+
+    function isYoutubePlayingNow(){
+      return !!(ytModeActive && ytCurrentId && document.getElementById("ytEmbedFrame"));
+    }
+
+    function ytPost(cmd, arg){
+      try{
+        var frame = document.getElementById("ytEmbedFrame");
+        if(!frame || !frame.contentWindow) return;
+        frame.contentWindow.postMessage(JSON.stringify({
+          event: "command",
+          func: cmd,
+          args: arg != null ? [arg] : []
+        }), "*");
+      }catch(e){}
+    }
+
+    function showYtListenBtn(show){
+      var btn = document.getElementById("ytListenBtn");
+      if(!btn) return;
+      if(show){
+        btn.classList.remove("hidden");
+        btn.style.display = "block";
+      } else {
+        btn.classList.add("hidden");
+        btn.style.display = "none";
+      }
+    }
+
+    function buildYtEmbedSrc(videoId, startSec, muted){
+      var q = [
+        "autoplay=1",
+        "mute=" + (muted ? "1" : "0"),
+        "playsinline=1",
+        "rel=0",
+        "modestbranding=1",
+        "controls=1",
+        "fs=1",
+        "enablejsapi=1",
+        "origin=" + encodeURIComponent(location.origin)
+      ];
+      if(startSec > 0 && isFinite(startSec)) q.push("start=" + Math.floor(startSec));
+      return "https://www.youtube.com/embed/" + encodeURIComponent(videoId) + "?" + q.join("&");
+    }
+
+    function ytElapsedSec(){
+      if(!ytWantedStart) return 0;
+      return Math.max(0, Math.floor((Date.now() - Number(ytWantedStart)) / 1000));
+    }
+
+    function markYtSounding(){
+      ytHasSound = true;
+      showYtListenBtn(false);
+      setBoot("▶ YouTube al aire");
+      hideListenBanner();
+      markUnlocked();
+      setOnAirVisual(true);
+      setPublicLiveDecor(true);
+      try{
+        var eq = document.getElementById("eq");
+        if(eq) eq.classList.remove("off");
+      }catch(e){}
+    }
+
+    /** Un solo gesto → sonido. Una carga con mute=0 (sin spamear play cada poll). */
+    function unmuteYoutubeNow(){
+      markYtSounding();
+      var frame = document.getElementById("ytEmbedFrame");
+      if(!frame || !ytCurrentId) return;
+
+      if(!ytUnmuteReloadDone){
+        // Primera vez: recargar UNA vez con sonido + posición correcta (fluido)
+        ytUnmuteReloadDone = true;
+        frame.src = buildYtEmbedSrc(ytCurrentId, ytElapsedSec(), false);
+        return;
+      }
+      // Ya estaba con sonido: solo reanudar (sin recargar)
+      ytPost("playVideo");
+      ytPost("unMute");
+      ytPost("setVolume", 100);
+    }
+
+    function stopYoutubePlayer(){
+      ytModeActive = false;
+      ytCurrentId = "";
+      ytHasSound = false;
+      ytWantedStart = 0;
+      ytMountedAt = 0;
+      ytUnmuteReloadDone = false;
+      var host = document.getElementById("ytPlayerHost");
+      if(host) host.innerHTML = "";
+      showYtListenBtn(false);
+    }
+
+    function mountYoutubeIframe(videoId, startSec){
+      var host = document.getElementById("ytPlayerHost");
+      if(!host) return;
+      ytMountedAt = Date.now();
+      ytUnmuteReloadDone = false;
+      // mute=1 → autoplay fluido; el botón da el sonido
+      var src = buildYtEmbedSrc(videoId, startSec, true);
+      host.innerHTML =
+        '<iframe id="ytEmbedFrame" title="YouTube al aire" ' +
+        'style="width:100%;height:100%;min-height:200px;border:0;display:block;background:#000" ' +
+        'src="' + src + '" ' +
+        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+      setBoot("YouTube listo — pulsa ▶ Toca para oír");
+      showYtListenBtn(true);
+      hideListenBanner();
+      setOnAirVisual(true);
+      setPublicLiveDecor(true);
+    }
+
+    function playYoutubeVideo(videoId, startedAtMs){
+      if(!videoId) return;
+      ytModeActive = true;
+      if(startedAtMs) ytWantedStart = startedAtMs;
+
+      // Mismo video montado → NO tocar el iframe (esto evitaba que “se quedara” al recargar cada 2s)
+      var frame = document.getElementById("ytEmbedFrame");
+      if(ytCurrentId === videoId && frame){
+        if(ytHasSound){
+          // Silencioso: no spamear playVideo (provoca micro-cortes)
+          setBoot("▶ YouTube al aire");
+        } else {
+          showYtListenBtn(true);
+          setBoot("YouTube listo — pulsa ▶ Toca para oír");
+        }
+        return;
+      }
+
+      // Video nuevo
+      var startSec = 0;
+      if(ytWantedStart) startSec = ytElapsedSec();
+      ytCurrentId = videoId;
+      ytHasSound = false;
+      setBoot("Cargando YouTube…");
+      showYtListenBtn(false);
+      mountYoutubeIframe(videoId, startSec);
+    }
+
+    // Botón: un gesto → sonido (sin pelear con el poll)
+    (function wireYtListenBtn(){
+      var btn = document.getElementById("ytListenBtn");
+      if(!btn || btn.__serWired) return;
+      btn.__serWired = true;
+      btn.addEventListener("click", function(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+        unmuteYoutubeNow();
+      });
+    })();
+
+    var httpLiveStarted = false;
+    var httpLiveBackupTimer = null;
+    var lastBackupPeer = "";
+
+    /** Si Peer no produce audio real en ~5s, intentar HTTP live (y viceversa). */
+    function scheduleHttpLiveBackup(peerIdForContext){
+      if(httpLiveBackupTimer) clearTimeout(httpLiveBackupTimer);
+      lastBackupPeer = peerIdForContext || "";
+      httpLiveBackupTimer = setTimeout(function(){
+        httpLiveBackupTimer = null;
+        var el = mainEl();
+        if(!el) return;
+        // ¿Ya suena de verdad?
+        var hasStream = !!(el.srcObject && el.srcObject.getAudioTracks && el.srcObject.getAudioTracks().length);
+        var progressing = !el.paused && (el.currentTime || 0) > 0.2;
+        if(hasStream || progressing){
+          setBoot("▶ Al aire");
+          return;
+        }
+        // Peer falló o silencio → HTTP
+        setBoot("Reintentando por red masiva…");
+        connectHttpLive({ asBackup: true });
+      }, 5000);
+    }
+
+    
+    // ----- AUDIO OYENTES ESTABLE -----
+    var serLastLabel = "";
+    function serSetLabel(txt){
+      if(txt === serLastLabel) return;
+      serLastLabel = txt;
+      var lab = document.getElementById("playerModeLabel");
+      if(lab) lab.textContent = txt;
+    }
+    function serShowForceListen(show){
+      var b = document.getElementById("forceListenBtn");
+      if(!b) return;
+      b.style.display = show ? "block" : "none";
+    }
+    function serStablePlayMusic(url, seekAt){
+      var el = mainEl();
+      if(!el || !url) return Promise.resolve(false);
+      // Si ya suena la misma URL, no recargar
+      try{
+        var cur = el.currentSrc || el.src || "";
+        if(cur && (cur.indexOf(url) >= 0 || url.indexOf(cur) >= 0) && !el.paused && (el.currentTime||0) > 0.2){
+          hardUnmute(el);
+          return forcePlay(el);
+        }
+      }catch(e){}
+      return playUrlOnMain(url, false, seekAt ? { seekAt: seekAt } : {}).then(function(ok){
+        if(ok){
+          serShowForceListen(false);
+          setBoot("▶ Al aire");
+        } else {
+          serShowForceListen(true);
+          setBoot("Pulsa ▶ para oír");
+        }
+        return ok;
+      });
+    }
+    // Probe si hay voz real en /api/live
+    var serMicLiveOk = false;
+    var serMicProbeAt = 0;
+    function serProbeMicLive(){
+      var now = Date.now();
+      if(now - serMicProbeAt < 2000) return Promise.resolve(serMicLiveOk);
+      serMicProbeAt = now;
+      var origin = "";
+      try{ origin = location.origin; }catch(e){}
+      return fetch(origin + "/api/live?from=0&_=" + now, { cache: "no-store" })
+        .then(function(r){ return r.json(); })
+        .then(function(j){
+          serMicLiveOk = !!(j && j.active && j.chunks && j.chunks.length);
+          return serMicLiveOk;
+        })
+        .catch(function(){ serMicLiveOk = false; return false; });
+    }
+    if(!window.__serForceListenBound){
+      window.__serForceListenBound = true;
+      document.addEventListener("click", function(ev){
+        var b = document.getElementById("forceListenBtn");
+        if(b && (ev.target === b || (ev.target && ev.target.id === "forceListenBtn"))){
+          unlockAllAudio();
+          var el = mainEl();
+          if(el) forcePlay(el);
+          if(window.__serWantMicOverlay) connectMicOverlay();
+          serShowForceListen(false);
+          setBoot("▶ Al aire");
+        }
+      }, true);
+    }
+    // Watchdog: si hay URL y está en pausa con ON AIR, reintentar
+    if(!window.__serListenWatch){
+      window.__serListenWatch = setInterval(function(){
+        try{
+          if(!stationIsOnAir()) return;
+          var el = mainEl();
+          if(!el) return;
+          if(el.paused && lastWantedUrl){
+            hardUnmute(el);
+            forcePlay(el).then(function(ok){
+              if(!ok) serShowForceListen(true);
+            });
+          }
+        }catch(e){}
+      }, 3000);
+    }
+
+    /** Mic HTTP en segundo canal (música en mainPlayer + voz en micPlayer) */
+    function connectMicOverlay(){
+      if(!window.HttpLive || !window.HttpLive.Listener) return;
+      var micEl = document.getElementById("micPlayer");
+      if(!micEl) return;
+      try{
+        // Asegurar desbloqueo de audio (autoplay)
+        try{
+          micEl.setAttribute("playsinline", "");
+          micEl.setAttribute("webkit-playsinline", "");
+          micEl.playsInline = true;
+          micEl.muted = false;
+          micEl.volume = 1;
+        }catch(eU){}
+        if(window.__serHttpMicListener && window.__serHttpMicListener.active){
+          try{ micEl.muted = false; micEl.volume = 1; micEl.play().catch(function(){}); }catch(e){}
+          return;
+        }
+        if(window.__serHttpMicListener){
+          try{ window.__serHttpMicListener.disconnect(); }catch(e){}
+        }
+        window.__serHttpMicListener = new window.HttpLive.Listener({});
+        window.__serHttpMicListener.onStatus(function(msg){
+          if(msg && /voz|vivo|Mic|HTTP/i.test(msg)){
+            try{ setBoot("▶ Música + voz"); }catch(e){}
+          }
+        });
+        window.__serHttpMicListener.connect(micEl).then(function(){
+          try{
+            micEl.muted = false;
+            micEl.volume = 1;
+            micEl.play().catch(function(){
+              micEl.muted = true;
+              micEl.play().then(function(){ micEl.muted = false; }).catch(function(){});
+            });
+          }catch(e2){}
+          setBoot("▶ Música + mic");
+          var lab = document.getElementById("playerModeLabel");
+          if(lab) lab.textContent = "MÚSICA + MIC";
+        }).catch(function(err){
+          console.warn("mic overlay", err);
+          // reintento en 2s
+          setTimeout(function(){
+            try{
+              if(window.__serWantMicOverlay){
+                window.__serHttpMicListener = null;
+                connectMicOverlay();
+              }
+            }catch(eR){}
+          }, 2000);
+        });
+      }catch(e3){
+        console.warn(e3);
+      }
+    }
+
+    // Watchdog: si hay overlay pedido pero no activo, reconectar
+    if(!window.__serMicOverlayWatch){
+      window.__serMicOverlayWatch = setInterval(function(){
+        try{
+          if(!window.__serWantMicOverlay) return;
+          var micEl = document.getElementById("micPlayer");
+          if(!micEl) return;
+          var lis = window.__serHttpMicListener;
+          if(!lis || !lis.active){
+            connectMicOverlay();
+            return;
+          }
+          // mantener volumen
+          micEl.muted = false;
+          micEl.volume = 1;
+          if(micEl.paused) micEl.play().catch(function(){});
+        }catch(e){}
+      }, 3000);
+    }
+
+    function connectHttpLive(opts){
+      opts = opts || {};
+      if(!window.HttpLive || !window.HttpLive.Listener){
+        // Sin MediaSource: usar Peer si hay
+        setBoot("Usando conexión directa…");
+        return;
+      }
+      var audioEl = mainEl();
+      if(!audioEl) return;
+      if(httpLiveStarted && window.__serHttpListener && window.__serHttpListener.active){
+        forcePlay(audioEl);
+        return;
+      }
+      httpLiveStarted = true;
+      if(!window.__serHttpListener){
+        window.__serHttpListener = new window.HttpLive.Listener({});
+        window.__serHttpListener.onStatus(function(msg){
+          if(msg) setBoot(msg);
+        });
+      }
+      // Backup no debe matar Peer si ya suena; solo si no hay stream
+      if(!opts.asBackup){
+        clearPeerFromMain(audioEl);
+      } else {
+        var hasStream = !!(audioEl.srcObject && audioEl.srcObject.getAudioTracks && audioEl.srcObject.getAudioTracks().length);
+        if(hasStream && !audioEl.paused){
+          httpLiveStarted = false;
+          return;
+        }
+        try{
+          if(liveListener) liveListener.disconnect();
+        }catch(e){}
+        lastLivePeer = "";
+        clearPeerFromMain(audioEl);
+      }
+      window.__serHttpListener.connect(audioEl).then(function(){
+        markUnlocked();
+        startMainMeter(audioEl);
+        watchRealAudio(audioEl);
+        setOnAirVisual(true);
+        setPublicLiveDecor(true);
+        setBoot("▶ Al aire");
+        forcePlay(audioEl);
+        // Si HTTP conecta pero no avanza audio, reintentar Peer
+        setTimeout(function(){
+          var el = mainEl();
+          if(!el) return;
+          var ok = !el.paused && ((el.currentTime || 0) > 0.15 || (el.srcObject && el.srcObject.getAudioTracks && el.srcObject.getAudioTracks().length));
+          if(!ok && lastBackupPeer && window.LiveStream){
+            setBoot("Reintentando conexión…");
+            httpLiveStarted = false;
+            try{ if(window.__serHttpListener) window.__serHttpListener.disconnect(); }catch(e){}
+            connectLive(lastBackupPeer, true);
+          }
+        }, 6000);
+      }).catch(function(err){
+        httpLiveStarted = false;
+        setBoot("Reintentando…");
+        console.warn(err);
+        if(lastBackupPeer){
+          connectLive(lastBackupPeer, true);
+        } else {
+          setTimeout(function(){ httpLiveStarted = false; connectHttpLive(); }, 2500);
+        }
+      });
+    }
+
+    function connectLive(peerId, forceReconnect){
+      if(!peerId || !window.LiveStream) return;
+      var audioEl = mainEl();
+      if(!forceReconnect && peerId === lastLivePeer && liveListener){
+        tryAutoLivePlay(audioEl);
+        return;
+      }
+      lastLivePeer = peerId;
+      if(!liveListener) liveListener = new window.LiveStream.Listener();
+      liveListener.onStatus(function(){ setMainStatus(""); });
+      setMainStatus("");
+      setPublicLiveDecor(true);
+      liveListener.disconnect().then(function(){
+        return liveListener.connect(peerId, audioEl);
+      }).then(function(){
+        liveRetryCount = 0;
+        markUnlocked();
+        setBoot("▶ Al aire");
+        hideListenBanner();
+        // PeerJS OK: mezcla en vivo (canción+mic)
+        return tryAutoLivePlay(audioEl).then(function(ok){
+          if(ok) setBoot("▶ Al aire");
+          return ok;
+        });
+      }).catch(function(err){
+        console.warn("live peer", err);
+        // Fallback: seguir con MP3 si ya suena; reintentar Peer en silencio
+        if(liveRetryCount < 8){
+          liveRetryCount++;
+          if(liveRetryTimer) clearTimeout(liveRetryTimer);
+          liveRetryTimer = setTimeout(function(){
+            lastLivePeer = "";
+            connectLive(peerId, true);
+          }, 3000);
+        }
+        // No esconder el audio de fallback
+        var el = mainEl();
+        if(el && el.paused && el.src) forcePlay(el);
+      });
+    }
+
+    /** Autoplay agresivo: muted→unmute (suele pasar en móviles) */
+    function tryAutoLivePlay(el){
+      el = el || mainEl();
+      if(!el) return Promise.resolve(false);
+      try{
+        el.autoplay = true;
+        el.playsInline = true;
+        el.muted = true;
+        el.volume = 1;
+      }catch(e){}
+      return el.play().then(function(){
+        try{ el.muted = false; }catch(e){}
+        return el.play().then(function(){
+          markUnlocked();
+          setPublicLiveDecor(true);
+          startMainMeter(el);
+          var mbtn = document.getElementById("mainPlayBtn");
+          if(mbtn) mbtn.classList.add("hidden");
+          hideTap();
+          return true;
+        }).catch(function(){
+          try{ el.muted = false; }catch(e){}
+          showTapOnce();
+          return false;
+        });
+      }).catch(function(){
+        try{ el.muted = false; }catch(e){}
+        // reintento sin muted — nunca banner «Escuchar»
+        return forcePlay(el).then(function(ok){
+          if(ok){
+            markUnlocked();
+            setPublicLiveDecor(true);
+            hideListenBanner();
+            hideTap();
+            setBoot("▶ Al aire");
+          } else {
+            hideListenBanner();
+            setBoot("Sintonizando…");
+          }
+          return ok;
+        });
+      });
+    }
+
+    function startCityHttp(url, fallbackRelay){
+      var audio = mainEl();
+      if(!audio) return;
+      if(cityHls){ try{ cityHls.destroy(); }catch(e){} cityHls = null; }
+      setMainStatus("Conectando stream ciudad…");
+
+      function failCity(errMsg){
+        setMainStatus(errMsg || "Stream ciudad no disponible");
+        if(fallbackRelay && fallbackRelay !== lastCityRelay){
+          lastCityRelay = fallbackRelay;
+          startCityRelay(fallbackRelay);
+          return;
+        }
+        hardStopMain(errMsg || "Ciudad sin audio — espera al control");
+        showTapOnce();
+      }
+
+      if(!window.CityStream){
+        // Fallback directo
+        audio.src = url;
+        audio.load();
+        forcePlay(audio).then(function(ok){
+          if(!ok) failCity("No se pudo reproducir el stream");
+          else {
+            // Si no llega audio en 4s, caer a espera
+            setTimeout(function(){
+              if(audio.paused || audio.readyState < 2) failCity("Stream sin datos");
+            }, 4000);
+          }
+        });
+        return;
+      }
+
+      window.CityStream.playHttpStream(audio, url, function(msg){
+        setMainStatus(msg);
+      }).then(function(maybeHls){
+        if(maybeHls && maybeHls.destroy) cityHls = maybeHls;
+        return forcePlay(audio);
+      }).then(function(ok){
+        if(!ok){
+          failCity("Pulsa ▶ o stream caído");
+          return;
+        }
+        setTimeout(function(){
+          if(audio.paused || (audio.readyState < 2 && audio.networkState === 3)){
+            failCity("Stream ciudad sin señal");
+          }
+        }, 5000);
+      }).catch(function(err){
+        failCity((err && err.message) || "Error de stream ciudad");
+      });
+    }
+
+    function startCityRelay(wsUrl){
+      var audio = mainEl();
+      if(!audio || !window.CityStream){
+        hardStopMain("Relay no disponible — recarga la página");
+        return;
+      }
+      // Normalizar https → wss
+      wsUrl = String(wsUrl || "").trim();
+      if(/^https:\/\//i.test(wsUrl)) wsUrl = "wss://" + wsUrl.slice(8);
+      if(/^http:\/\//i.test(wsUrl)) wsUrl = "ws://" + wsUrl.slice(7);
+      wsUrl = wsUrl.replace(/\/(radio|stream|status|health)\/?$/i, "").replace(/\/$/, "");
+      if(!wsUrl){
+        hardStopMain("Sin URL de relay — el control debe pegar wss://…trycloudflare.com");
+        return;
+      }
+      if(!cityRelayListener) cityRelayListener = new window.CityStream.RelayListener();
+      cityRelayListener.onStatus(function(msg){ setMainStatus(msg); });
+
+      if(cityRelayListener.isConnected && cityRelayListener.isConnected() && lastCityRelay === wsUrl){
+        setMainStatus("▶ Relay conectado — activando audio");
+        forcePlay(audio).then(function(ok){
+          if(!ok) showTapOnce();
+        });
+        return;
+      }
+
+      setMainStatus("Conectando al relay…");
+      var tries = 0;
+      function attempt(){
+        tries++;
+        cityRelayListener.connect(wsUrl, audio).then(function(){
+          setMainStatus("▶ Conectado — pulsa ▶ si no oyes (el control debe estar Transmitiendo)");
+          return forcePlay(audio);
+        }).then(function(ok){
+          if(!ok){
+            setMainStatus("Relay listo — pulsa ▶ Toca para oír");
+            showTapOnce();
+          } else {
+            setMainStatus("▶ Escuchando (si no hay sonido: control → Transmitir)");
+          }
+        }).catch(function(err){
+          console.warn("relay", err);
+          var msg = (err && err.message) || "Relay no disponible";
+          setMainStatus(msg);
+          if(tries < 3){
+            setMainStatus("Reintento " + tries + "/3…");
+            setTimeout(attempt, 2500);
+          } else {
+            lastCityRelay = "";
+            showTapOnce();
+            var btn = document.getElementById("mainPlayBtn");
+            if(btn){
+              btn.classList.remove("hidden");
+              btn.textContent = "▶ Reintentar sintonía";
+              btn.onclick = function(){
+                markUnlocked();
+                lastCityRelay = "";
+                startCityRelay(wsUrl);
+              };
+            }
+          }
+        });
+      }
+      lastCityRelay = wsUrl;
+      attempt();
+    }
+
+    // reloj público
+    setInterval(function(){
+      var el = document.getElementById("publicClock");
+      if(!el) return;
+      el.textContent = new Date().toLocaleTimeString("es-CO", { hour12: false });
+    }, 1000);
+
+    function renderSchedule(items){
+      var list = document.getElementById("scheduleList");
+      if(!items || !items.length){
+        list.innerHTML = '<p class="text-neutral-600 text-xs">Sin programación publicada.</p>';
+        return;
+      }
+      var order = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+      items = items.slice().sort(function(a,b){
+        return order.indexOf(a.day)-order.indexOf(b.day) || String(a.time||"").localeCompare(String(b.time||""));
+      });
+      list.innerHTML = items.map(function(s){
+        return '<div class="flex gap-3 border-b border-line/80 pb-2 last:border-0">' +
+          '<span class="font-mono text-[10px] text-brand bg-brand/10 border border-brand/30 rounded px-1.5 py-0.5 h-fit">' +
+          (s.day||"") + " " + (s.time||"") + '</span>' +
+          '<div><p class="text-white text-sm">' + (s.title||"") + '</p>' +
+          '<p class="text-xs text-neutral-500">' + (s.dj||"") + '</p></div></div>';
+      }).join("");
+    }
+
+    // ----- RADIO 24H: sintonía de transmisión (no reinicia al entrar) -----
+    var auto24Bound = false;
+    var auto24Advancing = false;
+    var lastAuto24State = null;
+    var lastAuto24PlayKey = "";
+
+    /** Lista del bucle 24h: la que mandó el panel (selección) o toda la biblioteca */
+    function getAuto24Lib(state){
+      state = state || lastAuto24State || {};
+      var a = state.auto24 || {};
+      if(a.tracks && a.tracks.length){
+        return a.tracks.filter(function(t){ return t && t.mp3Url; });
+      }
+      var full = (window.MP3_LIBRARY && window.MP3_LIBRARY.length) ? window.MP3_LIBRARY : [];
+      if(a.playlist && a.playlist.length && full.length){
+        var set = Object.create(null);
+        a.playlist.forEach(function(id){ set[id] = true; });
+        var filtered = full.filter(function(t){ return t && set[t.id]; });
+        if(filtered.length) return filtered;
+      }
+      return full;
+    }
+
+    function auto24TrackAt(idx, state){
+      var lib = getAuto24Lib(state);
+      if(!lib.length) return null;
+      var i = ((idx % lib.length) + lib.length) % lib.length;
+      var t = lib[i];
+      return {
+        source: "auto24",
+        title: t.title || ("Tema " + (i + 1)),
+        artist: t.artist || "SALVADOR ENTREGAS",
+        mp3Url: t.mp3Url || "",
+        libraryId: t.id || t.libraryId || "",
+        cover: t.cover || "",
+        auto24Index: i,
+        at: Date.now()
+      };
+    }
+
+    function wireAuto24Ended(state){
+      lastAuto24State = state || lastAuto24State;
+      var el = mainEl();
+      if(!el) return;
+      if(!el._serAuto24EndedBound){
+        el._serAuto24EndedBound = true;
+        el.addEventListener("ended", function(){
+          try{
+            var st = lastAuto24State || {};
+            var a24 = st.auto24 || {};
+            if(!a24.enabled && !(st.nowPlaying && st.nowPlaying.source === "auto24") && st.mode !== "auto24"){
+              return;
+            }
+            // Preferir seguir al panel: pull y aplicar; solo avanzar si nadie cambió
+            requestAuto24Next(st, "ended");
+          }catch(e){ console.warn("auto24 ended", e); }
+        });
+      }
+    }
+
+    // Watchdog 24h: reanuda si se pausa; NO fuerza avance salvo ended real
+    if(!window.__serAuto24Watch){
+      window.__serAuto24Watch = setInterval(function(){
+        try{
+          var st = lastAuto24State || {};
+          if(!(st.auto24 && st.auto24.enabled)) return;
+          var el = mainEl();
+          if(!el) return;
+          var np = st.nowPlaying || {};
+          if(!np.mp3Url) return;
+          if(el.ended){
+            requestAuto24Next(st, "watch-ended");
+            return;
+          }
+          // Solo reanudar si está pausado a mitad de canción (no reiniciar)
+          if(el.paused && (el.currentTime || 0) > 0.5){
+            forcePlay(el);
+          }
+        }catch(e){}
+      }, 5000);
+    }
+
+    /**
+     * Oyentes: primero siguen la sintonía del panel.
+     * Solo un avance local si el panel no ha cambiado (bloqueo 12s anti-carrera).
+     */
+    var lastLocalAdvanceAt = 0;
+    function requestAuto24Next(state, reason){
+      if(auto24Advancing) return;
+      var now = Date.now();
+      if(now - lastLocalAdvanceAt < 12000) return;
+      auto24Advancing = true;
+      var finish = function(){ setTimeout(function(){ auto24Advancing = false; }, 2500); };
+
+      function followRemote(st){
+        lastAuto24State = st;
+        // NO borrar lastMp3 si es la misma canción
+        applyIncomingState(st);
+        finish();
+      }
+
+      if(window.StationSync && window.StationSync.pull){
+        window.StationSync.pull().then(function(remote){
+          var st = (remote && remote.state) || state || {};
+          var a = st.auto24 || {};
+          var localIdx = (state && state.auto24 && typeof state.auto24.index === "number")
+            ? state.auto24.index
+            : -1;
+          // El panel (u otro) ya avanzó → solo seguir
+          if(a.enabled && localIdx >= 0 && typeof a.index === "number" && a.index !== localIdx){
+            followRemote(st);
+            return;
+          }
+          // Si el panel actualizó trackStartedAt reciente (<8s), no empujar
+          var tsa = (a.trackStartedAt || (st.nowPlaying && st.nowPlaying.trackStartedAt) || 0);
+          if(tsa && (now - Number(tsa) < 8000) && (elPlayingProgress() < 0.92)){
+            followRemote(st);
+            return;
+          }
+          // Avance local controlado (sin panel / panel cerrado)
+          lastLocalAdvanceAt = now;
+          try{ localStorage.setItem("ser_a24_adv_at", String(now)); }catch(e){}
+          advanceAuto24(st);
+          finish();
+        }).catch(function(){
+          lastLocalAdvanceAt = now;
+          advanceAuto24(state || {});
+          finish();
+        });
+      } else {
+        lastLocalAdvanceAt = now;
+        advanceAuto24(state || {});
+        finish();
+      }
+    }
+
+    function elPlayingProgress(){
+      try{
+        var el = mainEl();
+        if(!el) return 1;
+        var d = el.duration;
+        var c = el.currentTime || 0;
+        if(!isFinite(d) || d < 1) return 1;
+        return c / d;
+      }catch(e){ return 1; }
+    }
+
+    function advanceAuto24(state){
+      if(auto24Advancing && arguments.length){ /* lock already set by request */ }
+      // Lock largo anti-carrera entre muchos oyentes
+      try{
+        var lastG = parseInt(localStorage.getItem("ser_a24_adv_at") || "0", 10) || 0;
+        if(Date.now() - lastG < 10000 && Date.now() - lastLocalAdvanceAt > 50){
+          // otro oyente acaba de avanzar: pull y seguir
+          if(window.StationSync && window.StationSync.pull){
+            window.StationSync.pull().then(function(r){
+              if(r && r.state) applyIncomingState(r.state);
+            }).catch(function(){});
+          }
+          return;
+        }
+      }catch(eL){}
+
+      function doAdvance(st){
+        var lib = getAuto24Lib(st);
+        if(!lib.length) return;
+        var cur = (st.auto24 && typeof st.auto24.index === "number")
+          ? st.auto24.index
+          : (st.nowPlaying && typeof st.nowPlaying.auto24Index === "number"
+            ? st.nowPlaying.auto24Index
+            : 0);
+        var next = (cur + 1) % lib.length;
+        var track = auto24TrackAt(next, st);
+        if(!track || !track.mp3Url) return;
+        // Evitar “repetir la misma” si la lib tiene 1 sola canción y ya estamos en ella
+        // (si hay >1, next siempre es distinta)
+        var t0 = Date.now();
+        track.trackStartedAt = t0;
+        track.at = t0;
+        var prevA = st.auto24 || {};
+        var prevLive = st.live || {};
+        var keepMic = !!(prevLive.mic || prevLive.micRemote || prevLive.httpLive || prevLive.peerId || (st.nowPlaying && (st.nowPlaying.hasMic || st.nowPlaying.httpLive)));
+        var newState = {
+          onAir: true,
+          mode: "auto24",
+          source: "auto24",
+          auto24: {
+            enabled: true,
+            index: next,
+            playlist: prevA.playlist && prevA.playlist.length ? prevA.playlist : lib.map(function(x){ return x.id || x.libraryId; }),
+            tracks: prevA.tracks && prevA.tracks.length ? prevA.tracks : lib,
+            startedAt: prevA.startedAt || t0,
+            trackStartedAt: t0,
+            updatedAt: t0
+          },
+          live: {
+            active: keepMic || !!prevLive.active || !!prevLive.peerId,
+            peerId: prevLive.peerId || "",
+            httpLive: !!prevLive.httpLive,
+            mode: prevLive.mode || (prevLive.httpLive ? "http" : (prevLive.peerId ? "peer" : "off")),
+            mic: !!prevLive.mic,
+            micRemote: !!prevLive.micRemote,
+            capture: prevLive.capture || "",
+            at: t0
+          },
+          city: { active: false },
+          testSignal: { enabled: false },
+          nowPlaying: Object.assign({}, track, {
+            httpLive: !!(prevLive.httpLive || (st.nowPlaying && st.nowPlaying.httpLive)),
+            hasMic: keepMic,
+            micRemote: !!prevLive.micRemote,
+            micPeerId: (st.nowPlaying && st.nowPlaying.micPeerId) || prevLive.peerId || ""
+          })
+        };
+        lastAuto24State = Object.assign({}, st, newState);
+        // Pre-marcar clave para no re-seek al aplicar
+        lastMp3 = track.mp3Url;
+        lastAuto24PlayKey = track.mp3Url + "|" + next;
+        lastWantedUrl = track.mp3Url;
+        try{ localStorage.setItem(LS_STATE, JSON.stringify(lastAuto24State)); }catch(e){}
+        try{ localStorage.setItem("ser_a24_adv_at", String(t0)); }catch(e2){}
+        var pub = window.StationSync && window.StationSync.push
+          ? window.StationSync.push({ state: newState })
+          : Promise.resolve();
+        pub.catch(function(){}).then(function(){
+          applyIncomingState(lastAuto24State);
+        });
+      }
+
+      doAdvance(state || lastAuto24State || {});
+    }
+
+    // Estado del control → qué oye el público
+    var lastAppliedKey = "";
+    function applyIncomingState(state){
+      state = state || {};
+      try{ localStorage.setItem(LS_STATE, JSON.stringify(state)); }catch(e){}
+      lastAuto24State = state;
+
+      var np = state.nowPlaying || null;
+      // Clave ESTABLE: sin trackStartedAt/title (heartbeats del mic los cambian y reiniciaban la canción)
+      var a24idx = (state.auto24 && state.auto24.enabled && typeof state.auto24.index === "number")
+        ? state.auto24.index
+        : ((np && typeof np.auto24Index === "number") ? np.auto24Index : -1);
+      var changeKey = [
+        state.onAir ? "1" : "0",
+        state.mode || "",
+        (np && np.source) || "",
+        (np && np.mp3Url) || "",
+        (np && np.videoId) || "",
+        "a24:" + a24idx,
+        (state.live && state.live.mic) ? "mic" : "",
+        (state.live && state.live.httpLive) ? "hl" : ""
+      ].join("|");
+      var isNew = changeKey !== lastAppliedKey;
+      if(isNew){
+        lastAppliedKey = changeKey;
+        try{
+          var nextKey = ((np && np.mp3Url) || "") + "|" + a24idx;
+          // Solo forzar recarga si cambió URL o índice 24h
+          if(nextKey !== lastAuto24PlayKey && np && np.mp3Url){
+            if(np.mp3Url !== lastMp3 || ("a24:" + a24idx) !== ("a24:" + (lastAuto24PlayKey.split("|")[1] || ""))){
+              lastMp3 = "";
+              lastWantedUrl = "";
+              lastAuto24PlayKey = "";
+            }
+          }
+        }catch(eK){}
+      }
+
+      var hasLive = !!(state.live && state.live.active && state.live.peerId);
+      var hasCity = !!(state.city && state.city.active);
+      var hasSpotify = !!(state.onAir && np && (np.source === "spotify" || np.trackId));
+      var hasAuto24 = !!(state.auto24 && state.auto24.enabled);
+      // Si 24h está apagada, no usar tracks viejos de biblioteca
+      if(state.auto24 && state.auto24.enabled === false){
+        hasAuto24 = false;
+      }
+      var hasUpload = !!(state.onAir && np && (np.source === "upload" || np.isUpload || state.mode === "upload"));
+      var hasYoutube = !!(state.onAir && np && (np.source === "youtube" || np.youtube || np.videoId || state.mode === "youtube"));
+      var hasMp3 = !!(state.onAir && np && (np.source === "mp3" || np.source === "test" || np.source === "auto24" || np.source === "live" || np.mp3Url));
+      var hasTestFlag = !!(state.testSignal && state.testSignal.enabled);
+      var hasHttpLive = !!(state.live && state.live.httpLive && state.live.active);
+      var hasReal = !!(hasLive || hasCity || hasSpotify || hasMp3 || hasAuto24 || hasUpload || hasHttpLive || hasYoutube || hasTestFlag || (state.onAir && np && np.title));
+
+      // Upload / live tiene prioridad sobre restos de 24h
+      if((hasUpload || (state.mode === "live" && !hasAuto24)) && state.auto24){
+        state = Object.assign({}, state, {
+          auto24: Object.assign({}, state.auto24, { enabled: false })
+        });
+        hasAuto24 = false;
+      }
+
+      // Radio 24h activa sin nowPlaying → armar primer tema
+      if(hasAuto24 && !hasLive && !hasUpload && (!np || !np.mp3Url)){
+        var idx0 = (state.auto24 && typeof state.auto24.index === "number") ? state.auto24.index : 0;
+        var t0 = auto24TrackAt(idx0, state);
+        if(t0 && t0.mp3Url){
+          state = Object.assign({}, state, {
+            onAir: true,
+            mode: "auto24",
+            nowPlaying: t0
+          });
+          hasReal = true;
+          np = t0;
+        }
+      }
+
+      // Prueba forzada por el control
+      if(hasTestFlag && !hasLive && !hasCity && !hasSpotify && !(hasMp3 && np && np.source !== "test")){
+        state = Object.assign({}, state, {
+          onAir: true,
+          mode: "mp3",
+          nowPlaying: {
+            source: "test",
+            title: "Señal de prueba",
+            artist: "SALVADOR ENTREGAS",
+            mp3Url: (cfg.TEST_SIGNAL_URL) || (location.origin + "/test-signal.mp3"),
+            at: Date.now()
+          }
+        });
+        hasReal = true;
+      }
+
+      // Si el control está ON AIR, NUNCA forzar OFF en el oyente
+      // (antes se pisaba a off cuando faltaba nowPlaying un momento)
+      if(hasReal || state.onAir){
+        renderState(state);
+        return;
+      }
+
+      // Sin emisión
+      try{
+        var el = mainEl();
+        if(el && !el.srcObject){
+          el.pause();
+        }
+      }catch(e){}
+      setMainStatus("");
+      renderState(Object.assign({}, state, {
+        onAir: false,
+        nowPlaying: null
+      }));
+    }
+
+    function pullState(){
+      if(window.StationSync){
+        window.StationSync.pull().then(function(remote){
+          if(remote && remote.state){
+            applyIncomingState(remote.state);
+            if(remote.schedule) renderSchedule(remote.schedule);
+            return;
+          }
+          applyIncomingState(localGet(LS_STATE, {}));
+        }).catch(function(){
+          applyIncomingState(localGet(LS_STATE, {}));
+        });
+      } else {
+        applyIncomingState(localGet(LS_STATE, {}));
+      }
+      renderSchedule(localGet(LS_SCH, []));
+    }
+
+    if(db){
+      db.collection("station").doc("state").onSnapshot(function(doc){ applyIncomingState(doc.data()||{}); });
+      db.collection("schedule").onSnapshot(function(snap){
+        var items = [];
+        snap.forEach(function(d){ items.push(d.data()); });
+        renderSchedule(items);
+      });
+    } else {
+      pullState();
+      // 2s: cambio de canción casi al instante; 200 oyentes × 0.5/s ≈ 100 req/s OK en Vercel
+      setInterval(pullState, 2500);
+      window.addEventListener("storage", pullState);
+      window.addEventListener("focus", function(){
+        pullState();
+        if(!isYoutubePlayingNow()) forcePlay(mainEl());
+      });
+      document.addEventListener("visibilitychange", function(){
+        if(document.visibilityState === "visible"){
+          pullState();
+          // YouTube: no llamar forcePlay (interrumpe el iframe)
+          if(!isYoutubePlayingNow()) forcePlay(mainEl());
+        }
+      });
+    }
+    // Arranque inmediato + reintentos cortos (sin recargar la página)
+    setBoot("Sintonizando…");
+    pullState();
+    setTimeout(function(){ pullState(); }, 400);
+    setTimeout(function(){ pullState(); if(!isYoutubePlayingNow()) forcePlay(mainEl()); }, 1000);
+    setTimeout(function(){ if(!isYoutubePlayingNow()) forcePlay(mainEl()); }, 2000);
+
+    // Pedidos (solo texto)
+    document.getElementById("requestForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var payload = {
+        id: "r_" + Date.now(),
+        name: document.getElementById("reqName").value.trim(),
+        song: document.getElementById("reqSong").value.trim(),
+        artist: document.getElementById("reqArtist").value.trim(),
+        note: document.getElementById("reqNote").value.trim(),
+        status: "pending",
+        createdAt: Date.now()
+      };
+      var status = document.getElementById("reqStatus");
+      function ok(){
+        e.target.reset();
+        status.textContent = "✓ Pedido enviado al control. Ellos deciden si lo ponen al aire.";
+        status.className = "text-xs mt-3 font-mono text-emerald-400";
+        status.classList.remove("hidden");
+      }
+      var list = localGet(LS_REQ, []);
+      list.unshift(payload);
+      try{ localStorage.setItem(LS_REQ, JSON.stringify(list)); }catch(e){}
+      if(window.StationSync){
+        window.StationSync.pushRequest(payload).then(ok).catch(function(){
+          status.textContent = "Pedido guardado localmente.";
+          status.className = "font-mono";
+          status.style.color = "#eab308";
+          status.classList.remove("hidden");
+          status.style.fontSize = "12px";
+        });
+      } else {
+        ok();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
