@@ -284,7 +284,7 @@ def milis(cv, t):
     x0, x1, yb, amp = 130, 950, 640, 150
     tm = C.wd(2, "milisegundos")
     td = C.wd(2, "décadas")
-    pr = e_inout(prog(t, s0 + 0.2, td + 0.9))
+    pr = e_out(prog(t, s0 + 0.1, td + 0.9))
     lay = new_layer()
     d = ImageDraw.Draw(lay)
     d.rectangle((x0 - 10, 380, x1 + 10, 900), outline=(60, 90, 130, 255), width=3)
