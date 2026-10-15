@@ -1,0 +1,4 @@
+# Vídeos generados (pesados, no van al repo)
+salida/
+__pycache__/
+*.part
