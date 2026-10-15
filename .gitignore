@@ -2,3 +2,4 @@
 salida/
 __pycache__/
 *.part
+herramientas/video/noticiero/historias/*/build/

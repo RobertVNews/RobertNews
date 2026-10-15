@@ -1,0 +1,3 @@
+Anton (Vernon Adams) y Barlow Condensed (Jeremy Tribby): SIL Open Font License 1.1.
+Obtenidas del paquete npm @fontsource/anton y @fontsource/barlow-condensed (formato woff).
+Pueden redistribuirse libremente con este proyecto.

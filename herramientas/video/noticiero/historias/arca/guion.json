@@ -1,0 +1,74 @@
+{
+  "titulo": "Arca de Noé: perforan la formación Durupınar",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 11,
+  "marca": {
+    "etiqueta": "ARQUEOLOGÍA",
+    "titular": "EN BUSCA DEL ARCA DE NOÉ",
+    "cinta": "ROBERT NEWS  •  ARQUEOLOGÍA  •  FORMACIÓN DURUPINAR, TURQUÍA  •  FUENTES: FOX NEWS, POPULAR MECHANICS",
+    "banner_desde_linea": 1,
+    "cta_linea": 7,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SÍGUENOS EN ROBERT NEWS"
+  },
+  "escenas_en_linea": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "lineas": [
+    {
+      "texto": "¡Científicos acaban de perforar la formación donde algunos creen que reposa el Arca de Noé!",
+      "vel": 8,
+      "tono": 6,
+      "vol": 10
+    },
+    {
+      "texto": "Está en Turquía, junto al monte Ararat. Una colina con forma de barco.",
+      "vel": 2,
+      "tono": -3,
+      "vol": 0
+    },
+    {
+      "texto": "El equipo bajó casi veinte metros y sacó más de trescientas muestras.",
+      "vel": 6,
+      "tono": 0,
+      "vol": 6
+    },
+    {
+      "texto": "¿Y qué encontraron? Según uno de sus líderes... ¡no hay roca sólida! Solo capas de tierra.",
+      "vel": 12,
+      "tono": 6,
+      "vol": 12
+    },
+    {
+      "texto": "Su georradar marca líneas rectas, cavidades... ¡y hasta tres niveles! Pero son lecturas de radar, no fotos.",
+      "vel": 4,
+      "tono": -3,
+      "vol": 0
+    },
+    {
+      "texto": "Dentro de la silueta hay más materia orgánica. ¿Madera del Arca? ¡Todavía no confirmada!",
+      "vel": 9,
+      "tono": 4,
+      "vol": 8
+    },
+    {
+      "texto": "Los geólogos advierten: cambios en la tierra no prueban un barco. Y un estudio de mil novecientos noventa y seis dice que es natural.",
+      "vel": 3,
+      "tono": -2,
+      "vol": 0
+    },
+    {
+      "texto": "El carbono catorce dirá la verdad. ¿Leyenda o descubrimiento? ¡Síguenos en Robert News!",
+      "vel": 11,
+      "tono": 6,
+      "vol": 12
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # ROBERT NEWS · Vídeos narrados
 
+> **Shorts de noticiero (45 s, gráficos animados, voz explosiva):** ver [`noticiero/README.md`](noticiero/README.md) y la skill `/short-noticiero`. Este documento cubre los especiales largos (30–90 min).
+
 Convierte una noticia en un especial narrado (30–90 min) con voz neural gratuita, portada y capítulos para YouTube.
 
 ## Flujo completo

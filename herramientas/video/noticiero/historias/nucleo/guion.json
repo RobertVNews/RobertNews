@@ -1,0 +1,26 @@
+{
+  "titulo": "El núcleo interno de la Tierra modifica la duración de los días",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 1,
+  "marca": {
+    "etiqueta": "CIENCIA",
+    "titular": "EL NÚCLEO QUE CAMBIA TUS DÍAS",
+    "cinta": "ROBERT NEWS  •  CIENCIA  •  ESTUDIO EN NATURE  •  UNIVERSIDAD DE ALBERTA (CANADÁ)  •  ZHANG Y DUMBERRY",
+    "banner_desde_linea": 1,
+    "cta_linea": 8,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SÍGUENOS EN ROBERT NEWS"
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+  "lineas": [
+    {"texto": "¡Una esfera sólida en el centro de la Tierra está cambiando la duración de tus días!", "vel": 8, "tono": 6, "vol": 10},
+    {"texto": "Lo revela un estudio en Nature, de la Universidad de Alberta, en Canadá.", "vel": 3, "tono": -2, "vol": 0},
+    {"texto": "Tranquilo: hablamos de unos pocos milisegundos de diferencia, a lo largo de las décadas.", "vel": 6, "tono": 0, "vol": 4},
+    {"texto": "¿La causa? Una batalla de fuerzas a miles de kilómetros bajo tus pies.", "vel": 11, "tono": 6, "vol": 10},
+    {"texto": "La gravedad del núcleo interno tira de zonas densas del manto... ¡y eso acelera o frena la rotación!", "vel": 5, "tono": -2, "vol": 2},
+    {"texto": "Otras dos fuerzas, la electromagnética y la topográfica, funcionan como amortiguador.", "vel": 8, "tono": 3, "vol": 6},
+    {"texto": "Y atención: ese núcleo sólido podría deformarse de forma viscosa en unos diez años.", "vel": 10, "tono": 5, "vol": 8},
+    {"texto": "Pero aún quedan misterios, y no todos los científicos coinciden en cómo gira el núcleo.", "vel": 3, "tono": -3, "vol": 0},
+    {"texto": "El centro de la Tierra manda... ¡y tus días lo sienten! ¡Síguenos en Robert News!", "vel": 11, "tono": 6, "vol": 12}
+  ]
+}
