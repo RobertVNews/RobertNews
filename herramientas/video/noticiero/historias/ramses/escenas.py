@@ -426,8 +426,7 @@ def bloque(cv, t):
         return
     panel(cv, a, T_BLO, 0.96 + 0.04 * ain)
     s0 = C.SC_T[7][0]
-    tb = C.wd(7, "bloque")
-    p = e_back(prog(t, tb - 0.1, tb + 0.5), 1.3)
+    p = e_back(prog(t, s0 + 0.1, s0 + 0.6), 1.3)
     cx, cy = 540, 640
     blit(cv, BLOCK_G, cx, cy, scale=p, alpha=a * 0.7 * clamp(p * 2))
     blit(cv, BLOCK, cx, cy, scale=p, alpha=a * clamp(p * 2))
