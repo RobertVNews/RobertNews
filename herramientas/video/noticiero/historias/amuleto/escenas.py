@@ -196,7 +196,6 @@ def setup(ctx):
         # 7 · cierre
         photo_bleed(f"{A}/portada.webp", SC[7][0] + 0.05, ctx.DUR + 1, z0=1.1, z1=1.0, fx=0.5, fy=0.55, tag=ILU),
         caption("MÁS DE 17 SIGLOS", wd(7, "diecisiete"), ctx.DUR + 1, y=1000, col=AMBER),
-        emblema(wd(7, "síguenos") - 0.25, ctx.DUR + 1),
     ]
     impacts = [0.30, wd(0, "setecientos") + 0.1, wd(3, "dieciocho") + 0.1, wd(4, "doblad") + 0.1, wd(5, "setenta") + 0.3, wd(6, "contrastarla") + 0.1, wd(7, "diecisiete") + 0.2]
     flashes = [(0.27, 0.9), (wd(3, "dieciocho") + 0.1, 0.25)]

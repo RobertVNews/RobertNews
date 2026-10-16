@@ -264,14 +264,31 @@ class Ctx:
         self.BTN = rrect(900, 130, (236, 22, 38), (184, 8, 22), 22)
         txt = m.get("cta_texto_tiktok", "SÍGUENOS  @robertnews_") if TT else m.get("cta_texto", "SÍGUENOS EN ROBERT NEWS")
         bt = S(txt, B7, 66, fill=(255, 255, 255), shadow=(0, 3, 2, 0.5))
-        if bt.width > 730:
-            bt = bt.resize((730, round(bt.height * 730 / bt.width)), Image.LANCZOS)
-        self.BTN.alpha_composite(bt, (60, (130 - bt.height) // 2))
+        emb = f"{HERE}/assets/marca/emblema_rojo.png"
+        oy = 0
+        self.URL_DY = 0
+        if m.get("cta_emblema") and os.path.exists(emb):
+            # botón con el emblema RN a la izquierda (sobresale de la barra)
+            bar = self.BTN
+            self.BTN = Image.new("RGBA", (900, 176), (0, 0, 0, 0))
+            self.BTN.alpha_composite(bar, (0, 23))
+            e = Image.open(emb).convert("RGBA")
+            e = e.resize((round(e.width * 176 / e.height), 176), Image.LANCZOS)
+            if bt.width > 560:
+                bt = bt.resize((560, round(bt.height * 560 / bt.width)), Image.LANCZOS)
+            self.BTN.alpha_composite(bt, (210, (176 - bt.height) // 2))
+            self.BTN.alpha_composite(e, (14, 0))
+            oy = 23
+            self.URL_DY = 26
+        else:
+            if bt.width > 730:
+                bt = bt.resize((730, round(bt.height * 730 / bt.width)), Image.LANCZOS)
+            self.BTN.alpha_composite(bt, (60, (130 - bt.height) // 2))
         d = ImageDraw.Draw(self.BTN)
-        ax, ay = 818, 65
+        ax, ay = 818, 65 + oy
         for xy in ((ax - 34, ay, ax + 30, ay), (ax + 6, ay - 24, ax + 34, ay), (ax + 6, ay + 24, ax + 34, ay)):
             d.line(xy, fill=(255, 255, 255, 255), width=10)
-        self.BTN_G = soft_glow(900, 130, (255, 30, 50), 26, 0.8)
+        self.BTN_G = soft_glow(900, self.BTN.height, (255, 30, 50), 26, 0.8)
         self.URL = S("robertnews.vercel.app", B6, 54, fill=(135, 205, 255), shadow=(0, 4, 3, 0.6))
 
 
@@ -314,7 +331,7 @@ def cta(ctx, cv, t):
     beat = 1 + 0.035 * math.sin((t - tc) * 7) * (t > tc + 0.5)
     blit(cv, ctx.BTN_G, 540, 1330 + DY, scale=beat * pb, alpha=0.9 * clamp(pb))
     blit(cv, ctx.BTN, 540, 1330 + DY, scale=beat * pb, alpha=clamp(pb * 2))
-    blit(cv, ctx.URL, 540, 1420 + DY, alpha=prog(t, tc + 0.2, tc + 0.6))
+    blit(cv, ctx.URL, 540, 1420 + DY + ctx.URL_DY, alpha=prog(t, tc + 0.2, tc + 0.6))
 
 
 def camera(cv, t, dur, impacts):
