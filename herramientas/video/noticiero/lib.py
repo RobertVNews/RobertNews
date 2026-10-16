@@ -15,6 +15,13 @@ SR = 44100
 HERE = os.path.dirname(os.path.abspath(__file__))
 ANTON, B7, B6 = (f"{HERE}/fonts/{n}" for n in ("Anton.woff", "BarlowCond700.woff", "BarlowCond600.woff"))
 
+# variante TikTok (RN_TIKTOK=1): la interfaz de TikTok tapa más la parte baja (~480-660 px) y la alta (~240 px).
+# Se encoge el contenido (escenas) y se sube el banner; el logo baja un poco. Ver README.
+TT = os.environ.get("RN_TIKTOK") == "1"
+TT_S, TT_TOP = 0.86, 290          # escala del contenido y la y a la que queda su borde superior (y=215 de origen)
+DY = -60 if TT else 0              # desplazamiento vertical del banner y del botón final
+LOGO_Y = 205 if TT else 120
+
 # paleta de la marca
 AMBER, TEAL, RED = (255, 176, 0), (90, 220, 230), (232, 30, 45)
 GOLD = ((255, 240, 70), (255, 168, 0))
@@ -163,7 +170,19 @@ def make_stamp(text, col, size=104, fillc=(40, 0, 8, 215)):
 
 # ------------------------------------------------------------------ marca
 _LOGO_IMG = Image.open(f"{HERE}/assets/logo.png").convert("RGBA")
-_LOGO_GLOW = soft_glow(_LOGO_IMG.width, _LOGO_IMG.height, (255, 20, 40), 26, 0.45)
+if os.path.exists(f"{HERE}/assets/marca/robertnews_texto.webp"):
+    _LOGO_IMG = Image.open(f"{HERE}/assets/marca/robertnews_texto.webp").convert("RGBA")
+    _LOGO_IMG = _LOGO_IMG.crop(_LOGO_IMG.getbbox())
+if os.path.exists(f"{HERE}/assets/marca/robertnews_texto.webp"):
+    # sombra paralela siguiendo la silueta del logotipo (el logotipo nuevo es transparente)
+    _a = Image.new("L", (_LOGO_IMG.width + 120, _LOGO_IMG.height + 120), 0)
+    _a.paste(_LOGO_IMG.getchannel("A"), (60, 60))
+    _a = _a.filter(ImageFilter.GaussianBlur(18)).point(lambda v: min(255, int(v * 1.6)))
+    _LOGO_GLOW = Image.new("RGBA", _a.size, (0, 0, 0, 0))
+    _LOGO_GLOW.putalpha(_a)
+    _LOGO_GLOW = Image.merge("RGBA", (*Image.new("RGB", _a.size, (0, 0, 0)).split(), _a.point(lambda v: int(v * 0.85))))
+else:
+    _LOGO_GLOW = soft_glow(_LOGO_IMG.width, _LOGO_IMG.height, (255, 20, 40), 26, 0.45)
 
 PANEL = Image.new("RGBA", (1020, 1080), (0, 0, 0, 0))
 _pd = ImageDraw.Draw(PANEL)
@@ -243,7 +262,10 @@ class Ctx:
         self.TICK_W = S(ticker, B6, 34, fill=(255, 255, 255)).width - 24
         self.TICK_BG = rrect(1000, 48, (150, 8, 20), (120, 6, 16), 6)
         self.BTN = rrect(900, 130, (236, 22, 38), (184, 8, 22), 22)
-        bt = S(m.get("cta_texto", "SÍGUENOS EN ROBERT NEWS"), B7, 66, fill=(255, 255, 255), shadow=(0, 3, 2, 0.5))
+        txt = m.get("cta_texto_tiktok", "SÍGUENOS  @robertnews_") if TT else m.get("cta_texto", "SÍGUENOS EN ROBERT NEWS")
+        bt = S(txt, B7, 66, fill=(255, 255, 255), shadow=(0, 3, 2, 0.5))
+        if bt.width > 730:
+            bt = bt.resize((730, round(bt.height * 730 / bt.width)), Image.LANCZOS)
         self.BTN.alpha_composite(bt, (60, (130 - bt.height) // 2))
         d = ImageDraw.Draw(self.BTN)
         ax, ay = 818, 65
@@ -256,7 +278,7 @@ class Ctx:
 # ------------------------------------------------------------------ elementos comunes de cada fotograma
 def top_logo(cv, t):
     p = e_back(prog(t, 0.55, 1.1), 1.4)
-    y = 120 - 220 * (1 - p)
+    y = LOGO_Y - 220 * (1 - p)
     sc = 760 / _LOGO_IMG.width * (1 + 0.012 * math.sin(t * 3.2))
     blit(cv, _LOGO_GLOW, 540, y, scale=sc, alpha=prog(t, 0.55, 0.85))
     blit(cv, _LOGO_IMG, 540, y, scale=sc, alpha=prog(t, 0.55, 0.75))
@@ -271,16 +293,16 @@ def lower_third(ctx, cv, t):
         return
     off = -1100 * (1 - p) + 1100 * out
     ptick = e_out(prog(t, ctx.lt_in + 0.25, ctx.lt_in + 0.75))
-    y0 = 1262
+    y0 = 1262 + DY
     glow = soft_glow(1000, 110, (0, 90, 220), 22, 0.35)
     cv.paste(glow.convert("RGB"), (round(40 - 44 + off), y0 - 44), glow.getchannel("A"))
     cv.paste(ctx.TAG.convert("RGB"), (round(40 + off), y0), ctx.TAG.getchannel("A"))
     cv.paste(ctx.BAR.convert("RGB"), (round(302 + off), y0), ctx.BAR.getchannel("A"))
-    cv.paste(ctx.TICK_BG.convert("RGB"), (round(40 + off), 1380 + round(40 * (1 - ptick))), ctx.TICK_BG.getchannel("A"))
+    cv.paste(ctx.TICK_BG.convert("RGB"), (round(40 + off), 1380 + DY + round(40 * (1 - ptick))), ctx.TICK_BG.getchannel("A"))
     if ptick > 0.4:
         shift = (t * 150) % ctx.TICK_W
         strip = ctx.TICK.crop((round(shift), 0, round(shift) + 960, ctx.TICK.height))
-        cv.paste(strip.convert("RGB"), (round(60 + off), 1380 + (48 - strip.height) // 2 + 1), strip.getchannel("A"))
+        cv.paste(strip.convert("RGB"), (round(60 + off), 1380 + DY + (48 - strip.height) // 2 + 1), strip.getchannel("A"))
 
 
 def cta(ctx, cv, t):
@@ -290,9 +312,9 @@ def cta(ctx, cv, t):
     if pb <= 0:
         return
     beat = 1 + 0.035 * math.sin((t - tc) * 7) * (t > tc + 0.5)
-    blit(cv, ctx.BTN_G, 540, 1330, scale=beat * pb, alpha=0.9 * clamp(pb))
-    blit(cv, ctx.BTN, 540, 1330, scale=beat * pb, alpha=clamp(pb * 2))
-    blit(cv, ctx.URL, 540, 1420, alpha=prog(t, tc + 0.2, tc + 0.6))
+    blit(cv, ctx.BTN_G, 540, 1330 + DY, scale=beat * pb, alpha=0.9 * clamp(pb))
+    blit(cv, ctx.BTN, 540, 1330 + DY, scale=beat * pb, alpha=clamp(pb * 2))
+    blit(cv, ctx.URL, 540, 1420 + DY, alpha=prog(t, tc + 0.2, tc + 0.6))
 
 
 def camera(cv, t, dur, impacts):
@@ -315,11 +337,30 @@ class Spec:
         self.pad = pad
 
 
+_TT_MASK = None
+
+
+def tt_squeeze(cv):
+    """Encoge las escenas (con borde difuminado sobre un fondo borroso) para dejar sitio a la interfaz de TikTok."""
+    global _TT_MASK
+    sw, sh = round(W * TT_S), round(H * TT_S)
+    if _TT_MASK is None:
+        m = Image.new("L", (sw, sh), 0)
+        ImageDraw.Draw(m).rectangle((46, 46, sw - 46, sh - 46), fill=255)
+        _TT_MASK = m.filter(ImageFilter.GaussianBlur(22))
+    base = cv.resize((W // 4, H // 4), Image.BILINEAR).filter(ImageFilter.GaussianBlur(5)).resize((W, H), Image.BILINEAR)
+    base = Image.blend(Image.new("RGB", (W, H), (0, 0, 0)), base, 0.7)
+    base.paste(cv.resize((sw, sh), Image.LANCZOS), ((W - sw) // 2, round(TT_TOP - 215 * TT_S)), _TT_MASK)
+    return base
+
+
 def make_frame(ctx, spec):
     def frame(t):
         cv = spec.background(t, clamp(spec.dim(t)))
         for sc in spec.scenes:
             sc(cv, t)
+        if TT:
+            cv = tt_squeeze(cv)
         top_logo(cv, t)
         cv = camera(cv, t, ctx.DUR, spec.impacts)
         lower_third(ctx, cv, t)
@@ -460,16 +501,16 @@ def run(story_dir, mode, times=()):
         ims = []
         for t in times:
             im = frame(t)
-            im.save(f"{ctx.build}/test_{t:05.2f}.png")
+            im.save(f"{ctx.build}/test{'_tt' if TT else ''}_{t:05.2f}.png")
             ims.append(im.resize((324, 576), Image.LANCZOS))
         sheet = Image.new("RGB", (324 * len(ims), 576))
         for i, im in enumerate(ims):
             sheet.paste(im, (324 * i, 0))
-        sheet.save(f"{ctx.build}/contacto.png")
+        sheet.save(f"{ctx.build}/contacto{'_tt' if TT else ''}.png")
         print(f"hoja de contacto: {ctx.build}/contacto.png")
         return
     build_audio(ctx, spec, f"{ctx.build}/mezcla.wav")
-    out = f"{ctx.build}/short.mp4"
+    out = f"{ctx.build}/short{'_tiktok' if TT else ''}.mp4"
     p = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
                           "-i", f"{ctx.build}/mezcla.wav", "-af", "loudnorm=I=-14:TP=-1.0:LRA=11",
                           "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
