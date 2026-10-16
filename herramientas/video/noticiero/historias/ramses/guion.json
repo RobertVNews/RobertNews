@@ -1,0 +1,26 @@
+{
+  "titulo": "Agricultor halla una estatua gigante de Ramsés II en Egipto",
+  "voz": "es-MX-JorgeNeural",
+  "boost": -5,
+  "marca": {
+    "etiqueta": "HISTORIA",
+    "titular": "AGRICULTOR HALLA UN FARAÓN GIGANTE",
+    "cinta": "ROBERT NEWS  •  HISTORIA  •  EGIPTO  •  FUENTES: EGYPTIAN GAZETTE, HERITAGE DAILY, NEW YORK POST",
+    "banner_desde_linea": 1,
+    "cta_linea": 8,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SÍGUENOS EN ROBERT NEWS"
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+  "lineas": [
+    {"texto": "¡Un agricultor araba su tierra en Egipto... y encontró por accidente a un faraón gigante!", "vel": 8, "tono": 6, "vol": 10},
+    {"texto": "Es una estatua de Ramsés II, uno de los reyes más poderosos del antiguo Egipto.", "vel": 3, "tono": -3, "vol": 0},
+    {"texto": "Según medios egipcios, ocurrió en Behbeit El Hagar, en el delta del Nilo.", "vel": 5, "tono": 0, "vol": 4},
+    {"texto": "Avisó a las autoridades, y arqueólogos del Consejo Supremo de Antigüedades excavaron.", "vel": 10, "tono": 5, "vol": 8},
+    {"texto": "Salió una cabeza de más de metro y medio, con la doble corona del Alto y Bajo Egipto.", "vel": 6, "tono": 0, "vol": 4},
+    {"texto": "Calculan que la estatua completa medía más de ocho metros.", "vel": 11, "tono": 6, "vol": 12},
+    {"texto": "Y hay más: una segunda estatua de casi dos metros y medio, con tocado real a rayas.", "vel": 8, "tono": 3, "vol": 6},
+    {"texto": "Además, un bloque de granito rosa con jeroglíficos que proclaman al faraón Hijo de Ra.", "vel": 4, "tono": -3, "vol": 0},
+    {"texto": "Esperan que ayude a entender mejor esta zona del delta. ¡Síguenos en Robert News!", "vel": 11, "tono": 6, "vol": 12}
+  ]
+}
