@@ -376,6 +376,55 @@ def photo_bleed(path, t0, t1, z0=1.04, z1=1.18, fx=0.5, fy=0.5, tag=None, tag_xy
     return f
 
 
+def video_bleed(path, t0, t1, src0, pan=(0.3, 0.7), tag=None, tag_xy=(60, 330)):
+    """Clip de vídeo (aunque sea horizontal) a pantalla completa 1080x1920: se escala a la altura y se recorta con un paneo
+    lento de `pan[0]` a `pan[1]` (fracción del ancho). Se lee del segundo `src0` del clip a velocidad normal entre t0 y t1.
+    Decodifica en streaming con ffmpeg (los fotogramas se piden en orden). Devuelve f(cv, t)."""
+    ov = np.zeros((H, W, 4), "uint8")
+    ya = np.arange(H)[:, None]
+    ov[..., 3] = np.broadcast_to(np.maximum(np.clip(1 - ya / 380.0, 0, 1) ** 1.5 * 175, np.clip((ya - 980) / 940.0, 0, 1) ** 1.3 * 215), (H, W)).astype("uint8")
+    OV = Image.fromarray(ov, "RGBA")
+    TAG = None
+    if tag:
+        t_s = S(tag, B7, 34, fill=(255, 255, 255), shadow=(0, 2, 2, 0.6))
+        TAG = Image.new("RGBA", (t_s.width + 40, t_s.height + 22), (0, 0, 0, 150))
+        TAG.alpha_composite(t_s, (20, 11))
+    st = {"p": None, "n": -1, "last": None}
+    D = max(t1 - t0, 0.1)
+
+    def start(n):
+        if st["p"] is not None:
+            st["p"].kill()
+        off = n / FPS
+        x = f"(iw-ow)*({pan[0]}+({pan[1]}-{pan[0]})*min(1,(t+{off:.3f})/{D:.3f}))"
+        vf = f"fps={FPS},scale=-2:{H}:flags=lanczos,crop=w={W}:h={H}:x='{x}':y=0,unsharp=5:5:0.7"
+        st["p"] = subprocess.Popen(["ffmpeg", "-v", "error", "-ss", f"{src0 + off:.3f}", "-i", path, "-vf", vf, "-an", "-f", "rawvideo",
+                                    "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=W * H * 6)
+        st["n"] = n
+
+    def get(n):
+        if st["p"] is None or n != st["n"]:
+            start(n)
+        buf = st["p"].stdout.read(W * H * 3)
+        st["n"] = n + 1
+        if len(buf) < W * H * 3:
+            return st["last"] or Image.new("RGB", (W, H))
+        st["last"] = Image.frombytes("RGB", (W, H), buf)
+        return st["last"]
+
+    def f(cv, t):
+        a = e_out(prog(t, t0, t0 + 0.2)) * (1 - e_out(prog(t, t1 - 0.2, t1)))
+        if a <= 0.003:
+            return
+        fr = get(max(0, round((t - t0) * FPS))).convert("RGBA")
+        fr.alpha_composite(OV)
+        if TAG is not None:
+            fr.alpha_composite(TAG, tag_xy)
+        cv.paste(Image.blend(cv, fr.convert("RGB"), a))
+
+    return f
+
+
 def caption(txt, t_in, t_out, y=1010, col=(255, 255, 255), size=84):
     """Rótulo grande que entra con rebote en t_in y sale en t_out. Devuelve f(cv, t)."""
     sp = S(txt, ANTON, size, fill=col, shadow=(0, 5, 4, 0.85))

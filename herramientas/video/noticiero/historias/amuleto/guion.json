@@ -1,0 +1,27 @@
+{
+  "titulo": "Amuleto de Fráncfort: la evidencia cristiana más antigua al norte de los Alpes",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 0,
+  "marca": {
+    "etiqueta": "HISTORIA",
+    "titular": "EL AMULETO CRISTIANO MÁS ANTIGUO",
+    "cinta": "ROBERT NEWS  •  HISTORIA  •  FRÁNCFORT (ALEMANIA)  •  AMULETO DE PLATA  •  SIGLO III  •  FUENTE: REDES Y AOL",
+    "banner_desde_linea": 1,
+    "cta_linea": 7,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SUSCRÍBETE",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6, 7],
+  "lineas": [
+    {"texto": "¡Un amuleto de plata, con un mensaje de más de mil setecientos años, apareció bajo la barbilla de un esqueleto!", "vel": 8, "tono": 6, "vol": 10},
+    {"texto": "Fue en Fráncfort, Alemania, en un antiguo cementerio romano. Lo hallaron en dos mil dieciocho.", "vel": 2, "tono": -3, "vol": 0},
+    {"texto": "Era una lámina de plata tan frágil que no podían desenrollarla. Así que la escanearon con tomografía computarizada.", "vel": 6, "tono": 0, "vol": 6},
+    {"texto": "¿Y qué decía? ¡Una inscripción de dieciocho líneas, escrita por completo en latín!", "vel": 10, "tono": 6, "vol": 12},
+    {"texto": "Incluye la invocación santo, santo, santo, y la frase: doblad vuestras rodillas.", "vel": 3, "tono": -3, "vol": 0},
+    {"texto": "Según los arqueólogos, sería la evidencia cristiana más antigua al norte de los Alpes. Data de entre los años doscientos treinta y doscientos setenta.", "vel": 8, "tono": 4, "vol": 8},
+    {"texto": "Ojo: la noticia circula en redes y medios. Conviene contrastarla con la publicación científica completa.", "vel": 3, "tono": -2, "vol": 0},
+    {"texto": "¡Un mensaje de fe guardado más de diecisiete siglos bajo tierra! ¡Síguenos en Robert News!", "vel": 11, "tono": 6, "vol": 12}
+  ]
+}

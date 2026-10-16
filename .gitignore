@@ -3,3 +3,4 @@ salida/
 __pycache__/
 *.part
 herramientas/video/noticiero/historias/*/build/
+herramientas/video/noticiero/historias/*/assets/*.mp4
