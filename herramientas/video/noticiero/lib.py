@@ -628,10 +628,10 @@ def run(story_dir, mode, times=()):
         sheet.save(f"{ctx.build}/contacto{'_tt' if TT else ''}.png")
         print(f"hoja de contacto: {ctx.build}/contacto.png")
         return
-    build_audio(ctx, spec, f"{ctx.build}/mezcla.wav")
+    build_audio(ctx, spec, f"{ctx.build}/mezcla{'_tt' if TT else ''}.wav")
     out = f"{ctx.build}/short{'_tiktok' if TT else ''}.mp4"
     p = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-                          "-i", f"{ctx.build}/mezcla.wav", "-af", "loudnorm=I=-14:TP=-1.0:LRA=11",
+                          "-i", f"{ctx.build}/mezcla{'_tt' if TT else ''}.wav", "-af", "loudnorm=I=-14:TP=-1.0:LRA=11",
                           "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
                           "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-movflags", "+faststart", "-shortest", out], stdin=subprocess.PIPE)
     for i in range(ctx.NF):
