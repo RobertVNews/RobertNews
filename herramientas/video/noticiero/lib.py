@@ -330,14 +330,65 @@ def camera(cv, t, dur, impacts):
 class Spec:
     """Lo que una historia entrega al motor."""
 
-    def __init__(self, background, scenes, impacts=(), flashes=(), sfx=None, dim=None, pad=(55, 65.4, 98, 130.8)):
-        self.background, self.scenes = background, scenes
+    def __init__(self, background, scenes, impacts=(), flashes=(), sfx=None, dim=None, pad=(55, 65.4, 98, 130.8), bleed=()):
+        self.background, self.scenes, self.bleed = background, scenes, list(bleed)
         self.impacts, self.flashes, self.sfx = list(impacts), list(flashes), sfx
         self.dim = dim or (lambda t: 0.0)
         self.pad = pad
 
 
 _TT_MASK = None
+
+
+def photo_bleed(path, t0, t1, z0=1.04, z1=1.18, fx=0.5, fy=0.5, tag=None, tag_xy=(60, 330)):
+    """Foto a pantalla completa (1080x1920, recorte tipo 'cover') entre t0 y t1, con zoom lento y degradados arriba y abajo
+    para que se lean el logo y el banner. `tag`: rótulo de transparencia (p. ej. 'IMAGEN ILUSTRATIVA'). Devuelve f(cv, t)."""
+    img = Image.open(path).convert("RGB")
+    s0 = max(W / img.width, H / img.height) * z1
+    base = img.resize((math.ceil(img.width * s0), math.ceil(img.height * s0)), Image.LANCZOS)
+    ov = np.zeros((H, W, 4), "uint8")
+    ya = np.arange(H)[:, None]
+    top = np.clip(1 - ya / 380.0, 0, 1) ** 1.5 * 175
+    bot = np.clip((ya - 980) / 940.0, 0, 1) ** 1.3 * 215
+    ov[..., 3] = np.broadcast_to(np.maximum(top, bot), (H, W)).astype("uint8")
+    OV = Image.fromarray(ov, "RGBA")
+    TAG = None
+    if tag:
+        t_s = S(tag, B7, 34, fill=(255, 255, 255), shadow=(0, 2, 2, 0.6))
+        TAG = Image.new("RGBA", (t_s.width + 40, t_s.height + 22), (0, 0, 0, 150))
+        TAG.alpha_composite(t_s, (20, 11))
+
+    def f(cv, t):
+        a = e_out(prog(t, t0, t0 + 0.2)) * (1 - e_out(prog(t, t1 - 0.2, t1)))
+        if a <= 0.003:
+            return
+        z = z0 + (z1 - z0) * prog(t, t0, t1)
+        cw, ch = W * z1 / z, H * z1 / z
+        cx = clamp(fx * base.width, cw / 2, base.width - cw / 2)
+        cy = clamp(fy * base.height, ch / 2, base.height - ch / 2)
+        fr = base.resize((W, H), Image.BILINEAR, box=(cx - cw / 2, cy - ch / 2, cx + cw / 2, cy + ch / 2))
+        fr = fr.convert("RGBA")
+        fr.alpha_composite(OV)
+        if TAG is not None:
+            fr.alpha_composite(TAG, tag_xy)
+        cv.paste(Image.blend(cv, fr.convert("RGB"), a))
+
+    return f
+
+
+def caption(txt, t_in, t_out, y=1010, col=(255, 255, 255), size=84):
+    """Rótulo grande que entra con rebote en t_in y sale en t_out. Devuelve f(cv, t)."""
+    sp = S(txt, ANTON, size, fill=col, shadow=(0, 5, 4, 0.85))
+    if sp.width > 960:
+        sp = sp.resize((960, round(sp.height * 960 / sp.width)), Image.LANCZOS)
+
+    def f(cv, t):
+        p = e_back(prog(t, t_in, t_in + 0.3), 1.6)
+        a = clamp(p * 2) * (1 - e_out(prog(t, t_out - 0.15, t_out)))
+        if a > 0.01:
+            blit(cv, sp, 540, y + 30 * (1 - clamp(p)), scale=0.85 + 0.15 * clamp(p), alpha=a)
+
+    return f
 
 
 def tt_squeeze(cv):
@@ -361,6 +412,8 @@ def make_frame(ctx, spec):
             sc(cv, t)
         if TT:
             cv = tt_squeeze(cv)
+        for b in spec.bleed:      # fotos a pantalla completa (no se encogen en la variante TikTok)
+            b(cv, t)
         top_logo(cv, t)
         cv = camera(cv, t, ctx.DUR, spec.impacts)
         lower_third(ctx, cv, t)

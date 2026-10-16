@@ -625,5 +625,18 @@ def setup(ctx):
 
     impacts = [0.30, 0.78, wd(3, "roca") + 0.28, wd(5, "todavía") + 0.14, wd(6, "natural") + 0.14, wd(6, "barco") + 0.3, wd(7, "descubrimiento") + 0.35]
     flashes = [(0.27, 0.9), (0.55, 0.4), (wd(5, "todavía") + 0.14, 0.25)]
+    A = f"{HERE}/historias/arca/assets"
+    s1, s2, s7 = ctx.SC_T[1], ctx.SC_T[2], ctx.SC_T[7]
+    t_ley = wd(7, "leyenda") - 0.1
+    bleed = [
+        photo_bleed(f"{A}/durupinar_aerea.jpg", s1[0] + 0.05, s1[1] + 0.1, fx=0.5, fy=0.5, tag="IMAGEN DE REFERENCIA"),
+        caption("TURQUÍA", wd(1, "turquía"), s1[1], y=960, col=AMBER),
+        caption("COLINA EN FORMA DE BARCO", wd(1, "colina"), s1[1], y=1070),
+        photo_bleed(f"{A}/equipo_muestras.jpg", s2[0] + 0.05, s2[1] + 0.1, fx=0.5, fy=0.55, tag="IMAGEN DE REFERENCIA"),
+        caption("CASI 20 METROS", wd(2, "veinte"), s2[1], y=960, col=AMBER),
+        caption("+300 MUESTRAS", wd(2, "trescientas"), s2[1], y=1070),
+        photo_bleed(f"{A}/laboratorio_ilustrativo.jpg", s7[0] + 0.05, t_ley, fx=0.42, fy=0.5, tag="IMAGEN ILUSTRATIVA"),
+        caption("CARBONO-14", wd(7, "carbono"), t_ley, y=1040, col=AMBER),
+    ]
     return Spec(background, [hook, place, drilling, finding, radar, organic, skeptics, finale],
-                impacts=impacts, flashes=flashes, sfx=sfx, dim=dim)
+                impacts=impacts, flashes=flashes, sfx=sfx, dim=dim, bleed=bleed)
