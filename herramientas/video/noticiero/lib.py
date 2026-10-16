@@ -19,7 +19,7 @@ ANTON, B7, B6 = (f"{HERE}/fonts/{n}" for n in ("Anton.woff", "BarlowCond700.woff
 # Se encoge el contenido (escenas) y se sube el banner; el logo baja un poco. Ver README.
 TT = os.environ.get("RN_TIKTOK") == "1"
 TT_S, TT_TOP = 0.86, 290          # escala del contenido y la y a la que queda su borde superior (y=215 de origen)
-DY = -60 if TT else 0              # desplazamiento vertical del banner y del botón final
+DY = 68 if TT else 158        # banner y botón final más abajo (pedido del usuario): barra en y=1420 (Shorts) o y=1330 (TikTok)
 LOGO_Y = 205 if TT else 120
 
 # paleta de la marca

@@ -40,7 +40,7 @@ Historias de ejemplo: `arca` (Arca de Noé, 8 escenas) y `nucleo` (núcleo terre
 
 ## Lecciones aprendidas
 
-- **Zona segura de Shorts:** la interfaz tapa el 15 % superior y el 25 % inferior. Contenido entre y=215 y y=1235; banner en y=1262–1428; botón final por encima de y=1440.
+- **Zona segura de Shorts:** la interfaz tapa el 15 % superior y buena parte de la inferior. Contenido entre y=215 y y=1235. Por preferencia del usuario el banner va abajo: barra en y≈1420 (Shorts) o y≈1330 (TikTok); se cambia con `DY` en `lib.py` (sube el banner restando píxeles si la interfaz lo tapa).
 - **Caracteres:** las fuentes latinas de Anton/Barlow no incluyen "≈", "→" ni "≠". Evítalos (o dibuja la flecha con líneas, como hace el botón final).
 - **Gráficos de escala:** si no son datos reales, rotúlalos "ILUSTRATIVO". Las cifras reales salen de la fuente primaria.
 - **Fuentes:** si GitHub bloquea la descarga (403), `npm pack @fontsource/anton @fontsource/barlow-condensed` entrega los `.woff`.
