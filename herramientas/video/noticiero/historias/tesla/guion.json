@@ -1,0 +1,27 @@
+{
+  "titulo": "El Tesla Roadster vuela sobre una fila de vehículos en su presentación",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 10,
+  "marca": {
+    "etiqueta": "TECNOLOGÍA",
+    "titular": "EL ROADSTER VOLADOR DE TESLA",
+    "cinta": "ROBERT NEWS  •  TECNOLOGÍA  •  TESLA ROADSTER  •  PRESENTACIÓN EN TEXAS  •  FUENTES: CNN, TECHCRUNCH, FOX BUSINESS",
+    "banner_desde_linea": 1,
+    "cta_linea": 7,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SUSCRÍBETE",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6, 7],
+  "lineas": [
+    {"texto": "¿Un auto que vuela? ¡Tesla acaba de mostrarlo en vivo, y el nuevo Roadster saltó sobre una fila de coches!", "vel": 8, "tono": 6, "vol": 10},
+    {"texto": "Fue en su presentación, en Texas. Pasó por encima de un Model 3, un Model Y, un Cybertruck, un Cybercab y hasta un camión Semi.", "vel": 4, "tono": -2, "vol": 2},
+    {"texto": "Y no fue un simple salto: según los medios, dio una vuelta en el aire antes de aterrizar.", "vel": 8, "tono": 4, "vol": 8},
+    {"texto": "¿Cómo lo hizo? Con propulsores de aire comprimido, según la prensa.", "vel": 6, "tono": 0, "vol": 4},
+    {"texto": "¡Y sin nadie al volante! Elon Musk explicó que fue para no poner a nadie en peligro.", "vel": 10, "tono": 5, "vol": 10},
+    {"texto": "Las cifras: de cero a sesenta millas por hora en cero coma ochenta y uno segundos, según algunos medios. Y Musk dice que se producirá en dos mil veintiocho.", "vel": 3, "tono": -2, "vol": 0},
+    {"texto": "Pero ojo: esta versión voladora no está aprobada para la calle, y falta ver si los dueños podrán volar de verdad.", "vel": 3, "tono": -3, "vol": 0},
+    {"texto": "¿Futuro del auto o puro espectáculo? ¡Síguenos en Robert News!", "vel": 11, "tono": 6, "vol": 12}
+  ]
+}

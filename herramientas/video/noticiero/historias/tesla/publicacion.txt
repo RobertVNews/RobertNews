@@ -1,0 +1,34 @@
+=== YOUTUBE SHORTS ===
+TÍTULO:
+¿Un auto que vuela? Tesla lo mostró en vivo 🚀 #tesla #roadster
+
+DESCRIPCIÓN:
+En su presentación en Texas (15 de octubre de 2026), el nuevo Tesla Roadster saltó sobre una fila de vehículos —Model 3, Model Y, Cybertruck, Cybercab y un camión Semi— y, según los medios, dio una vuelta en el aire antes de aterrizar. Según la prensa usó propulsores de aire comprimido y no llevaba conductor; Elon Musk dijo que fue para no poner a nadie en peligro. Algunos medios hablan de 0 a 60 mph en 0,81 s, y Musk dice que se producirá en 2028. La versión voladora no está aprobada para circular por la calle y falta ver si los dueños podrán volar de verdad.
+
+▶ Noticia completa en Robert News: https://robertnews.vercel.app/noticia/el-tesla-roadster-vuela-sobre-una-fila-de-vehiculos-en-su-presentacion
+
+Fuentes: CNN, TechCrunch, Fox Business, Not a Tesla App (cifras no verificadas de forma independiente). La nota de Robert News cita a Polymarket en X.
+Imágenes de referencia de la presentación. Narración con voz sintética (IA). Contenido informativo.
+
+🔔 Suscríbete a ROBERT NEWS para más tecnología y misterios cada día.
+
+#tesla #roadster #elonmusk #shorts
+
+COMENTARIO PARA FIJAR:
+¿Futuro del auto o puro espectáculo? 🚀 Cuéntanos qué opinas y suscríbete para más noticias de tecnología.
+
+AJUSTES EN STUDIO: No es contenido para niños · Contenido alterado o sintético: SÍ (voz generada) · Visibilidad: Público.
+
+=== TIKTOK (usa short_tiktok.mp4) ===
+DESCRIPCIÓN:
+¿Un auto que vuela? 🚀 El nuevo Tesla Roadster saltó sobre una fila de coches en su presentación. ¿Futuro o espectáculo? #tesla #roadster #elonmusk #tecnologia
+
+Activar "Contenido generado por IA". Comentario para fijar: ¿Futuro del auto o puro espectáculo? 🚀
+
+NOTAS DE VERIFICACIÓN (no pegar):
+- Noticia real y reciente (15 oct 2026): CNN, TechCrunch, Fox Business, NBC, Newsweek. La nota de Robert News solo cita un post de Polymarket y dice "16 de octubre" (los medios fechan el evento el 15).
+- Lugar: las fuentes difieren (McGregor, Texas, instalación de SpaceX, o Waco, Texas); el Short dice solo "Texas".
+- Propulsores de aire comprimido, sin conductor, vuelta en el aire, 0-60 mph en 0,81 s (un solo medio: Not a Tesla App; Fox habla de "menos de un segundo"), producción en 2028, versión sin homologar: de la búsqueda; no se leyeron los artículos completos.
+- Un precio de >250.000 $ de un blog de aficionados NO se incluyó (sin confirmar).
+- Fotos: las envió el usuario (imágenes del evento), rotuladas "IMAGEN DE REFERENCIA"; se desconoce su crédito.
+- El clip de Gemini enviado se descartó: traía texto y subtítulos quemados en el vídeo y era horizontal.
