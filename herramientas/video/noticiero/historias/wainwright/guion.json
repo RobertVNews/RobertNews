@@ -1,0 +1,27 @@
+{
+  "titulo": "Explosión e incendio en la base CFB Wainwright (Alberta, Canadá)",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 8,
+  "marca": {
+    "etiqueta": "ÚLTIMA HORA",
+    "titular": "INCENDIO EN LA BASE WAINWRIGHT",
+    "cinta": "ROBERT NEWS  •  ÚLTIMA HORA  •  CFB WAINWRIGHT, ALBERTA (CANADÁ)  •  CIFRAS SIN CONFIRMAR  •  FUENTES: GLOBAL NEWS, CBC",
+    "banner_desde_linea": 1,
+    "cta_linea": 7,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SUSCRÍBETE",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6, 7],
+  "lineas": [
+    {"texto": "¿Qué pasó ayer en una base militar de Canadá? Una explosión y un incendio en Wainwright, Alberta, dejaron muertos y heridos.", "vel": 2, "tono": 2, "vol": 6},
+    {"texto": "El ministro de Defensa lo confirmó, sin dar cifras: una situación muy activa y delicada.", "vel": -2, "tono": -3, "vol": 0},
+    {"texto": "Fuentes militares anónimas hablan de al menos siete muertos y decenas de heridos. No hay cifras oficiales.", "vel": -2, "tono": -3, "vol": 2},
+    {"texto": "Varios hospitales de Alberta activaron el código naranja, el protocolo para víctimas masivas.", "vel": 0, "tono": -2, "vol": 2},
+    {"texto": "¿La causa? Sin confirmar: según fuentes militares, un ejercicio con fuego real habría golpeado un pozo de gas.", "vel": 0, "tono": 0, "vol": 4},
+    {"texto": "El fuego, empujado por vientos fuertes, cruzó la cerca de la base; a medianoche estaba contenido, según el municipio.", "vel": -1, "tono": -2, "vol": 0},
+    {"texto": "Ojo: estas imágenes son ilustraciones hechas con IA, no fotos del lugar. Y circulan cifras mayores que nadie ha verificado.", "vel": -2, "tono": -3, "vol": 2},
+    {"texto": "Seguiremos informando. Síguenos en Robert News.", "vel": 0, "tono": -1, "vol": 4}
+  ]
+}
