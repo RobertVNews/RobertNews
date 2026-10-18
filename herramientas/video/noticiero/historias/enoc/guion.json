@@ -1,0 +1,16 @@
+{
+  "titulo": "Enoc: el hombre que según la Biblia nunca murió",
+  "voz": "es-CO-GonzaloNeural",
+  "boost": -6,
+  "lineas": [
+    {"texto": "¿Existió un hombre que nunca murió? Según el Génesis, sí: Enoc, el bisabuelo de Noé.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "El texto dice que caminó con Dios, y un día desapareció, porque Dios se lo llevó.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "La carta a los Hebreos añade que fue trasladado para no ver la muerte.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "Algunas tradiciones cuentan que, desde lo alto, ha observado todas las épocas.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "Mientras pasaban los siglos, la humanidad fue olvidándolo.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "El Libro de Enoc, un texto apócrifo, lo presenta como un escriba que anotó secretos del cielo.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "Hay quien cree que camina entre nosotros. Es una creencia popular, no un dato.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "Y que espera su momento. Algunas lecturas proféticas lo sugieren.", "vel": 0, "tono": -4, "vol": 0},
+    {"texto": "¿Sigue vivo? La Biblia no lo afirma ni lo niega: solo dice que desapareció.", "vel": 0, "tono": -4, "vol": 0}
+  ]
+}
