@@ -7,10 +7,11 @@ description: Crea un Short vertical de ~45 s estilo noticiero (voz en off, gráf
 
 Todo el método, la estructura y las lecciones están en `herramientas/video/noticiero/README.md`. Léelo antes de empezar. Resumen operativo:
 
-## 1. Leer y verificar
-- `curl -sSL -A "Mozilla/5.0" <URL>` y extrae el texto del `<article>`.
-- Busca la fuente primaria (WebSearch: estudio, comunicado, medios de referencia) y contrasta cifras. Si la noticia mezcla unidades o cifras distintas, dilo al usuario en la primera línea de la respuesta.
-- Si la nota de Robert News muestra restos de IA (instrucciones de imagen, "Título alternativo"), avísalo.
+## 1. Leer la nota (sin verificar por tu cuenta)
+- `curl -sSL -A "Mozilla/5.0" <URL>` y extrae el texto del `<article>`, o usa el texto que pegue el usuario.
+- **Regla del usuario (2026-10-18): no contrastar las noticias con fuentes externas, no corregir cifras ni datos, no cambiar su texto "porque no sea verdad".** Haz el guion con lo que dice la nota o el texto del usuario, conservando sus matices ("supuestamente", "según fuentes", etc.).
+- Solo busca en la web si el usuario lo pide expresamente.
+- No inventes datos que no estén en la nota ni conviertas lo atribuido en hecho.
 
 ## 2. Crear la historia
 - Carpeta `herramientas/video/noticiero/historias/<slug>/` con `guion.json`, `escenas.py` y `assets/` (la imagen que envíe el usuario, convertida a `.webp`/`.png`).

@@ -29,7 +29,7 @@ Historias de ejemplo: `arca` (Arca de Noé, 8 escenas) y `nucleo` (núcleo terre
 
 ## El método, paso a paso
 
-1. **Leer la noticia y verificar la fuente.** `curl` de la URL de Robert News, búsqueda del estudio o comunicado original y cifras en la fuente primaria. Anota las discrepancias (por ejemplo "60 pies" y "20 metros" no son lo mismo: 60 pies ≈ 18 m) y úsalas con cautela en el guion.
+1. **Leer la noticia.** `curl` de la URL de Robert News o el texto que pegue el usuario. Por instrucción del usuario (2026-10-18) no se contrasta con fuentes externas ni se corrigen datos salvo que lo pida.
 2. **Escribir el guion: 8–9 líneas, unas 120–130 palabras** para 45 s. Una idea por línea: gancho → contexto → dato → mecanismo → matiz o contra-argumento → cierre con "Síguenos en Robert News". Números y años en palabras. Todo lo no verificado se atribuye ("según uno de sus líderes", "algunos creen").
 3. **`guion.json`:** voz (`es-MX-JorgeNeural` por defecto: la más neutra), `boost` global de velocidad, `lineas` con `vel`/`tono`/`vol` por frase (explosivas en los golpes de efecto, graves en el misterio), `marca` (etiqueta, titular del banner, cinta, palabra del cierre) y `escenas_en_linea`.
 4. **Voz:** `python3 voz.py historias/<nombre>`. Ajusta `--boost` hasta que diga "vídeo ≈ 45 s".
