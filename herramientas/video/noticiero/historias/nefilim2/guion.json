@@ -1,0 +1,25 @@
+{
+  "titulo": "Los nefilim: gigantes, espías y diluvio (con vídeo)",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 2,
+  "marca": {
+    "etiqueta": "BIBLIA",
+    "titular": "LOS NEFILIM: ¿GIGANTES REALES?",
+    "cinta": "ROBERT NEWS  •  BIBLIA Y MISTERIOS  •  NÚMEROS 13  •  GÉNESIS 6  •  LIBRO DE ENOC",
+    "banner_desde_linea": 1,
+    "cta_linea": 5,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SUSCRÍBETE",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5],
+  "lineas": [
+    {"texto": "¿Y si los gigantes de la Biblia fueran reales? Los llaman nefilim.", "vel": 2, "tono": -2, "vol": 4},
+    {"texto": "Cuando Israel envió espías a Canaán, volvieron aterrados: habían visto hombres enormes.", "vel": 0, "tono": -3, "vol": 2},
+    {"texto": "Éramos como langostas, dijeron.", "vel": -4, "tono": -4, "vol": 4},
+    {"texto": "Algunos creen que descendían de ángeles caídos, como cuenta el Libro de Enoc.", "vel": 0, "tono": -3, "vol": 2},
+    {"texto": "Y que por eso llegó el diluvio. Otros dicen que es solo un símbolo.", "vel": 0, "tono": -3, "vol": 2},
+    {"texto": "¿Mito, símbolo o historia? Cuéntanos qué crees. ¡Síguenos en Robert News!", "vel": 8, "tono": 4, "vol": 10}
+  ]
+}
