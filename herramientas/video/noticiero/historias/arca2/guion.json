@@ -1,0 +1,26 @@
+{
+  "titulo": "Arca de Noé, parte 2: lo que marcó el georradar",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 8,
+  "marca": {
+    "etiqueta": "BIBLIA",
+    "titular": "ARCA DE NOÉ: LO QUE MARCÓ EL GEORRADAR",
+    "cinta": "ROBERT NEWS  •  BIBLIA Y ARQUEOLOGÍA  •  FORMACIÓN DURUPINAR, TURQUÍA  •  LECTURAS DE RADAR, NO FOTOS",
+    "banner_desde_linea": 1,
+    "cta_linea": 6,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SUSCRÍBETE",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6],
+  "lineas": [
+    {"texto": "¿Qué encontró el georradar bajo la colina donde algunos creen que está el Arca de Noé?", "vel": 8, "tono": 6, "vol": 10},
+    {"texto": "Los científicos perforaron casi veinte metros y sacaron más de trescientas muestras.", "vel": 5, "tono": 0, "vol": 4},
+    {"texto": "Según uno de sus líderes, no hay roca sólida. Solo capas de tierra.", "vel": 9, "tono": 4, "vol": 8},
+    {"texto": "Pero el georradar marca líneas rectas, cavidades y hasta tres niveles.", "vel": 6, "tono": 2, "vol": 6},
+    {"texto": "Dicen que dentro de la silueta hay más materia orgánica. ¿Madera del Arca?", "vel": 9, "tono": 5, "vol": 8},
+    {"texto": "Todavía no está confirmado: los geólogos advierten que cambios en la tierra no prueban un barco.", "vel": 3, "tono": -2, "vol": 0},
+    {"texto": "El carbono catorce dirá la verdad. ¿Leyenda o descubrimiento? ¡Síguenos en Robert News!", "vel": 11, "tono": 6, "vol": 12}
+  ]
+}
