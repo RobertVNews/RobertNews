@@ -442,8 +442,14 @@ def video_bleed(path, t0, t1, src0, pan=(0.3, 0.7), tag=None, tag_xy=(60, 330)):
     return f
 
 
+# Rótulos grandes a mitad de pantalla: apagados por defecto (pedido del usuario, 2026-10-21). RN_ROTULOS=1 los vuelve a activar.
+ROTULOS = os.environ.get("RN_ROTULOS") == "1"
+
+
 def caption(txt, t_in, t_out, y=1010, col=(255, 255, 255), size=84):
-    """Rótulo grande que entra con rebote en t_in y sale en t_out. Devuelve f(cv, t)."""
+    """Rótulo grande que entra con rebote en t_in y sale en t_out. Devuelve f(cv, t). Desactivado salvo RN_ROTULOS=1."""
+    if not ROTULOS:
+        return lambda cv, t: None
     sp = S(txt, ANTON, size, fill=col, shadow=(0, 5, 4, 0.85))
     if sp.width > 960:
         sp = sp.resize((960, round(sp.height * 960 / sp.width)), Image.LANCZOS)

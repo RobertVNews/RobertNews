@@ -40,6 +40,7 @@ Historias de ejemplo: `arca` (Arca de Noé, 8 escenas) y `nucleo` (núcleo terre
 
 ## Lecciones aprendidas
 
+- **Rótulos a mitad de pantalla:** apagados por defecto (`RN_ROTULOS=1` los activa). Solo quedan logo arriba y banner abajo.
 - **Zona segura de Shorts:** la interfaz tapa el 15 % superior y buena parte de la inferior. Contenido entre y=215 y y=1235. Por preferencia del usuario el banner va abajo: barra en y≈1420 (Shorts) o y≈1330 (TikTok); se cambia con `DY` en `lib.py` (sube el banner restando píxeles si la interfaz lo tapa).
 - **Caracteres:** las fuentes latinas de Anton/Barlow no incluyen "≈", "→" ni "≠". Evítalos (o dibuja la flecha con líneas, como hace el botón final).
 - **Gráficos de escala:** si no son datos reales, rotúlalos "ILUSTRATIVO". Las cifras reales salen de la fuente primaria.
