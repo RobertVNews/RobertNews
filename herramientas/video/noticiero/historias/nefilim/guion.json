@@ -1,0 +1,26 @@
+{
+  "titulo": "Los nefilim: ¿gigantes en la Biblia?",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 8,
+  "marca": {
+    "etiqueta": "BIBLIA",
+    "titular": "LOS NEFILIM: ¿GIGANTES BÍBLICOS?",
+    "cinta": "ROBERT NEWS  •  BIBLIA Y MISTERIOS  •  GÉNESIS 6  •  NÚMEROS 13  •  LIBRO DE ENOC",
+    "banner_desde_linea": 1,
+    "cta_linea": 6,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SUSCRÍBETE",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5, 6],
+  "lineas": [
+    {"texto": "¿Existieron gigantes en la Biblia? El Génesis habla de unos seres llamados nefilim.", "vel": 8, "tono": 6, "vol": 10},
+    {"texto": "Dice: había gigantes en la tierra en aquellos días, cuando los hijos de Dios se unieron a las hijas de los hombres.", "vel": 2, "tono": -3, "vol": 0},
+    {"texto": "La palabra nefilim se suele traducir como gigantes o caídos, pero su significado exacto se discute.", "vel": 5, "tono": 0, "vol": 4},
+    {"texto": "Siglos después, los espías de Israel dijeron haber visto gigantes en Canaán. Se sintieron como langostas.", "vel": 9, "tono": 5, "vol": 8},
+    {"texto": "¿Quiénes eran? Unos dicen que ángeles caídos, como cuenta el Libro de Enoc. Otros, descendientes de Set, o reyes y guerreros.", "vel": 4, "tono": -2, "vol": 2},
+    {"texto": "Después, según el Génesis, llegó el diluvio por la maldad de los hombres.", "vel": 3, "tono": -3, "vol": 0},
+    {"texto": "¿Mito, símbolo o historia? La Biblia no lo explica del todo. ¿Tú qué crees? ¡Síguenos en Robert News!", "vel": 11, "tono": 6, "vol": 12}
+  ]
+}

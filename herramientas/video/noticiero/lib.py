@@ -257,7 +257,7 @@ class Ctx:
         if s.width > 690:
             s = s.resize((690, round(s.height * 690 / s.width)), Image.LANCZOS)
         self.BAR.alpha_composite(s, (22, (self.BAR.height - s.height) // 2))
-        ticker = m["cinta"] + "  •  robertnews.vercel.app  •  "
+        ticker = m["cinta"] + "  •  robert-news-latest.onrender.com  •  "
         self.TICK = S(ticker * 3, B6, 34, fill=(255, 255, 255))
         self.TICK_W = S(ticker, B6, 34, fill=(255, 255, 255)).width - 24
         self.TICK_BG = rrect(1000, 48, (150, 8, 20), (120, 6, 16), 6)
@@ -289,7 +289,7 @@ class Ctx:
         for xy in ((ax - 34, ay, ax + 30, ay), (ax + 6, ay - 24, ax + 34, ay), (ax + 6, ay + 24, ax + 34, ay)):
             d.line(xy, fill=(255, 255, 255, 255), width=10)
         self.BTN_G = soft_glow(900, self.BTN.height, (255, 30, 50), 26, 0.8)
-        self.URL = S("robertnews.vercel.app", B6, 54, fill=(135, 205, 255), shadow=(0, 4, 3, 0.6))
+        self.URL = S("robert-news-latest.onrender.com", B6, 54, fill=(135, 205, 255), shadow=(0, 4, 3, 0.6))
 
 
 # ------------------------------------------------------------------ elementos comunes de cada fotograma
