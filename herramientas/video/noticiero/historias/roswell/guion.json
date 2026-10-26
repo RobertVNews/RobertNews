@@ -1,0 +1,25 @@
+{
+  "titulo": "Roswell 1947: disco volador, cuerpos y un globo",
+  "voz": "es-MX-JorgeNeural",
+  "boost": 4,
+  "marca": {
+    "etiqueta": "MISTERIO",
+    "titular": "ROSWELL 1947: ¿QUÉ CAYÓ?",
+    "cinta": "ROBERT NEWS  •  MISTERIOS  •  ROSWELL, NUEVO MÉXICO, 1947  •  SEGÚN TESTIGOS",
+    "banner_desde_linea": 1,
+    "cta_linea": 5,
+    "cta_palabra": "síguenos",
+    "cta_texto": "SÍGUENOS  @robertnews_",
+    "cta_texto_tiktok": "SÍGUENOS  @robertnews_",
+    "cta_emblema": true
+  },
+  "escenas_en_linea": [0, 1, 2, 3, 4, 5],
+  "lineas": [
+    {"texto": "Mil novecientos cuarenta y siete. Algo cae del cielo en Roswell. El Ejército dice: recuperamos un disco volador.", "vel": 2, "tono": -3, "vol": 4},
+    {"texto": "Pero testigos aseguran que encontraron algo más. Cuerpos.", "vel": -2, "tono": -4, "vol": 4},
+    {"texto": "Cuerpos pequeños, delgados, con la cabeza enorme, que los soldados se llevaron a un hangar.", "vel": 0, "tono": -3, "vol": 2},
+    {"texto": "Un día después, el Ejército cambió la historia: solo era un globo.", "vel": 4, "tono": 0, "vol": 6},
+    {"texto": "¿Un globo… o la prueba que nunca quisieron que vieras?", "vel": -2, "tono": -3, "vol": 6},
+    {"texto": "Cuéntanos qué crees. Síguenos en Robert News.", "vel": 6, "tono": 2, "vol": 8}
+  ]
+}
